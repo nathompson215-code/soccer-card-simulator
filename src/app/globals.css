@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  --pitch-950: #07110d;
+  --pitch-900: #0b1a14;
+  --pitch-800: #10261c;
+  --pitch-700: #163528;
+  --pitch-600: #1b7a4e;
+  --pitch-500: #22a06b;
+  --pitch-400: #3dcf8e;
+  --ink: #f4f7f5;
+  --ink-muted: #a8b8b0;
+  --gold: #d4af37;
+  --gold-soft: #f0d78c;
+  --danger: #e85d4c;
+  --line: rgba(244, 247, 245, 0.12);
+  --glow: rgba(34, 160, 107, 0.35);
+  --background: var(--pitch-950);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-pitch-950: var(--pitch-950);
+  --color-pitch-900: var(--pitch-900);
+  --color-pitch-800: var(--pitch-800);
+  --color-pitch-700: var(--pitch-700);
+  --color-pitch-600: var(--pitch-600);
+  --color-pitch-500: var(--pitch-500);
+  --color-pitch-400: var(--pitch-400);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-bebas);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(34, 160, 107, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 10% 0%, rgba(212, 175, 55, 0.08), transparent 50%),
+    linear-gradient(180deg, #0b1a14 0%, #07110d 40%, #050c09 100%);
+  color: var(--ink);
+  font-family: var(--font-dm-sans), "Segoe UI", sans-serif;
+  min-height: 100%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  z-index: 0;
+}
+
+main,
+header,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(34, 160, 107, 0.45);
+  color: white;
+}
+
+.display {
+  font-family: var(--font-bebas), Impact, sans-serif;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+}
+
+.pitch-panel {
+  background: linear-gradient(160deg, rgba(22, 53, 40, 0.85), rgba(11, 26, 20, 0.92));
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.foil-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 45%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: foil-sweep 2.8s ease-in-out infinite;
+}
+
+@keyframes foil-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes pulse-hit {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 40px 8px rgba(212, 175, 55, 0.25);
+  }
+}
+
+.hit-pulse {
+  animation: pulse-hit 1.6s ease-in-out infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-y {
+  animation: float-y 4s ease-in-out infinite;
+}
+
+.stadium-lights {
+  background:
+    radial-gradient(ellipse 40% 20% at 20% 0%, rgba(255, 250, 220, 0.14), transparent),
+    radial-gradient(ellipse 40% 20% at 80% 0%, rgba(255, 250, 220, 0.12), transparent),
+    radial-gradient(ellipse 60% 30% at 50% 100%, rgba(34, 160, 107, 0.12), transparent);
+}
