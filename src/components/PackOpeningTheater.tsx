@@ -363,7 +363,7 @@ export function PackOpeningTheater({
                 exit={{ opacity: 0 }}
                 className="flex min-h-0 flex-1 flex-col"
               >
-                <div className="flex items-center justify-center gap-2 px-4 pt-3 text-[11px] uppercase tracking-[0.18em] text-ink-muted md:pt-4">
+                <div className="flex shrink-0 items-center justify-center gap-2 px-4 pt-2 text-[10px] uppercase tracking-[0.18em] text-ink-muted md:pt-3 md:text-[11px]">
                   <span>
                     {mode === "box" ? `Pack ${packIndex + 1}/${queue.length}` : "Single Pack"}
                   </span>
@@ -377,7 +377,7 @@ export function PackOpeningTheater({
                   </span>
                 </div>
 
-                <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto px-3 py-4 md:px-6">
+                <div className="flex min-h-0 flex-1 flex-col items-stretch justify-center overflow-hidden px-3 py-2 md:px-6 md:py-3">
                   <CardReveal
                     key={`${packIndex}-${revealIndex}-${currentCard.card.id}-${skipAnimation ? "skip" : "play"}`}
                     pull={currentCard}
@@ -389,13 +389,13 @@ export function PackOpeningTheater({
                   />
                 </div>
 
-                <div className="safe-bottom border-t border-white/10 bg-[#07110d]/90 px-3 py-3 backdrop-blur md:px-6 md:py-4">
+                <div className="safe-bottom shrink-0 border-t border-white/10 bg-[#07110d]/90 px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
                   <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
                     <button
                       type="button"
                       disabled={!cardReady || revealAll}
                       onClick={nextCard}
-                      className="min-h-12 flex-1 rounded-full bg-white px-5 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:flex-none sm:min-w-[160px]"
+                      className="min-h-11 flex-1 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:flex-none sm:min-w-[160px]"
                     >
                       {revealIndex < currentPulls.length - 1
                         ? "Next Card"
