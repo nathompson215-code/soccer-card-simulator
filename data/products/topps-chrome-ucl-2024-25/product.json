@@ -1,0 +1,108 @@
+{
+  "slug": "topps-chrome-ucl-2024-25",
+  "name": "Topps Chrome UEFA Club Competitions 2024-25",
+  "description": "Flagship Chrome hobby experience for UEFA Club Competitions — 20 packs, Chrome autographs, Pulsar refractors, numbered parallels, and chase inserts. Configuration mirrors the published hobby box break.",
+  "year": 2025,
+  "season": "2024-25",
+  "releaseYear": 2025,
+  "format": "HOBBY_BOX",
+  "accentHex": "#001F5B",
+  "featured": true,
+  "manufacturer": {
+    "slug": "topps",
+    "name": "Topps",
+    "foundedYear": 1938,
+    "country": "USA",
+    "colorHex": "#C8102E"
+  },
+  "brand": {
+    "slug": "chrome-ucl",
+    "name": "Chrome"
+  },
+  "tournament": {
+    "slug": "uefa-champions-league",
+    "name": "UEFA Champions League",
+    "type": "UEFA_CHAMPIONS_LEAGUE"
+  },
+  "box": {
+    "packsPerBox": 20,
+    "cardsPerPack": 4,
+    "boxesPerCase": 12,
+    "source": "Published Topps hobby configuration: 20 packs / 4 cards; box break ≈ 1 Chrome Autograph, 3 #'d parallels, 3 Pulsar Refractors, 9 inserts."
+  },
+  "guarantees": [
+    {
+      "id": "autograph",
+      "label": "Chrome Autograph",
+      "count": 1,
+      "pool": "autograph"
+    },
+    {
+      "id": "numbered",
+      "label": "Numbered Parallel",
+      "count": 3,
+      "pool": "numbered"
+    },
+    {
+      "id": "pulsar",
+      "label": "Pulsar Refractor",
+      "count": 3,
+      "pool": "pulsar"
+    },
+    {
+      "id": "insert",
+      "label": "Insert",
+      "count": 9,
+      "pool": "insert"
+    }
+  ],
+  "fillOdds": {
+    "refractorChancePerSlot": 0.22,
+    "bonusHitChancePerSlot": 0.012,
+    "bonusHitWeights": {
+      "autograph": 0.15,
+      "patch": 0.25,
+      "booklet": 0.2,
+      "case_hit": 0.08,
+      "numbered": 0.32
+    },
+    "notes": "After placing box guarantees, remaining slots fill mostly with base commons. Refractors appear often enough to feel like ~1:3 packs. Bonus hits are rare extras beyond guarantees."
+  },
+  "oddsLabels": [
+    {
+      "label": "Chrome Autograph",
+      "scope": "PER_BOX",
+      "expectedCount": 1
+    },
+    {
+      "label": "Numbered Parallel",
+      "scope": "PER_BOX",
+      "expectedCount": 3
+    },
+    {
+      "label": "Pulsar Refractor",
+      "scope": "PER_BOX",
+      "expectedCount": 3
+    },
+    {
+      "label": "Insert",
+      "scope": "PER_BOX",
+      "expectedCount": 9
+    },
+    {
+      "label": "Refractor",
+      "scope": "PER_PACK",
+      "expectedCount": 0.33
+    }
+  ],
+  "singlePackApprox": {
+    "autographChance": 0.05,
+    "insertChance": 0.45,
+    "pulsarChance": 0.15,
+    "numberedChance": 0.15,
+    "refractorChance": 0.33,
+    "patchChance": 0.04,
+    "bookletChance": 0.02,
+    "caseHitChance": 0.008
+  }
+}

@@ -84,16 +84,17 @@ export function SealedPack({
         <div className="absolute inset-x-8 top-11 h-px bg-white/20" />
 
         <div className="absolute left-1/2 top-16 -translate-x-1/2 rounded-full border border-gold/50 bg-black/30 px-3 py-1 text-[9px] uppercase tracking-[0.28em] text-gold-soft">
-          {brandLabel === "Chrome" || brandLabel.toLowerCase().includes("chrome")
-            ? "D11 Chrome"
-            : brandLabel}
+          {brandLabel}
         </div>
 
-        <div className="display absolute inset-x-3 top-[42%] text-center text-3xl leading-none text-white drop-shadow-lg">
-          DRAFT ELEVEN
+        <div className="display absolute inset-x-3 top-[40%] text-center text-3xl leading-none text-white drop-shadow-lg">
+          {manufacturer.toUpperCase()}
         </div>
-        <div className="absolute inset-x-4 top-[58%] text-center text-[10px] uppercase tracking-[0.24em] text-white/70">
+        <div className="absolute inset-x-4 top-[56%] text-center text-[10px] uppercase tracking-[0.24em] text-white/70">
           {subtitle}
+        </div>
+        <div className="absolute inset-x-4 top-[64%] text-center text-[8px] uppercase tracking-[0.2em] text-white/40">
+          Draft Eleven
         </div>
 
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent" />

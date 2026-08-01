@@ -36,7 +36,8 @@ export default async function ProductDetailPage({
           <div className="pitch-panel rounded-2xl px-5 py-4 text-sm text-ink-muted">
             <div>{formatLabel(product.format)}</div>
             <div className="mt-1 text-ink">
-              {product.packsPerBox} packs · {product.cardsPerPack}/pack
+              {product.packsPerBox} packs · {product.cardsPerPack}/pack ·{" "}
+              {product.packsPerBox * product.cardsPerPack} cards/box
             </div>
             <div className="mt-1">{formatNumber(product.cardCount)} unique cards</div>
             {product.tournament ? <div className="mt-1">{product.tournament.name}</div> : null}
@@ -55,6 +56,22 @@ export default async function ProductDetailPage({
               </li>
             ))}
           </ul>
+        ) : null}
+
+        {product.slug === "topps-chrome-ucl-2024-25" ? (
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["20 packs", "Official hobby count"],
+              ["4 cards / pack", "80 cards per box"],
+              ["1 Chrome Auto", "Guaranteed per box"],
+              ["3 #'d · 3 Pulsar · 9 inserts", "Published box break"],
+            ].map(([title, sub]) => (
+              <div key={title} className="pitch-panel rounded-xl px-4 py-3">
+                <div className="display text-2xl text-ink">{title}</div>
+                <div className="mt-1 text-xs uppercase tracking-[0.14em] text-ink-muted">{sub}</div>
+              </div>
+            ))}
+          </div>
         ) : null}
       </div>
 

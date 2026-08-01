@@ -26,6 +26,7 @@ export interface CardDTO {
   setType: SetType;
   parallelId: string;
   parallelName: string;
+  parallelSlug: string;
   parallelColor: string;
   foil: boolean;
   rarity: Rarity;
@@ -108,6 +109,30 @@ export interface PullResultDTO {
 export interface PackResultDTO {
   packIndex: number;
   cards: PullResultDTO[];
+}
+
+export interface GuaranteeResultDTO {
+  id: string;
+  label: string;
+  expected: number;
+  actual: number;
+}
+
+export interface BoxSummaryDTO {
+  totalCards: number;
+  hitCount: number;
+  rarityCounts: Record<string, number>;
+  guarantees: GuaranteeResultDTO[];
+  estimatedValueCents: number;
+  topHits: PullResultDTO[];
+}
+
+export interface CollectionProgressDTO {
+  productId: string;
+  uniqueOwned: number;
+  totalCatalog: number;
+  completionPct: number;
+  newUniquesThisOpen?: number;
 }
 
 export interface OwnedCardDTO {

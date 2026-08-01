@@ -1,7 +1,16 @@
-import type { Card, Parallel, Product } from "@prisma/client";
+import type { Card, Parallel } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { cardInclude, toCardDTO } from "@/lib/mappers";
-import type { Celebration, PackResultDTO, PullResultDTO } from "@/lib/types";
+import { loadProductConfig, type HitPool, type LoadedProductConfig } from "@/lib/product-config";
+import type {
+  BoxSummaryDTO,
+  Celebration,
+  GuaranteeResultDTO,
+  PackResultDTO,
+  PullResultDTO,
+} from "@/lib/types";
+
+type CardRow = Parameters<typeof toCardDTO>[0];
 
 function mulberry32(seed: number) {
   return function () {
@@ -22,16 +31,29 @@ function hash32(input: string): number {
 }
 
 function pickWeighted<T extends { weight: number }>(items: T[], rng: () => number): T {
-  const total = items.reduce((s, i) => s + i.weight, 0);
+  const total = items.reduce((s, i) => s + Math.max(0, i.weight), 0);
+  if (total <= 0) return items[items.length - 1];
   let roll = rng() * total;
   for (const item of items) {
-    roll -= item.weight;
+    roll -= Math.max(0, item.weight);
     if (roll <= 0) return item;
   }
   return items[items.length - 1];
 }
 
-function celebrationFor(rarity: string, cardType: string, printRun: number | null): Celebration {
+function shuffleInPlace<T>(arr: T[], rng: () => number) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+export function celebrationFor(
+  rarity: string,
+  cardType: string,
+  printRun: number | null,
+): Celebration {
   if (rarity === "LEGENDARY" || printRun === 1 || cardType === "ONE_OF_ONE") return "jackpot";
   if (
     cardType.includes("AUTOGRAPH") ||
@@ -46,12 +68,12 @@ function celebrationFor(rarity: string, cardType: string, printRun: number | nul
   return "none";
 }
 
-function isHit(rarity: string, cardType: string, printRun: number | null) {
+export function isHit(rarity: string, cardType: string, printRun: number | null) {
   return (
     rarity === "ULTRA_RARE" ||
     rarity === "MYTHIC" ||
     rarity === "LEGENDARY" ||
-    Boolean(printRun && printRun <= 99) ||
+    Boolean(printRun) ||
     cardType.includes("AUTOGRAPH") ||
     cardType.includes("PATCH") ||
     cardType.includes("RELIC") ||
@@ -60,6 +82,37 @@ function isHit(rarity: string, cardType: string, printRun: number | null) {
     cardType === "ONE_OF_ONE"
   );
 }
+
+function serialFor(
+  card: Card & { numbering: { printRun: number } | null; parallel: Parallel },
+  rng: () => number,
+) {
+  const printRun = card.numbering?.printRun ?? card.parallel.printRun;
+  if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
+  const serialNumber = Math.floor(rng() * printRun) + 1;
+  return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
+}
+
+function toPull(card: CardRow, serialDisplay: string | null): PullResultDTO {
+  const dto = toCardDTO(card);
+  return {
+    card: dto,
+    serialDisplay,
+    isHit: isHit(dto.rarity, dto.cardType, dto.printRun),
+    celebration: celebrationFor(dto.rarity, dto.cardType, dto.printRun),
+  };
+}
+
+const RARITY_RANK: Record<string, number> = {
+  COMMON: 0,
+  UNCOMMON: 1,
+  RARE: 2,
+  ULTRA_RARE: 3,
+  MYTHIC: 4,
+  LEGENDARY: 5,
+};
+
+type PoolMap = Record<HitPool, CardRow[]>;
 
 async function loadProductPool(productId: string) {
   const product = await prisma.product.findUnique({
@@ -86,27 +139,110 @@ async function loadProductPool(productId: string) {
     set.checklistEntries.flatMap((entry) => entry.cards),
   );
 
-  return { product, allCards };
+  const config = loadProductConfig(product.slug);
+  const pools = buildPools(allCards, config);
+
+  return { product, allCards, config, pools };
 }
 
-function serialFor(card: Card & { numbering: { printRun: number } | null; parallel: Parallel }, rng: () => number) {
-  const printRun = card.numbering?.printRun ?? card.parallel.printRun;
-  if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
-  const serialNumber = Math.floor(rng() * printRun) + 1;
-  return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
+function parallelPoolHint(parallelSlug: string, cardType: string): HitPool | null {
+  if (parallelSlug === "base") return "base";
+  if (parallelSlug === "refractor") return "refractor";
+  if (parallelSlug === "pulsar") return "pulsar";
+  if (
+    ["violet", "pink", "aqua", "green", "gold", "orange", "black", "superfractor"].includes(
+      parallelSlug,
+    )
+  ) {
+    return "numbered";
+  }
+  if (cardType === "INSERT") return "insert";
+  if (cardType.includes("AUTOGRAPH")) return "autograph";
+  if (cardType.includes("PATCH") || cardType.includes("RELIC")) return "patch";
+  if (cardType === "BOOKLET") return "booklet";
+  if (cardType === "CASE_HIT") return "case_hit";
+  return null;
 }
 
-function toPull(
-  card: Parameters<typeof toCardDTO>[0],
-  serialDisplay: string | null,
-): PullResultDTO {
-  const dto = toCardDTO(card);
-  return {
-    card: dto,
-    serialDisplay,
-    isHit: isHit(dto.rarity, dto.cardType, dto.printRun),
-    celebration: celebrationFor(dto.rarity, dto.cardType, dto.printRun),
+function buildPools(allCards: CardRow[], config: LoadedProductConfig | null): PoolMap {
+  const pools: PoolMap = {
+    base: [],
+    refractor: [],
+    pulsar: [],
+    numbered: [],
+    insert: [],
+    autograph: [],
+    patch: [],
+    booklet: [],
+    case_hit: [],
   };
+
+  for (const card of allCards) {
+    const hint = parallelPoolHint(card.parallel.slug, card.parallel.cardType);
+    if (hint) pools[hint].push(card);
+  }
+
+  // Prefer config parallel.pool when available via slug match in base parallels
+  if (config) {
+    const bySlug = new Map(
+      config.sets.baseParallels.map((p) => [p.slug, p.pool] as const),
+    );
+    for (const card of allCards) {
+      const pool = bySlug.get(card.parallel.slug);
+      if (pool && pool !== parallelPoolHint(card.parallel.slug, card.parallel.cardType)) {
+        // keep primary classification
+      }
+    }
+  }
+
+  return pools;
+}
+
+function playerWeight(card: CardRow, config: LoadedProductConfig | null) {
+  const slug = card.checklistEntry.player.slug;
+  return config?.playerWeightBySlug[slug] ?? 1;
+}
+
+function pickFromPool(
+  pool: CardRow[],
+  used: Set<string>,
+  rng: () => number,
+  config: LoadedProductConfig | null,
+  weightedPlayers: boolean,
+): CardRow | null {
+  const available = pool.filter((c) => !used.has(c.id));
+  if (!available.length) return null;
+
+  if (weightedPlayers) {
+    const weighted = available.map((card) => ({
+      card,
+      weight: playerWeight(card, config) * (card.parallel.weight || 1),
+    }));
+    return pickWeighted(weighted, rng).card;
+  }
+
+  const weighted = available.map((card) => ({
+    card,
+    weight: Math.max(0.0001, card.parallel.weight || 1),
+  }));
+  return pickWeighted(weighted, rng).card;
+}
+
+function sortPulls(pulls: PullResultDTO[]) {
+  return [...pulls].sort(
+    (a, b) => (RARITY_RANK[a.card.rarity] ?? 0) - (RARITY_RANK[b.card.rarity] ?? 0),
+  );
+}
+
+function makePull(
+  card: CardRow,
+  used: Set<string>,
+  rng: () => number,
+): PullResultDTO | null {
+  if (used.has(card.id)) return null;
+  used.add(card.id);
+  const { serialDisplay } = serialFor(card, rng);
+  return toPull(card, serialDisplay);
 }
 
 export async function openPackFromDb(
@@ -117,99 +253,248 @@ export async function openPackFromDb(
   const pool = await loadProductPool(productId);
   if (!pool) return { packIndex, cards: [] };
 
-  const { product, allCards } = pool;
-  const rng = mulberry32(seed ?? hash32(`${productId}:${packIndex}:${Date.now()}`));
-  const pulls: PullResultDTO[] = [];
+  const { product, config, pools } = pool;
+  const rng = mulberry32(seed ?? hash32(`${productId}:pack:${packIndex}:${Date.now()}`));
   const used = new Set<string>();
+  const pulls: PullResultDTO[] = [];
 
-  const baseSet = product.sets.find((s) => s.setType === "BASE");
-  const insertSet = product.sets.find((s) => s.setType === "INSERT");
-  const autoSet = product.sets.find((s) => s.setType === "AUTOGRAPH");
-  const relicSet = product.sets.find((s) => s.setType === "RELIC");
-
-  const odds = Object.fromEntries(product.oddsRules.map((r) => [r.label, r]));
-
-  const pushCard = (card: (typeof allCards)[number] | undefined) => {
-    if (!card || used.has(card.id)) return false;
-    used.add(card.id);
-    const { serialDisplay } = serialFor(card, rng);
-    pulls.push(toPull(card, serialDisplay));
-    return true;
+  const approx = config?.product.singlePackApprox;
+  const tryPool = (hitPool: HitPool, chance: number, weightedPlayers = false) => {
+    if (pulls.length >= product.cardsPerPack) return;
+    if (rng() >= chance) return;
+    const card = pickFromPool(pools[hitPool], used, rng, config, weightedPlayers);
+    if (!card) return;
+    const pull = makePull(card, used, rng);
+    if (pull) pulls.push(pull);
   };
 
-  const chancePerPack = (label: string, fallback: number) => {
-    const rule = odds[label];
-    if (!rule) return fallback;
-    if (rule.scope === "PER_PACK") return rule.expectedCount;
-    if (rule.scope === "PER_BOX") return rule.expectedCount / Math.max(1, product.packsPerBox);
-    return rule.expectedCount / (product.packsPerBox * 6);
-  };
-
-  // Autograph / relic / insert attempts
-  if (autoSet && rng() < chancePerPack("Autograph per box", 0.1)) {
-    const cards = autoSet.checklistEntries.flatMap((e) => e.cards);
-    pushCard(cards[Math.floor(rng() * cards.length)]);
+  if (approx) {
+    tryPool("autograph", approx.autographChance);
+    tryPool("case_hit", approx.caseHitChance);
+    tryPool("booklet", approx.bookletChance);
+    tryPool("patch", approx.patchChance);
+    tryPool("insert", approx.insertChance);
+    tryPool("numbered", approx.numberedChance);
+    tryPool("pulsar", approx.pulsarChance);
+    tryPool("refractor", approx.refractorChance, true);
+  } else {
+    tryPool("autograph", 0.05);
+    tryPool("insert", 0.4);
+    tryPool("pulsar", 0.15);
+    tryPool("numbered", 0.12);
+    tryPool("refractor", 0.3, true);
   }
-  if (relicSet && rng() < chancePerPack("Relic per box", 0.08)) {
-    const cards = relicSet.checklistEntries.flatMap((e) => e.cards);
-    pushCard(cards[Math.floor(rng() * cards.length)]);
-  }
-  if (insertSet && rng() < chancePerPack("Insert per pack", 0.4)) {
-    const cards = insertSet.checklistEntries.flatMap((e) => e.cards);
-    pushCard(cards[Math.floor(rng() * cards.length)]);
-  }
-
-  // Fill with base / parallels
-  const baseCards = baseSet?.checklistEntries.flatMap((e) => e.cards) ?? allCards;
-  const baseOnly = baseCards.filter((c) => c.parallel.slug === "base");
-  const parallels = baseCards.filter((c) => c.parallel.slug !== "base");
-  const parallelChance = chancePerPack("Parallel per pack", 0.5);
 
   while (pulls.length < product.cardsPerPack) {
-    const wantParallel = parallels.length > 0 && rng() < parallelChance;
-    const source = wantParallel ? parallels : baseOnly.length ? baseOnly : baseCards;
-    if (!source.length) break;
-
-    // Weighted by parallel weight when pulling parallels
-    let chosen: (typeof source)[number];
-    if (wantParallel) {
-      const weighted = source.map((c) => ({ card: c, weight: c.parallel.weight || 0.01 }));
-      chosen = pickWeighted(weighted, rng).card;
-    } else {
-      chosen = source[Math.floor(rng() * source.length)];
-    }
-
-    if (!pushCard(chosen)) {
-      // try another random card
-      pushCard(allCards[Math.floor(rng() * allCards.length)]);
-    }
+    const card =
+      pickFromPool(pools.base, used, rng, config, true) ??
+      pickFromPool(pool.allCards, used, rng, config, true);
+    if (!card) break;
+    const pull = makePull(card, used, rng);
+    if (pull) pulls.push(pull);
+    else break;
   }
-
-  const rarityRank: Record<string, number> = {
-    COMMON: 0,
-    UNCOMMON: 1,
-    RARE: 2,
-    ULTRA_RARE: 3,
-    MYTHIC: 4,
-    LEGENDARY: 5,
-  };
-  pulls.sort((a, b) => rarityRank[a.card.rarity] - rarityRank[b.card.rarity]);
 
   return {
     packIndex,
-    cards: pulls.slice(0, product.cardsPerPack),
+    cards: sortPulls(pulls).slice(0, product.cardsPerPack),
   };
 }
 
-export async function openBoxFromDb(productId: string, seed?: number): Promise<PackResultDTO[]> {
-  const product = await prisma.product.findUnique({ where: { id: productId } });
-  if (!product) return [];
-  const base = seed ?? hash32(`${productId}:box:${Date.now()}`);
-  const packs: PackResultDTO[] = [];
-  for (let i = 0; i < product.packsPerBox; i++) {
-    packs.push(await openPackFromDb(productId, i, base + i * 9973));
+export async function openBoxFromDb(
+  productId: string,
+  seed?: number,
+): Promise<{ packs: PackResultDTO[]; summary: BoxSummaryDTO }> {
+  const pool = await loadProductPool(productId);
+  if (!pool) return { packs: [], summary: emptySummary() };
+
+  const { product, config, pools } = pool;
+  const baseSeed = seed ?? hash32(`${productId}:box:${Date.now()}`);
+  const rng = mulberry32(baseSeed);
+  const used = new Set<string>();
+
+  const packsPerBox = product.packsPerBox;
+  const cardsPerPack = product.cardsPerPack;
+  const packSlots: Array<PullResultDTO | null>[] = Array.from({ length: packsPerBox }, () =>
+    Array.from({ length: cardsPerPack }, () => null),
+  );
+
+  const guarantees = config?.product.guarantees ?? [
+    { id: "autograph", label: "Autograph", count: 1, pool: "autograph" as HitPool },
+    { id: "numbered", label: "Numbered Parallel", count: 3, pool: "numbered" as HitPool },
+    { id: "pulsar", label: "Pulsar Refractor", count: 3, pool: "pulsar" as HitPool },
+    { id: "insert", label: "Insert", count: 9, pool: "insert" as HitPool },
+  ];
+
+  const guaranteeResults: GuaranteeResultDTO[] = guarantees.map((g) => ({
+    id: g.id,
+    label: g.label,
+    expected: g.count,
+    actual: 0,
+  }));
+
+  const emptyCoords = () => {
+    const coords: Array<{ p: number; s: number }> = [];
+    for (let p = 0; p < packsPerBox; p++) {
+      for (let s = 0; s < cardsPerPack; s++) {
+        if (!packSlots[p][s]) coords.push({ p, s });
+      }
+    }
+    return shuffleInPlace(coords, rng);
+  };
+
+  const placeGuarantee = (gIndex: number) => {
+    const g = guarantees[gIndex];
+    const result = guaranteeResults[gIndex];
+    for (let n = 0; n < g.count; n++) {
+      const card = pickFromPool(pools[g.pool], used, rng, config, g.pool === "insert");
+      if (!card) continue;
+      const pull = makePull(card, used, rng);
+      if (!pull) continue;
+
+      // Prefer spreading: one major hit per pack when possible
+      let placed = false;
+      const packOrder = shuffleInPlace(
+        Array.from({ length: packsPerBox }, (_, i) => i),
+        rng,
+      );
+      for (const p of packOrder) {
+        const emptySlot = packSlots[p].findIndex((slot) => slot === null);
+        if (emptySlot === -1) continue;
+        // Avoid stacking multiple autos in one pack
+        if (g.pool === "autograph" && packSlots[p].some((s) => s?.card.cardType.includes("AUTOGRAPH"))) {
+          continue;
+        }
+        packSlots[p][emptySlot] = pull;
+        result.actual += 1;
+        placed = true;
+        break;
+      }
+      if (!placed) {
+        const coords = emptyCoords();
+        if (coords[0]) {
+          packSlots[coords[0].p][coords[0].s] = pull;
+          result.actual += 1;
+        }
+      }
+    }
+  };
+
+  for (let i = 0; i < guarantees.length; i++) placeGuarantee(i);
+
+  const fillOdds = config?.product.fillOdds ?? {
+    refractorChancePerSlot: 0.22,
+    bonusHitChancePerSlot: 0.012,
+    bonusHitWeights: {
+      autograph: 0.15,
+      patch: 0.25,
+      booklet: 0.2,
+      case_hit: 0.08,
+      numbered: 0.32,
+    },
+  };
+
+  for (let p = 0; p < packsPerBox; p++) {
+    for (let s = 0; s < cardsPerPack; s++) {
+      if (packSlots[p][s]) continue;
+
+      let card: CardRow | null = null;
+
+      if (rng() < fillOdds.bonusHitChancePerSlot) {
+        const bonusPools = Object.entries(fillOdds.bonusHitWeights)
+          .filter(([, w]) => (w ?? 0) > 0)
+          .map(([pool, weight]) => ({ pool: pool as HitPool, weight: weight ?? 0 }));
+        if (bonusPools.length) {
+          const chosen = pickWeighted(bonusPools, rng).pool;
+          card = pickFromPool(pools[chosen], used, rng, config, false);
+        }
+      }
+
+      if (!card && rng() < fillOdds.refractorChancePerSlot) {
+        card = pickFromPool(pools.refractor, used, rng, config, true);
+      }
+
+      if (!card) {
+        card =
+          pickFromPool(pools.base, used, rng, config, true) ??
+          pickFromPool(pool.allCards, used, rng, config, true);
+      }
+
+      if (!card) continue;
+      const pull = makePull(card, used, rng);
+      if (pull) packSlots[p][s] = pull;
+    }
   }
-  return packs;
+
+  const packs: PackResultDTO[] = packSlots.map((slots, packIndex) => {
+    const cards = sortPulls(slots.filter((c): c is PullResultDTO => Boolean(c)));
+    return { packIndex, cards };
+  });
+
+  const allPulls = packs.flatMap((pack) => pack.cards);
+  const rarityCounts: Record<string, number> = {};
+  for (const pull of allPulls) {
+    rarityCounts[pull.card.rarity] = (rarityCounts[pull.card.rarity] ?? 0) + 1;
+  }
+
+  // Recount guarantees from actual pulls for honesty
+  for (const result of guaranteeResults) {
+    const g = guarantees.find((x) => x.id === result.id);
+    if (!g) continue;
+    result.actual = allPulls.filter((pull) => matchesPool(pull, g.pool)).length;
+  }
+
+  const hits = allPulls.filter((p) => p.isHit);
+  const estimatedValueCents = allPulls.reduce((s, p) => s + p.card.estimatedValueCents, 0);
+
+  return {
+    packs,
+    summary: {
+      totalCards: allPulls.length,
+      hitCount: hits.length,
+      rarityCounts,
+      guarantees: guaranteeResults,
+      estimatedValueCents,
+      topHits: [...hits]
+        .sort((a, b) => b.card.estimatedValueCents - a.card.estimatedValueCents)
+        .slice(0, 12),
+    },
+  };
+}
+
+function matchesPool(pull: PullResultDTO, pool: HitPool) {
+  const slug = pull.card.parallelSlug;
+  const type = pull.card.cardType;
+  if (pool === "autograph") return type.includes("AUTOGRAPH");
+  if (pool === "insert") return type === "INSERT";
+  if (pool === "pulsar") return slug === "pulsar";
+  if (pool === "refractor") return slug === "refractor";
+  if (pool === "numbered") {
+    return (
+      Boolean(pull.card.printRun) &&
+      !type.includes("AUTOGRAPH") &&
+      !type.includes("PATCH") &&
+      type !== "BOOKLET" &&
+      type !== "CASE_HIT" &&
+      type !== "INSERT"
+    );
+  }
+  if (pool === "patch") return type.includes("PATCH") || type.includes("RELIC");
+  if (pool === "booklet") return type === "BOOKLET";
+  if (pool === "case_hit") return type === "CASE_HIT";
+  if (pool === "base") return slug === "base";
+  return false;
+}
+
+function emptySummary(): BoxSummaryDTO {
+  return {
+    totalCards: 0,
+    hitCount: 0,
+    rarityCounts: {},
+    guarantees: [],
+    estimatedValueCents: 0,
+    topHits: [],
+  };
 }
 
 export async function savePullsToCollection(
@@ -219,7 +504,6 @@ export async function savePullsToCollection(
 ) {
   const created = await prisma.$transaction(
     pulls.map((pull) => {
-      const printRun = pull.card.printRun;
       const serialNumber = pull.serialDisplay
         ? Number(pull.serialDisplay.split("/")[0])
         : null;
@@ -237,4 +521,26 @@ export async function savePullsToCollection(
   return created;
 }
 
-export type ProductForOdds = Product;
+export async function getProductCollectionProgress(userId: string, productId: string) {
+  const [ownedDistinct, totalCatalog] = await Promise.all([
+    prisma.userCard.findMany({
+      where: { userId, productId },
+      distinct: ["cardId"],
+      select: { cardId: true },
+    }),
+    prisma.card.count({
+      where: {
+        checklistEntry: { cardSet: { productId } },
+      },
+    }),
+  ]);
+
+  const uniqueOwned = ownedDistinct.length;
+  const pct = totalCatalog === 0 ? 0 : Math.round((uniqueOwned / totalCatalog) * 1000) / 10;
+  return {
+    productId,
+    uniqueOwned,
+    totalCatalog,
+    completionPct: pct,
+  };
+}

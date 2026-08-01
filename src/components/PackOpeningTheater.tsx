@@ -3,12 +3,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { CardFace } from "@/components/CardFace";
+import { BoxSummaryScreen } from "@/components/BoxSummaryScreen";
 import { CardReveal } from "@/components/CardReveal";
 import { SuspenseVeil } from "@/components/RevealEffects";
 import { SealedPack } from "@/components/SealedPack";
 import { packSounds, revealIntensity, suspenseMs } from "@/lib/pack-sounds";
-import type { Celebration, PackResultDTO, ProductDTO, PullResultDTO } from "@/lib/types";
+import type {
+  BoxSummaryDTO,
+  Celebration,
+  CollectionProgressDTO,
+  PackResultDTO,
+  ProductDTO,
+  PullResultDTO,
+} from "@/lib/types";
 
 type Phase = "loading" | "ripping" | "revealing" | "summary";
 type RipState = "charging" | "ripping" | "burst";
@@ -42,6 +49,10 @@ export function PackOpeningTheater({
   const [currentPulls, setCurrentPulls] = useState<PullResultDTO[]>([]);
   const [revealIndex, setRevealIndex] = useState(0);
   const [allPulls, setAllPulls] = useState<PullResultDTO[]>([]);
+  const [boxSummary, setBoxSummary] = useState<BoxSummaryDTO | null>(null);
+  const [collectionProgress, setCollectionProgress] = useState<CollectionProgressDTO | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
   const [ripState, setRipState] = useState<RipState>("charging");
@@ -54,7 +65,6 @@ export function PackOpeningTheater({
   const revealAllRef = useRef(false);
 
   const currentCard = currentPulls[revealIndex] ?? null;
-  const hits = useMemo(() => allPulls.filter((p) => p.isHit), [allPulls]);
   const accent = product.accentHex ?? "#001F5B";
   const totalCards = useMemo(
     () => queue.reduce((sum, pack) => sum + pack.cards.length, 0) || product.cardsPerPack,
@@ -169,6 +179,10 @@ export function PackOpeningTheater({
         const packs = data.packs as PackResultDTO[];
         setQueue(packs);
         setAllPulls([]);
+        setBoxSummary((data.boxSummary as BoxSummaryDTO | null) ?? null);
+        setCollectionProgress(
+          (data.collectionProgress as CollectionProgressDTO | null) ?? null,
+        );
         beginPack(packs, 0, [], false);
       } catch (err) {
         if (cancelled) return;
@@ -424,67 +438,13 @@ export function PackOpeningTheater({
                 animate={{ opacity: 1, y: 0 }}
                 className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-6 md:px-8"
               >
-                <div className="mx-auto w-full max-w-5xl space-y-6">
-                  <div className="text-center">
-                    <h3 className="display text-4xl text-ink md:text-5xl">
-                      {mode === "box" ? "Box Complete" : "Pack Complete"}
-                    </h3>
-                    <p className="mt-2 text-sm text-ink-muted">
-                      {allPulls.length} cards added to your collection · {hits.length} hits
-                    </p>
-                  </div>
-
-                  {hits.length > 0 ? (
-                    <div>
-                      <div className="mb-3 text-xs uppercase tracking-[0.2em] text-gold">Top Hits</div>
-                      <div className="flex gap-4 overflow-x-auto pb-2">
-                        {hits.slice(0, 12).map((pull, idx) => (
-                          <CardFace
-                            key={`${pull.card.id}-hit-${idx}`}
-                            card={pull.card}
-                            serialDisplay={pull.serialDisplay}
-                            size="sm"
-                            celebration={pull.celebration}
-                            interactiveFoil
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ) : null}
-
-                  <div>
-                    <div className="mb-3 text-xs uppercase tracking-[0.2em] text-ink-muted">
-                      Full Pull List
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                      {allPulls.map((pull, idx) => (
-                        <CardFace
-                          key={`${pull.card.id}-${idx}`}
-                          card={pull.card}
-                          serialDisplay={pull.serialDisplay}
-                          size="sm"
-                          celebration={pull.celebration}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap justify-center gap-3 pb-6 pt-2">
-                    <button
-                      type="button"
-                      onClick={onClose}
-                      className="min-h-12 rounded-full bg-pitch-500 px-6 py-3 text-sm font-semibold text-pitch-950"
-                    >
-                      Done
-                    </button>
-                    <a
-                      href="/collection"
-                      className="min-h-12 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-ink"
-                    >
-                      View Collection
-                    </a>
-                  </div>
-                </div>
+                <BoxSummaryScreen
+                  mode={mode}
+                  pulls={allPulls}
+                  summary={boxSummary}
+                  progress={collectionProgress}
+                  onClose={onClose}
+                />
               </motion.div>
             )}
           </AnimatePresence>
