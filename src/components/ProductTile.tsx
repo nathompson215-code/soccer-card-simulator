@@ -16,13 +16,33 @@ export function ProductTile({ product }: { product: ProductDTO }) {
       />
       <div className="relative">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="text-xs uppercase tracking-[0.2em] text-ink-muted">
+          <span className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-ink-muted">
+            {product.manufacturer.logoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={product.manufacturer.logoUrl}
+                alt=""
+                className="h-5 w-5 rounded object-cover"
+                loading="lazy"
+              />
+            ) : null}
             {product.manufacturer.name} · {product.year}
           </span>
           <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-muted">
             {formatLabel(product.format)}
           </span>
         </div>
+        {product.imageUrl ? (
+          <div className="mb-3 overflow-hidden rounded-xl border border-white/10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.imageUrl}
+              alt=""
+              className="aspect-[3/4] w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+          </div>
+        ) : null}
         <h3 className="display text-2xl text-ink md:text-[1.75rem]">{product.name}</h3>
         <p className="mt-2 line-clamp-2 text-sm text-ink-muted">{product.description}</p>
         <div className="mt-4 flex flex-wrap gap-3 text-xs text-ink-muted">

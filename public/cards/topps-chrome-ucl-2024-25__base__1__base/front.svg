@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="1050" viewBox="0 0 750 1050" role="img" aria-label="Lionel Messi card front">
+  <defs>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1a14"/>
+      <stop offset="50%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#07110d"/>
+    </linearGradient>
+    <linearGradient id="photo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b3a2e"/>
+      <stop offset="100%" stop-color="#0b1a14"/>
+    </linearGradient>
+  </defs>
+  <rect width="750" height="1050" rx="28" fill="url(#frame)"/>
+  <rect x="28" y="28" width="694" height="994" rx="18" fill="#0b1a14" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+  <rect x="52" y="90" width="646" height="720" rx="14" fill="url(#photo)"/>
+  <circle cx="375" cy="360" r="120" fill="#d7b39a"/>
+  <ellipse cx="375" cy="620" rx="170" ry="200" fill="#C8102E"/>
+  <text x="60" y="70" fill="rgba(255,255,255,0.75)" font-family="Arial,sans-serif" font-size="22" letter-spacing="6">DRAFT ELEVEN</text>
+  <text x="690" y="70" text-anchor="end" fill="#f0d78c" font-family="Arial,sans-serif" font-size="22" font-weight="700">#1</text>
+  <rect x="52" y="780" width="646" height="210" rx="14" fill="rgba(0,0,0,0.55)"/>
+  <text x="80" y="860" fill="#fff" font-family="Arial,sans-serif" font-size="54" font-weight="700">Lionel Messi</text>
+  <text x="80" y="910" fill="rgba(255,255,255,0.7)" font-family="Arial,sans-serif" font-size="24">Inter Miami · Argentina</text>
+  <text x="80" y="955" fill="#f0d78c" font-family="Arial,sans-serif" font-size="22" letter-spacing="2">Base</text>
+</svg>

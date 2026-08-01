@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-label="Chrome UCL 24/25">
+  <defs>
+    <linearGradient id="p" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#07110d"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#p)"/>
+  <rect x="60" y="80" width="780" height="1040" rx="24" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.25)"/>
+  <text x="450" y="520" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="48" font-weight="700">Chrome UCL 24/25</text>
+  <text x="450" y="580" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Arial,sans-serif" font-size="24">PRODUCT SAMPLE</text>
+</svg>

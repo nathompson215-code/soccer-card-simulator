@@ -18,6 +18,8 @@ model Manufacturer {
   foundedYear Int?
   country     String?
   colorHex    String?
+  logoUrl     String?
+  imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -32,6 +34,7 @@ model Brand {
   slug           String   @unique
   name           String
   manufacturerId String
+  logoUrl        String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -73,6 +76,8 @@ model Club {
   name      String
   leagueId  String?
   countryId String?
+  logoUrl   String?
+  imageUrl  String?
   createdAt DateTime @default(now())
 
   league  League?  @relation(fields: [leagueId], references: [id])
@@ -85,12 +90,13 @@ model Club {
 }
 
 model NationalTeam {
-  id             String   @id @default(cuid())
-  slug           String   @unique
-  name           String
-  countryId      String
-  confederation  String?
-  createdAt      DateTime @default(now())
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  countryId     String
+  confederation String?
+  logoUrl       String?
+  createdAt     DateTime @default(now())
 
   country Country  @relation(fields: [countryId], references: [id])
   players Player[]
@@ -152,6 +158,8 @@ model Player {
   position       Position
   era            PlayerEra @default(CURRENT)
   birthYear      Int?
+  imageUrl       String?
+  imageUrlHd     String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -200,6 +208,10 @@ model Product {
   featured       Boolean       @default(false)
   packsPerBox    Int
   cardsPerPack   Int
+  imageUrl       String?
+  packImageUrl   String?
+  boxImageUrl    String?
+  logoUrl        String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
@@ -343,6 +355,8 @@ model Card {
   estimatedValueCents Int      @default(0)
   frontImageUrl       String?
   backImageUrl        String?
+  frontImageUrlHd     String?
+  backImageUrlHd      String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
