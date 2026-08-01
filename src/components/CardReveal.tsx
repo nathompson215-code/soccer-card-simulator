@@ -86,11 +86,15 @@ export function CardReveal({
               rotateY: 0,
               scale:
                 step === "shown" && (celebration === "hit" || celebration === "jackpot")
-                  ? [1, 1.04, 1]
+                  ? [1, 1.035, 1]
                   : 1,
               opacity: 1,
             }}
-            transition={{ type: "spring", stiffness: 140, damping: 16 }}
+            transition={
+              step === "shown" && (celebration === "hit" || celebration === "jackpot")
+                ? { duration: 0.55, ease: "easeOut" }
+                : { type: "spring", stiffness: 140, damping: 16 }
+            }
             style={{ transformStyle: "preserve-3d" }}
             className="relative"
           >
