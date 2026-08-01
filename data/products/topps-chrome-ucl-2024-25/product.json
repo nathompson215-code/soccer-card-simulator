@@ -1,7 +1,7 @@
 {
   "slug": "topps-chrome-ucl-2024-25",
   "name": "Topps Chrome UEFA Club Competitions 2024-25",
-  "description": "Flagship Chrome hobby experience for UEFA Club Competitions — 20 packs, Chrome autographs, Pulsar refractors, numbered parallels, and chase inserts. Configuration mirrors the published hobby box break.",
+  "description": "Config-driven simulation of the 2024–25 Topps Chrome UEFA Club Competitions Hobby Box: 20 packs × 4 cards, Chrome autographs, Pulsar refractors, numbered Refractor rainbow (including Hobby RayWave exclusives), insert ladder (Wonderkids / Golazo / Final Destination / Circle of Power / Bowman Youth League), and case-hit chases (Shadow Etch, Tifo, Helix, Munich at Night, White Noise, Hidden Gems, The Grail, Shockwave).",
   "year": 2025,
   "season": "2024-25",
   "releaseYear": 2025,
@@ -28,7 +28,7 @@
     "packsPerBox": 20,
     "cardsPerPack": 4,
     "boxesPerCase": 12,
-    "source": "Published Topps hobby configuration: 20 packs / 4 cards; box break ≈ 1 Chrome Autograph, 3 #'d parallels, 3 Pulsar Refractors, 9 inserts."
+    "source": "Published Topps hobby configuration: 20 packs / 4 cards; box break ≈ 1 Chrome Autograph, 3 #'d parallels, 3 Pulsar Refractors, 9 inserts. Case typically includes Shadow Etch + Shockwave or Radiating Rookies."
   },
   "guarantees": [
     {
@@ -57,16 +57,15 @@
     }
   ],
   "fillOdds": {
-    "refractorChancePerSlot": 0.22,
-    "bonusHitChancePerSlot": 0.012,
+    "refractorChancePerSlot": 0.28,
+    "bonusHitChancePerSlot": 0.008,
     "bonusHitWeights": {
-      "autograph": 0.15,
-      "patch": 0.25,
-      "booklet": 0.2,
-      "case_hit": 0.08,
-      "numbered": 0.32
+      "autograph": 0.08,
+      "booklet": 0.12,
+      "case_hit": 0.35,
+      "numbered": 0.45
     },
-    "notes": "After placing box guarantees, remaining slots fill mostly with base commons. Refractors appear often enough to feel like ~1:3 packs. Bonus hits are rare extras beyond guarantees."
+    "notes": "After placing box guarantees, remaining slots are mostly base commons (player pullWeight). Refractors land often enough to feel like ~1:2–1:3 packs (published Refractor ~1:2). Bonus hits beyond guarantees are rare — case hits and 1/1s stay extremely scarce."
   },
   "oddsLabels": [
     {
@@ -92,7 +91,17 @@
     {
       "label": "Refractor",
       "scope": "PER_PACK",
-      "expectedCount": 0.33
+      "expectedCount": 0.5
+    },
+    {
+      "label": "Pulsar Refractor",
+      "scope": "PER_PACK",
+      "expectedCount": 0.167
+    },
+    {
+      "label": "Case Hit (approx)",
+      "scope": "PER_CASE",
+      "expectedCount": 2
     }
   ],
   "singlePackApprox": {
@@ -100,9 +109,9 @@
     "insertChance": 0.45,
     "pulsarChance": 0.15,
     "numberedChance": 0.15,
-    "refractorChance": 0.33,
-    "patchChance": 0.04,
-    "bookletChance": 0.02,
-    "caseHitChance": 0.008
+    "refractorChance": 0.4,
+    "patchChance": 0,
+    "bookletChance": 0.004,
+    "caseHitChance": 0.012
   }
 }

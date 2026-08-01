@@ -5,9 +5,79 @@ import { useEffect, useRef, useState } from "react";
 import { CardFace } from "@/components/CardFace";
 import { RevealEffects } from "@/components/RevealEffects";
 import { celebrationHeadline, packSounds, suspenseMs } from "@/lib/pack-sounds";
+import { getThemeSpec, resolveVisualTheme, type RevealStyle } from "@/lib/visual-themes";
 import type { Celebration, PullResultDTO } from "@/lib/types";
 
 type RevealStep = "suspense" | "flip" | "shown";
+
+function revealMotion(style: RevealStyle, skip: boolean) {
+  if (skip) return { initial: false as const, animate: { opacity: 1, scale: 1, y: 0, rotateY: 0, rotateZ: 0 } };
+  switch (style) {
+    case "rise":
+      return {
+        initial: { opacity: 0.15, y: 80, scale: 0.9, rotateY: 0 },
+        animate: { opacity: 1, y: 0, scale: 1, rotateY: 0 },
+      };
+    case "spark":
+    case "electric":
+      return {
+        initial: { opacity: 0, scale: 1.25, rotateZ: -8 },
+        animate: { opacity: 1, scale: 1, rotateZ: 0 },
+      };
+    case "pulse":
+    case "helix":
+      return {
+        initial: { opacity: 0.2, scale: 0.7, rotateY: 180 },
+        animate: { opacity: 1, scale: 1, rotateY: 0 },
+      };
+    case "shadow":
+    case "night":
+      return {
+        initial: { opacity: 0, scale: 0.95, y: -40 },
+        animate: { opacity: 1, scale: 1, y: 0 },
+      };
+    case "grail":
+      return {
+        initial: { opacity: 0, scale: 0.6, rotateY: 120, rotateZ: 12 },
+        animate: { opacity: 1, scale: 1, rotateY: 0, rotateZ: 0 },
+      };
+    case "ink":
+    case "patch":
+    case "book":
+      return {
+        initial: { opacity: 0.2, rotateY: -100, scale: 0.88 },
+        animate: { opacity: 1, rotateY: 0, scale: 1 },
+      };
+    case "lava":
+    case "raywave":
+    case "prism":
+    case "chrome":
+      return {
+        initial: { opacity: 0.15, rotateY: 90, scale: 0.84 },
+        animate: { opacity: 1, rotateY: 0, scale: 1 },
+      };
+    case "gem":
+      return {
+        initial: { opacity: 0, scale: 0.55, rotateZ: -18 },
+        animate: { opacity: 1, scale: 1, rotateZ: 0 },
+      };
+    case "trophy":
+      return {
+        initial: { opacity: 0.1, y: 60, scale: 0.92 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+      };
+    case "hero":
+      return {
+        initial: { opacity: 0, scale: 1.35, rotateZ: 6 },
+        animate: { opacity: 1, scale: 1, rotateZ: 0 },
+      };
+    default:
+      return {
+        initial: { opacity: 0.2, rotateY: 90, scale: 0.86 },
+        animate: { opacity: 1, rotateY: 0, scale: 1 },
+      };
+  }
+}
 
 export function CardReveal({
   pull,
@@ -29,9 +99,19 @@ export function CardReveal({
   continueLabel?: string;
 }) {
   const [step, setStep] = useState<RevealStep>(() => (skipAnimation ? "shown" : "suspense"));
-  const celebration = pull.celebration;
+  const celebration = (() => {
+    const boost = themeSpec.celebrationBoost;
+    if (!boost) return pull.celebration;
+    const order: Celebration[] = ["none", "glow", "foil", "hit", "jackpot"];
+    const pullRank = order.indexOf(pull.celebration);
+    const boostRank = order.indexOf(boost);
+    return order[Math.max(pullRank, boostRank)] ?? pull.celebration;
+  })();
   const headline = celebrationHeadline(celebration);
   const readySent = useRef(false);
+  const theme = resolveVisualTheme(pull.card.subset, pull.card.parallelSlug);
+  const themeSpec = getThemeSpec(theme);
+  const motionProps = revealMotion(themeSpec.reveal, skipAnimation);
 
   useEffect(() => {
     readySent.current = false;
@@ -116,12 +196,13 @@ export function CardReveal({
 
         {(step === "flip" || step === "shown") && (
           <motion.div
-            key={`face-${pull.card.id}`}
-            initial={skipAnimation ? false : { rotateY: 90, scale: 0.86, opacity: 0.2 }}
-            animate={{ rotateY: 0, scale: 1, opacity: 1 }}
+            key={`face-${pull.card.id}-${theme}`}
+            initial={motionProps.initial}
+            animate={motionProps.animate}
             transition={{ type: "spring", stiffness: 140, damping: 16 }}
             style={{ transformStyle: "preserve-3d" }}
-            className={`relative ${step === "shown" ? "card-reveal-pop" : ""}`}
+            className={`relative d11-reveal-${themeSpec.reveal} ${step === "shown" ? "card-reveal-pop" : ""}`}
+            data-theme={theme}
           >
             {step === "shown" ? <RevealEffects celebration={celebration} active /> : null}
             <CardFace

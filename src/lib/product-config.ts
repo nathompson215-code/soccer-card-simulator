@@ -38,6 +38,30 @@ export interface ParallelConfig {
   cardType: string;
   weight: number;
   pool: HitPool;
+  visualTheme?: string;
+}
+
+export interface SetConfig {
+  slug: string;
+  name: string;
+  setType: string;
+  sortOrder: number;
+  playerFilter: {
+    all?: boolean;
+    tiers?: PlayerTier[];
+    limit?: number;
+  };
+  parallels?: "baseParallels";
+  /** Single parallel (legacy / simple inserts). Prefer setParallels for rainbows. */
+  parallel?: ParallelConfig;
+  /** Multiple parallels for an insert/auto set (base + numbered rainbow, etc.). */
+  setParallels?: ParallelConfig[];
+  autograph?: boolean;
+  memorabilia?: string | null;
+  visualTheme?: string;
+  pool?: HitPool;
+  insertWeight?: number;
+  notes?: string;
 }
 
 export interface ProductConfigFile {
@@ -105,21 +129,7 @@ export interface PlayersConfigFile {
 
 export interface SetsConfigFile {
   baseParallels: ParallelConfig[];
-  sets: Array<{
-    slug: string;
-    name: string;
-    setType: string;
-    sortOrder: number;
-    playerFilter: {
-      all?: boolean;
-      tiers?: PlayerTier[];
-      limit?: number;
-    };
-    parallels?: "baseParallels";
-    parallel?: ParallelConfig;
-    autograph?: boolean;
-    memorabilia?: string;
-  }>;
+  sets: SetConfig[];
 }
 
 export interface LoadedProductConfig {
@@ -129,6 +139,11 @@ export interface LoadedProductConfig {
   sets: SetsConfigFile;
   playerWeightBySlug: Record<string, number>;
   playerTierBySlug: Record<string, PlayerTier>;
+  parallelPoolBySlug: Record<string, HitPool>;
+  setPoolBySlug: Record<string, HitPool>;
+  setInsertWeightBySlug: Record<string, number>;
+  setThemeBySlug: Record<string, string>;
+  parallelThemeBySlug: Record<string, string>;
 }
 
 const DATA_ROOT = path.join(process.cwd(), "data", "products");
@@ -171,6 +186,32 @@ export function loadProductConfig(slug: string): LoadedProductConfig | null {
     playerTierBySlug[s] = p.tier;
   }
 
+  const parallelPoolBySlug: Record<string, HitPool> = {};
+  const parallelThemeBySlug: Record<string, string> = {};
+  for (const p of sets.baseParallels) {
+    parallelPoolBySlug[p.slug] = p.pool;
+    if (p.visualTheme) parallelThemeBySlug[p.slug] = p.visualTheme;
+  }
+
+  const setPoolBySlug: Record<string, HitPool> = {};
+  const setInsertWeightBySlug: Record<string, number> = {};
+  const setThemeBySlug: Record<string, string> = {};
+  for (const s of sets.sets) {
+    if (s.pool) setPoolBySlug[s.slug] = s.pool;
+    const setPars = s.setParallels?.length
+      ? s.setParallels
+      : s.parallel
+        ? [s.parallel]
+        : [];
+    for (const par of setPars) {
+      // Keyed by set+parallel so shared slugs like "insert-base" don't collide
+      if (par.pool) parallelPoolBySlug[`${s.slug}:${par.slug}`] = par.pool;
+      if (par.visualTheme) parallelThemeBySlug[`${s.slug}:${par.slug}`] = par.visualTheme;
+    }
+    if (typeof s.insertWeight === "number") setInsertWeightBySlug[s.slug] = s.insertWeight;
+    if (s.visualTheme) setThemeBySlug[s.slug] = s.visualTheme;
+  }
+
   return {
     dir,
     product,
@@ -178,5 +219,10 @@ export function loadProductConfig(slug: string): LoadedProductConfig | null {
     sets,
     playerWeightBySlug,
     playerTierBySlug,
+    parallelPoolBySlug,
+    setPoolBySlug,
+    setInsertWeightBySlug,
+    setThemeBySlug,
+    parallelThemeBySlug,
   };
 }

@@ -723,6 +723,293 @@ a {
   z-index: 18;
 }
 
+/* ── Visual themes (driven by sets.json visualTheme) ── */
+
+.d11-theme-base .d11-card-bg {
+  background: linear-gradient(155deg, #1a2744 0%, #0d1528 55%, #1e3a5f 100%);
+}
+
+.d11-theme-refractor .d11-card-bg {
+  background: linear-gradient(135deg, #9aa7b8, #e8eef6 40%, #7a8899 70%, #c5d0dc);
+}
+.d11-theme-refractor .d11-chrome-sheen,
+.d11-theme-refractor .d11-bezel {
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.35);
+}
+
+.d11-theme-pulsar .d11-card-bg {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(180, 120, 255, 0.55), transparent 45%),
+    linear-gradient(160deg, #2a1050, #0b0618 60%, #4c1d95);
+}
+.d11-theme-pulsar .d11-rarity-frame {
+  animation: d11-pulse-glow 2.4s ease-in-out infinite;
+}
+
+.d11-theme-violet .d11-card-bg {
+  background: linear-gradient(150deg, #4a148c, #7b2d8e 50%, #1a0033);
+}
+.d11-theme-pink .d11-card-bg {
+  background: linear-gradient(150deg, #880e4f, #e91e8c 55%, #3a001f);
+}
+.d11-theme-pink-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #ad1457, #ff1493, #4a0028);
+}
+.d11-theme-aqua .d11-card-bg {
+  background: linear-gradient(150deg, #006064, #00b8c4 55%, #00363a);
+}
+.d11-theme-aqua-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.14) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #00838f, #00e5cc, #004d40);
+}
+.d11-theme-blue .d11-card-bg {
+  background: linear-gradient(150deg, #0d47a1, #1565c0 55%, #001a40);
+}
+.d11-theme-blue-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #0d47a1, #1e88e5, #002171);
+}
+.d11-theme-green .d11-card-bg {
+  background: linear-gradient(150deg, #1b5e20, #22a06b 55%, #0a2e14);
+}
+.d11-theme-green-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #1b5e20, #00c853, #003d12);
+}
+.d11-theme-magenta .d11-card-bg {
+  background: linear-gradient(150deg, #880e4f, #c2185b 55%, #3e0018);
+}
+.d11-theme-magenta-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #880e4f, #e91e63, #4a001f);
+}
+.d11-theme-gold .d11-card-bg,
+.d11-theme-toppsfractor .d11-card-bg {
+  background: linear-gradient(145deg, #5c4300, #d4af37 45%, #fff3c4 55%, #8a6a12 100%);
+}
+.d11-theme-gold-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.18) 0 3px, transparent 3px 10px),
+    linear-gradient(145deg, #5c4300, #ffd700, #3e2c00);
+}
+.d11-theme-orange .d11-card-bg {
+  background: linear-gradient(150deg, #bf360c, #f15a29 55%, #3e1100);
+}
+.d11-theme-orange-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.14) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #bf360c, #ff6d00, #3e1100);
+}
+.d11-theme-xi .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(186, 104, 255, 0.45), transparent 50%),
+    linear-gradient(160deg, #1a0033, #4a148c, #000);
+}
+.d11-theme-black .d11-card-bg,
+.d11-theme-black-lava .d11-card-bg {
+  background: linear-gradient(160deg, #050505, #1a1a1a 50%, #000);
+}
+.d11-theme-black-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 8px),
+    linear-gradient(160deg, #050505, #222, #000);
+}
+.d11-theme-red .d11-card-bg {
+  background: linear-gradient(150deg, #7f0000, #c62828 55%, #2b0000);
+}
+.d11-theme-red-lava .d11-card-bg {
+  background:
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.12) 0 3px, transparent 3px 10px),
+    linear-gradient(150deg, #7f0000, #e53935, #2b0000);
+}
+.d11-theme-club-country .d11-card-bg,
+.d11-theme-superfractor .d11-card-bg {
+  background:
+    conic-gradient(from 210deg, #f5d76e, #fff8dc, #c9a227, #ffe082, #f5d76e),
+    linear-gradient(160deg, #3e2c00, #1a1400);
+  background-blend-mode: soft-light, normal;
+}
+
+.d11-theme-night-vision-raywave .d11-card-bg {
+  background:
+    repeating-linear-gradient(95deg, rgba(57, 255, 20, 0.18) 0 6px, transparent 6px 14px),
+    linear-gradient(160deg, #031a08, #0d3b14 50%, #39ff14);
+}
+.d11-theme-neon-pink-raywave .d11-card-bg {
+  background:
+    repeating-linear-gradient(95deg, rgba(255, 16, 240, 0.2) 0 6px, transparent 6px 14px),
+    linear-gradient(160deg, #2a0028, #5c004f 50%, #ff10f0);
+}
+.d11-theme-neon-green-raywave .d11-card-bg {
+  background:
+    repeating-linear-gradient(95deg, rgba(0, 255, 127, 0.2) 0 6px, transparent 6px 14px),
+    linear-gradient(160deg, #002816, #004d2e 50%, #00ff7f);
+}
+
+.d11-theme-wonderkids .d11-card-bg {
+  background:
+    radial-gradient(circle at 70% 10%, rgba(61, 207, 142, 0.45), transparent 40%),
+    linear-gradient(160deg, #0a2e22, #123d30 55%, #1b5e48);
+}
+.d11-theme-golazo .d11-card-bg {
+  background:
+    radial-gradient(circle at 20% 80%, rgba(240, 215, 140, 0.35), transparent 45%),
+    linear-gradient(155deg, #3a2a08, #6b5420 50%, #1f1705);
+}
+.d11-theme-final-destination .d11-card-bg {
+  background:
+    linear-gradient(180deg, rgba(15, 40, 70, 0.2), transparent 40%),
+    linear-gradient(160deg, #0a1628, #1a3a5c 45%, #4fc3f7 120%);
+}
+.d11-theme-circle-power .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 213, 79, 0.35), transparent 50%),
+    linear-gradient(160deg, #1a1200, #3e2e00 60%, #ffd54f);
+}
+.d11-theme-high-voltage .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 234, 0, 0.55), transparent 45%),
+    linear-gradient(160deg, #221a00, #5c4a00, #ffea00);
+}
+.d11-theme-shockwave .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 0, 0.7), transparent 40%),
+    conic-gradient(from 90deg, #111, #ffea00, #111, #fff59d, #111);
+}
+.d11-theme-youth-league .d11-card-bg {
+  background: linear-gradient(155deg, #1b3a24, #2e7d32 50%, #0d1f12);
+}
+.d11-theme-white-noise .d11-card-bg {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 3px),
+    linear-gradient(160deg, #cfd8dc, #eceff1 40%, #90a4ae);
+}
+.d11-theme-radiating-rookies .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 112, 67, 0.55), transparent 45%),
+    linear-gradient(160deg, #3e1608, #bf360c);
+}
+.d11-theme-tifo .d11-card-bg {
+  background:
+    repeating-linear-gradient(90deg, rgba(183, 28, 28, 0.35) 0 8px, rgba 8px 16px),
+    linear-gradient(160deg, #2b0000, #b71c1c 60%, #1a0000);
+}
+.d11-theme-shadow-etch .d11-card-bg {
+  background: linear-gradient(160deg, #000, #121212 40%, #2a2a2a);
+  filter: contrast(1.15);
+}
+.d11-theme-shadow-etch .d11-nameplate {
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.d11-theme-helix .d11-card-bg {
+  background:
+    repeating-conic-gradient(from 20deg at 50% 50%, rgba(0, 188, 212, 0.25) 0 8deg, transparent 8deg 16deg),
+    linear-gradient(160deg, #001820, #006064);
+}
+.d11-theme-munich-night .d11-card-bg {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255, 193, 7, 0.2), transparent 40%),
+    linear-gradient(180deg, #0a0e2e 0%, #1a237e 55%, #000814 100%);
+}
+.d11-theme-the-grail .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.5), transparent 45%),
+    linear-gradient(160deg, #2a2000, #ffd700 70%, #1a1400);
+}
+.d11-theme-hidden-gems .d11-card-bg {
+  background:
+    radial-gradient(circle at 60% 30%, rgba(38, 166, 154, 0.45), transparent 40%),
+    linear-gradient(160deg, #00332e, #004d40);
+}
+.d11-theme-amber .d11-card-bg {
+  background: linear-gradient(150deg, #5c3b00, #ffb300 55%, #3e2800);
+}
+.d11-theme-sapphire .d11-card-bg {
+  background: linear-gradient(150deg, #0d2461, #1565c0 55%, #001a40);
+}
+.d11-theme-ruby .d11-card-bg {
+  background: linear-gradient(150deg, #5c0000, #c62828 55%, #2b0000);
+}
+.d11-theme-trophies .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(201, 162, 39, 0.45), transparent 40%),
+    linear-gradient(160deg, #2a2208, #c9a227 70%, #1a1400);
+}
+.d11-theme-hero .d11-card-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 111, 0, 0.4), transparent 40%),
+    linear-gradient(155deg, #1a0a00, #e65100 70%, #3e1600);
+}
+
+.d11-theme-chrome-auto .d11-card-bg,
+.d11-theme-wonderkids-auto .d11-card-bg,
+.d11-theme-future-stars-auto .d11-card-bg,
+.d11-theme-marks-excellence .d11-card-bg,
+.d11-theme-dual-auto .d11-card-bg,
+.d11-theme-triple-auto .d11-card-bg,
+.d11-theme-quad-auto .d11-card-bg,
+.d11-theme-quad-pundit .d11-card-bg {
+  background: linear-gradient(155deg, #1a1408, #3e3420 40%, #d4af37 110%);
+}
+.d11-theme-wonderkids-auto .d11-card-bg {
+  background: linear-gradient(155deg, #0a2e22, #1b5e48 45%, #3dcf8e 110%);
+}
+.d11-theme-future-stars-auto .d11-card-bg {
+  background: linear-gradient(155deg, #012a38, #0277bd 45%, #29b6f6 110%);
+}
+.d11-theme-marks-excellence .d11-card-bg {
+  background: linear-gradient(155deg, #2a1a12, #5d4037 45%, #8d6e63 110%);
+}
+.d11-theme-dual-auto .d11-card-bg {
+  background: linear-gradient(155deg, #2a1030, #7b1fa2 50%, #ab47bc);
+}
+.d11-theme-triple-auto .d11-card-bg {
+  background: linear-gradient(155deg, #1a0a30, #512da8 50%, #7e57c2);
+}
+.d11-theme-quad-auto .d11-card-bg,
+.d11-theme-quad-pundit .d11-card-bg {
+  background: linear-gradient(155deg, #120828, #311b92 50%, #5e35b1);
+}
+.d11-theme-booklet .d11-card-bg {
+  background: linear-gradient(155deg, #1a1f3a, #3949ab 55%, #5c6bc0);
+}
+
+@keyframes d11-pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.35), 0 0 18px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(196, 181, 253, 0.55), 0 0 28px rgba(167, 139, 250, 0.4);
+  }
+}
+
+.d11-reveal-electric {
+  filter: drop-shadow(0 0 18px rgba(255, 234, 0, 0.35));
+}
+.d11-reveal-grail {
+  filter: drop-shadow(0 0 22px rgba(240, 215, 140, 0.45));
+}
+.d11-reveal-shadow {
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.15));
+}
+.d11-reveal-helix {
+  filter: drop-shadow(0 0 18px rgba(0, 188, 212, 0.4));
+}
+.d11-reveal-gem {
+  filter: drop-shadow(0 0 16px rgba(38, 166, 154, 0.4));
+}
+.d11-reveal-ink {
+  filter: drop-shadow(0 8px 20px rgba(212, 175, 55, 0.25));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .foil-shine,
   .foil-prism,
@@ -737,7 +1024,8 @@ a {
   .d11-chrome-sheen,
   .d11-holo-wave,
   .d11-template-refractor .d11-card-bg,
-  .d11-template-oneofone .d11-card-bg {
+  .d11-template-oneofone .d11-card-bg,
+  .d11-theme-pulsar .d11-rarity-frame {
     animation: none !important;
   }
 }

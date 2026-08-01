@@ -3,6 +3,7 @@
 import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { rarityLabel } from "@/lib/format";
 import type { CardVisual } from "@/lib/card-visual";
+import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
 import type { CSSProperties } from "react";
 
@@ -34,10 +35,11 @@ export function TradingCardArt({
   const parts = card.playerName.trim().split(/\s+/);
   const lastName = parts.slice(-1)[0] ?? card.playerName;
   const firstName = parts.length > 1 ? parts.slice(0, -1).join(" ") : "";
+  const theme = resolveVisualTheme(card.subset, card.parallelSlug ?? card.parallelName);
 
   return (
     <div
-      className={`d11-card-art relative h-full w-full overflow-hidden ${templateClass(visual.template)} rarity-${visual.rarityFrame}`}
+      className={`d11-card-art relative h-full w-full overflow-hidden ${templateClass(visual.template)} rarity-${visual.rarityFrame} d11-theme-${theme}`}
       style={
         {
           "--card-accent": visual.accent,
@@ -46,6 +48,7 @@ export function TradingCardArt({
       }
       data-template={visual.template}
       data-rarity={visual.rarityFrame}
+      data-theme={theme}
     >
       <div className="d11-card-bg absolute inset-0" />
       <div className="d11-card-grain absolute inset-0" />
