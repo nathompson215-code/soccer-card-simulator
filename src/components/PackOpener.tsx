@@ -1,11 +1,29 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CardFace } from "@/components/CardFace";
-import type { PackResultDTO, ProductDTO, PullResultDTO } from "@/lib/types";
+import { CardReveal } from "@/components/CardReveal";
+import { SuspenseVeil } from "@/components/RevealEffects";
+import { SealedPack } from "@/components/SealedPack";
+import { packSounds, revealIntensity, suspenseMs } from "@/lib/pack-sounds";
+import type { Celebration, PackResultDTO, ProductDTO, PullResultDTO } from "@/lib/types";
 
 type Phase = "idle" | "ripping" | "revealing" | "summary";
+
+function bestCelebration(cards: PullResultDTO[]): Celebration {
+  const rank: Record<Celebration, number> = {
+    none: 0,
+    glow: 1,
+    foil: 2,
+    hit: 3,
+    jackpot: 4,
+  };
+  return cards.reduce<Celebration>(
+    (best, c) => (rank[c.celebration] > rank[best] ? c.celebration : best),
+    "none",
+  );
+}
 
 export function PackOpener({ product }: { product: ProductDTO }) {
   const [phase, setPhase] = useState<Phase>("idle");
@@ -17,29 +35,73 @@ export function PackOpener({ product }: { product: ProductDTO }) {
   const [allPulls, setAllPulls] = useState<PullResultDTO[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [ripState, setRipState] = useState<"charging" | "ripping" | "burst">("charging");
+  const [packAura, setPackAura] = useState<Celebration>("none");
+  const [chargeProgress, setChargeProgress] = useState(0);
 
   const currentCard = revealIndex >= 0 ? currentPulls[revealIndex] : null;
   const hits = useMemo(() => allPulls.filter((p) => p.isHit), [allPulls]);
+
+  useEffect(() => {
+    packSounds.setMuted(muted);
+  }, [muted]);
 
   const beginPack = (packs: PackResultDTO[], index: number, accumulated: PullResultDTO[]) => {
     const pack = packs[index];
     if (!pack) {
       setAllPulls(accumulated);
       setPhase("summary");
+      packSounds.playSummary();
       return;
     }
+
+    const aura = bestCelebration(pack.cards);
     setPackIndex(index);
     setCurrentPulls(pack.cards);
     setRevealIndex(-1);
-    setPhase("revealing");
-    window.setTimeout(() => setRevealIndex(0), 250);
+    setPackAura(aura);
+    setChargeProgress(0);
+    setRipState("charging");
+    setPhase("ripping");
+    packSounds.playWhoosh();
+    packSounds.playSuspense(aura);
+
+    const chargeMs = Math.max(450, suspenseMs(aura) * 0.55);
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / chargeMs);
+      setChargeProgress(p);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    window.setTimeout(() => {
+      cancelAnimationFrame(raf);
+      setChargeProgress(1);
+      setRipState("ripping");
+      packSounds.playRip();
+      window.setTimeout(() => {
+        setRipState("burst");
+        window.setTimeout(() => {
+          setPhase("revealing");
+          setRevealIndex(0);
+        }, 280);
+      }, 520);
+    }, chargeMs);
   };
 
   const start = async (nextMode: "pack" | "box") => {
+    await packSounds.unlock();
     setError(null);
     setLoading(true);
     setMode(nextMode);
+    setRipState("charging");
+    setPackAura("glow");
+    setChargeProgress(0.2);
     setPhase("ripping");
+    packSounds.playUiTap();
     try {
       const res = await fetch("/api/packs/open", {
         method: "POST",
@@ -51,7 +113,7 @@ export function PackOpener({ product }: { product: ProductDTO }) {
       const packs = data.packs as PackResultDTO[];
       setQueue(packs);
       setAllPulls([]);
-      window.setTimeout(() => beginPack(packs, 0, []), 500);
+      beginPack(packs, 0, []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to open packs");
       setPhase("idle");
@@ -68,10 +130,10 @@ export function PackOpener({ product }: { product: ProductDTO }) {
     const accumulated = [...allPulls, ...currentPulls];
     setAllPulls(accumulated);
     if (packIndex < queue.length - 1) {
-      setPhase("ripping");
-      window.setTimeout(() => beginPack(queue, packIndex + 1, accumulated), 550);
+      beginPack(queue, packIndex + 1, accumulated);
     } else {
       setPhase("summary");
+      packSounds.playSummary();
     }
   };
 
@@ -82,7 +144,11 @@ export function PackOpener({ product }: { product: ProductDTO }) {
     setRevealIndex(-1);
     setAllPulls([]);
     setError(null);
+    setPackAura("none");
+    setChargeProgress(0);
   };
+
+  const accent = product.accentHex ?? "#001F5B";
 
   return (
     <div className="pitch-panel overflow-hidden rounded-3xl">
@@ -92,43 +158,55 @@ export function PackOpener({ product }: { product: ProductDTO }) {
             <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">Pack Theater</div>
             <h2 className="display mt-1 text-3xl text-ink md:text-4xl">Open {product.name}</h2>
             <p className="mt-2 max-w-xl text-sm text-ink-muted">
-              {product.packsPerBox} packs · {product.cardsPerPack} cards per pack · odds from the
-              database
+              Premium rip experience · suspense on rare pulls · holographic foil reveals
             </p>
           </div>
-          {phase === "idle" ? (
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => start("pack")}
-                className="rounded-full bg-pitch-500 px-5 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-pitch-400 disabled:opacity-60"
-              >
-                Rip 1 Pack
-              </button>
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => start("box")}
-                className="rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 disabled:opacity-60"
-              >
-                Open Full Box
-              </button>
-            </div>
-          ) : (
+          <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={reset}
+              onClick={() => {
+                const next = packSounds.toggleMute();
+                setMuted(next);
+              }}
               className="rounded-full border border-white/15 px-4 py-2 text-sm text-ink-muted hover:text-ink"
+              aria-pressed={muted}
             >
-              Reset
+              {muted ? "Sound Off" : "Sound On"}
             </button>
-          )}
+            {phase === "idle" ? (
+              <>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => start("pack")}
+                  className="rounded-full bg-pitch-500 px-5 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-pitch-400 disabled:opacity-60"
+                >
+                  Rip 1 Pack
+                </button>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => start("box")}
+                  className="rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 disabled:opacity-60"
+                >
+                  Open Full Box
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={reset}
+                className="rounded-full border border-white/15 px-4 py-2 text-sm text-ink-muted hover:text-ink"
+              >
+                Reset
+              </button>
+            )}
+          </div>
         </div>
         {error ? <p className="mt-3 text-sm text-danger">{error}</p> : null}
       </div>
 
-      <div className="relative min-h-[420px] px-4 py-8 md:px-8">
+      <div className="relative min-h-[520px] px-4 py-8 md:px-8">
         <AnimatePresence mode="wait">
           {phase === "idle" && (
             <motion.div
@@ -138,102 +216,91 @@ export function PackOpener({ product }: { product: ProductDTO }) {
               exit={{ opacity: 0, y: -12 }}
               className="flex flex-col items-center justify-center gap-6 py-10"
             >
-              <motion.div
-                className="float-y relative h-56 w-40 rounded-2xl shadow-2xl"
-                style={{
-                  background: `linear-gradient(160deg, ${product.accentHex ?? "#1b7a4e"}, #07110d)`,
-                }}
-              >
-                <div className="absolute inset-0 rounded-2xl border border-white/20" />
-                <div className="absolute inset-x-4 top-8 h-1 rounded bg-white/30" />
-                <div className="absolute inset-x-8 top-14 h-1 rounded bg-white/15" />
-                <div className="display absolute inset-x-0 bottom-10 text-center text-3xl text-white">
-                  {product.manufacturer.slug.toUpperCase()}
-                </div>
-                <div className="absolute inset-x-0 bottom-4 text-center text-[10px] uppercase tracking-[0.2em] text-white/70">
-                  Sealed Pack
-                </div>
-              </motion.div>
+              <SealedPack
+                accentHex={accent}
+                manufacturer={product.manufacturer.name}
+                brandLabel={product.brand?.name ?? product.manufacturer.name}
+                subtitle={product.tournament?.name ?? product.league?.name ?? product.name}
+                label="Sealed Pack"
+                state="idle"
+              />
               <p className="max-w-md text-center text-sm text-ink-muted">
-                Pulls are simulated from PostgreSQL checklist, parallel, and odds tables, then saved
-                to your collection.
+                Tear the wrapper, feel the build-up on chrome hits, and watch foil cards catch the
+                light as they land in your collection.
               </p>
             </motion.div>
           )}
 
           {phase === "ripping" && (
             <motion.div
-              key="ripping"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1.05 }}
-              exit={{ opacity: 0, scale: 1.2, filter: "blur(8px)" }}
-              className="flex flex-col items-center justify-center py-16"
+              key={`ripping-${packIndex}`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.08, filter: "blur(8px)" }}
+              className="relative flex min-h-[420px] flex-col items-center justify-center py-10"
             >
-              <div
-                className="h-56 w-40 rounded-2xl shadow-[0_0_60px_rgba(34,160,107,0.35)]"
-                style={{
-                  background: `linear-gradient(160deg, ${product.accentHex ?? "#1b7a4e"}, #07110d)`,
-                }}
+              <SuspenseVeil celebration={packAura} progress={chargeProgress} />
+              <SealedPack
+                accentHex={accent}
+                manufacturer={product.manufacturer.name}
+                brandLabel={product.brand?.name ?? product.manufacturer.name}
+                subtitle={product.tournament?.name ?? product.league?.name ?? product.name}
+                label={
+                  mode === "box"
+                    ? `Pack ${packIndex + 1} / ${queue.length || product.packsPerBox}`
+                    : "Ripping..."
+                }
+                state={ripState}
+                intensity={revealIntensity(packAura)}
               />
-              <p className="mt-6 display text-3xl text-pitch-400">
-                {mode === "box"
-                  ? `Pack ${packIndex + 1} / ${queue.length || product.packsPerBox}`
-                  : "Ripping..."}
-              </p>
+              <motion.p
+                className="relative z-10 mt-8 display text-3xl text-pitch-400"
+                animate={{ opacity: [0.55, 1, 0.55] }}
+                transition={{ duration: 1.1, repeat: Infinity }}
+              >
+                {ripState === "charging"
+                  ? packAura === "jackpot" || packAura === "hit"
+                    ? "Energy building..."
+                    : packAura === "foil"
+                      ? "Chrome warming up..."
+                      : "Feeling the pack..."
+                  : ripState === "ripping"
+                    ? "Tear!"
+                    : "Cards incoming"}
+              </motion.p>
             </motion.div>
           )}
 
           {phase === "revealing" && currentCard && (
             <motion.div
               key={`reveal-${packIndex}-${revealIndex}`}
-              initial={{ opacity: 0, y: 40, rotateY: -40 }}
-              animate={{ opacity: 1, y: 0, rotateY: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", stiffness: 160, damping: 18 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               className="flex flex-col items-center"
             >
-              <div className="mb-4 text-center">
-                <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
-                  {mode === "box" ? `Pack ${packIndex + 1}` : "Single Pack"} · Card{" "}
-                  {revealIndex + 1}/{currentPulls.length}
-                </div>
-                {currentCard.celebration !== "none" ? (
-                  <div className="display mt-2 text-2xl text-gold">
-                    {currentCard.celebration === "jackpot"
-                      ? "ONE OF ONE ENERGY"
-                      : currentCard.celebration === "hit"
-                        ? "HIT PULLED"
-                        : "FOIL PULL"}
-                  </div>
-                ) : null}
-              </div>
-
-              <CardFace
-                card={currentCard.card}
-                serialDisplay={currentCard.serialDisplay}
-                size="lg"
-                celebration={currentCard.celebration}
+              <CardReveal
+                key={`${packIndex}-${revealIndex}-${currentCard.card.id}`}
+                pull={currentCard}
+                packLabel={mode === "box" ? `Pack ${packIndex + 1}` : "Single Pack"}
+                cardLabel={`Card ${revealIndex + 1}/${currentPulls.length}`}
+                onContinue={nextReveal}
+                continueLabel={
+                  revealIndex < currentPulls.length - 1
+                    ? "Reveal Next"
+                    : packIndex < queue.length - 1
+                      ? "Next Pack"
+                      : "See Results"
+                }
               />
-
-              <button
-                type="button"
-                onClick={nextReveal}
-                className="mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft"
-              >
-                {revealIndex < currentPulls.length - 1
-                  ? "Reveal Next"
-                  : packIndex < queue.length - 1
-                    ? "Next Pack"
-                    : "See Results"}
-              </button>
             </motion.div>
           )}
 
           {phase === "summary" && (
             <motion.div
               key="summary"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
               <div className="text-center">
@@ -241,7 +308,7 @@ export function PackOpener({ product }: { product: ProductDTO }) {
                   {mode === "box" ? "Box Complete" : "Pack Complete"}
                 </h3>
                 <p className="mt-2 text-sm text-ink-muted">
-                  {allPulls.length} cards saved to PostgreSQL · {hits.length} hits
+                  {allPulls.length} cards saved · {hits.length} hits
                 </p>
               </div>
 
@@ -256,6 +323,7 @@ export function PackOpener({ product }: { product: ProductDTO }) {
                         serialDisplay={pull.serialDisplay}
                         size="sm"
                         celebration={pull.celebration}
+                        interactiveFoil
                       />
                     ))}
                   </div>

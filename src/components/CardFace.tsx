@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { useRef, type MouseEvent } from "react";
 import { cardTypeLabel, formatMoney, rarityLabel } from "@/lib/format";
 import type { CardDTO, Celebration } from "@/lib/types";
 
@@ -19,6 +20,8 @@ interface CardFaceProps {
   onClick?: () => void;
   className?: string;
   href?: string;
+  interactiveFoil?: boolean;
+  revealActive?: boolean;
 }
 
 export function CardFace({
@@ -28,6 +31,8 @@ export function CardFace({
   celebration = "none",
   onClick,
   className = "",
+  interactiveFoil = false,
+  revealActive = false,
 }: CardFaceProps) {
   const dims =
     size === "sm"
@@ -36,34 +41,73 @@ export function CardFace({
         ? "w-[240px] h-[336px]"
         : "w-[180px] h-[252px]";
 
-  const serial =
-    serialDisplay ??
-    (card.printRun ? `?/${card.printRun}` : null);
+  const serial = serialDisplay ?? (card.printRun ? `?/${card.printRun}` : null);
+  const ref = useRef<HTMLButtonElement>(null);
+  const mx = useMotionValue(50);
+  const my = useMotionValue(40);
+  const smx = useSpring(mx, { stiffness: 180, damping: 22 });
+  const smy = useSpring(my, { stiffness: 180, damping: 22 });
+  const shine = useMotionTemplate`radial-gradient(420px circle at ${smx}% ${smy}%, rgba(255,255,255,0.38), transparent 42%)`;
+  const tiltX = useSpring(0, { stiffness: 200, damping: 20 });
+  const tiltY = useSpring(0, { stiffness: 200, damping: 20 });
+
+  const onMove = (e: MouseEvent<HTMLButtonElement>) => {
+    if (!interactiveFoil || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+    mx.set(px);
+    my.set(py);
+    tiltY.set((px - 50) / 4);
+    tiltX.set((50 - py) / 5);
+  };
+
+  const onLeave = () => {
+    mx.set(50);
+    my.set(40);
+    tiltX.set(0);
+    tiltY.set(0);
+  };
+
+  const borderClass =
+    celebration === "jackpot"
+      ? "hit-pulse border-gold card-frame-jackpot"
+      : celebration === "hit"
+        ? "hit-pulse border-gold"
+        : celebration === "foil"
+          ? "border-sky-300/50 card-frame-foil"
+          : celebration === "glow"
+            ? "border-pitch-400/60"
+            : "border-white/15";
 
   return (
     <motion.button
+      ref={ref}
       type="button"
       onClick={onClick}
-      whileHover={onClick ? { y: -6, rotateY: 6 } : undefined}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      whileHover={onClick && !interactiveFoil ? { y: -6, rotateY: 6 } : undefined}
+      style={
+        interactiveFoil
+          ? { rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }
+          : undefined
+      }
       className={`relative ${dims} shrink-0 text-left ${className}`}
     >
       <div
-        className={`relative h-full w-full overflow-hidden rounded-[14px] border shadow-2xl transition ${
-          celebration === "jackpot" || celebration === "hit"
-            ? "hit-pulse border-gold"
-            : celebration === "foil" || celebration === "glow"
-              ? "border-pitch-400/60"
-              : "border-white/15"
+        className={`relative h-full w-full overflow-hidden rounded-[14px] border shadow-2xl transition ${borderClass} ${
+          revealActive ? "card-reveal-pop" : ""
         }`}
         style={{
-          background: `linear-gradient(160deg, ${card.parallelColor}33, #0b1a14 45%, #07110d)`,
+          background: `linear-gradient(160deg, ${card.parallelColor}44, #0b1a14 45%, #07110d)`,
         }}
       >
         <div
           className="absolute inset-0 opacity-80"
           style={{
             background: `
-              radial-gradient(circle at 50% 20%, ${card.parallelColor}55, transparent 45%),
+              radial-gradient(circle at 50% 20%, ${card.parallelColor}66, transparent 45%),
               linear-gradient(180deg, ${card.productAccent ?? "#1b7a4e"}66 0%, transparent 40%),
               repeating-linear-gradient(
                 0deg,
@@ -76,9 +120,22 @@ export function CardFace({
           }}
         />
 
-        {card.foil ? (
-          <div className="foil-shine pointer-events-none absolute inset-0 mix-blend-screen opacity-70" />
+        {card.foil || celebration === "foil" || celebration === "glow" ? (
+          <>
+            <div className="foil-prism pointer-events-none absolute inset-0 opacity-55 mix-blend-color-dodge" />
+            <div className="foil-shine pointer-events-none absolute inset-0 mix-blend-screen opacity-70" />
+            {interactiveFoil ? (
+              <motion.div
+                className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+                style={{ background: shine }}
+              />
+            ) : null}
+          </>
         ) : null}
+
+        {(celebration === "jackpot" || celebration === "hit") && (
+          <div className="pointer-events-none absolute inset-0 card-sparkle opacity-70" />
+        )}
 
         <div className="relative flex h-full flex-col p-2.5">
           <div className="flex items-start justify-between gap-2">
@@ -118,18 +175,14 @@ export function CardFace({
             </div>
             <div className="flex items-center justify-between rounded-md bg-black/35 px-2 py-1 text-[10px]">
               <span className="text-gold-soft">{rarityLabel(card.rarity)}</span>
-              <span className="text-white/80">
-                {formatMoney(card.estimatedValueCents)}
-              </span>
+              <span className="text-white/80">{formatMoney(card.estimatedValueCents)}</span>
             </div>
             {serial && !serial.startsWith("?") ? (
               <div className="text-center text-[11px] font-semibold tracking-wider text-gold">
                 {serial}
               </div>
             ) : (
-              <div className="text-center text-[10px] text-white/50">
-                {cardTypeLabel(card.cardType)}
-              </div>
+              <div className="text-center text-[10px] text-white/50">{cardTypeLabel(card.cardType)}</div>
             )}
           </div>
         </div>
