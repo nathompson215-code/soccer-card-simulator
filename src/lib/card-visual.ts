@@ -1,4 +1,4 @@
-import type { CardDTO, Celebration } from "@/lib/types";
+import type { CardDTO, Celebration, Rarity } from "@/lib/types";
 
 export type CardTemplate =
   | "base"
@@ -13,9 +13,18 @@ export type CardTemplate =
   | "caseHit"
   | "oneOfOne";
 
+export type RarityFrame =
+  | "common"
+  | "uncommon"
+  | "rare"
+  | "ultra"
+  | "mythic"
+  | "legendary";
+
 export type CardVisual = {
   template: CardTemplate;
   label: string;
+  rarityFrame: RarityFrame;
   showFoil: boolean;
   showChrome: boolean;
   showHolo: boolean;
@@ -23,12 +32,31 @@ export type CardVisual = {
   showAutoStroke: boolean;
   showPatchWindow: boolean;
   showPlateGrain: boolean;
-  borderTone: "standard" | "metal" | "gold" | "rainbow" | "plate" | "case";
+  showEmboss: boolean;
+  showRimLight: boolean;
+  borderTone: "standard" | "metal" | "gold" | "rainbow" | "plate" | "case" | "mythic";
   accent: string;
 };
 
 function nameHints(card: CardDTO) {
   return `${card.parallelName} ${card.subsetName} ${card.subset}`.toLowerCase();
+}
+
+export function rarityToFrame(rarity: Rarity | string): RarityFrame {
+  switch (rarity) {
+    case "LEGENDARY":
+      return "legendary";
+    case "MYTHIC":
+      return "mythic";
+    case "ULTRA_RARE":
+      return "ultra";
+    case "RARE":
+      return "rare";
+    case "UNCOMMON":
+      return "uncommon";
+    default:
+      return "common";
+  }
 }
 
 export function resolveCardTemplate(card: CardDTO): CardTemplate {
@@ -42,7 +70,7 @@ export function resolveCardTemplate(card: CardDTO): CardTemplate {
   if (type === "BOOKLET" || set === "BOOKLET" || hints.includes("booklet")) {
     return "booklet";
   }
-  if (type === "CASE_HIT" || set === "CASE_HIT" || hints.includes("case hit")) {
+  if (type === "CASE_HIT" || set === "CASE_HIT" || hints.includes("case hit") || hints.includes("shadow etch")) {
     return "caseHit";
   }
   if (type === "ONE_OF_ONE" || hints.includes("superfractor") || hints.includes("1/1")) {
@@ -74,6 +102,7 @@ export function resolveCardTemplate(card: CardDTO): CardTemplate {
   if (
     type === "REFRACTOR" ||
     hints.includes("refractor") ||
+    hints.includes("pulsar") ||
     hints.includes("chrome") ||
     (card.foil && (type === "PARALLEL" || type === "SP" || type === "SSP"))
   ) {
@@ -81,12 +110,13 @@ export function resolveCardTemplate(card: CardDTO): CardTemplate {
   }
 
   if (type === "INSERT" || set === "INSERT" || set === "SP" || set === "SSP") return "insert";
-  if (type === "PARALLEL" || set === "PARALLEL_SET") return "parallel";
+  if (type === "PARALLEL" || set === "PARALLEL_SET" || Boolean(card.printRun)) return "parallel";
   return "base";
 }
 
 export function resolveCardVisual(card: CardDTO, celebration: Celebration = "none"): CardVisual {
   const template = resolveCardTemplate(card);
+  const rarityFrame = rarityToFrame(card.rarity);
   const accent = card.parallelColor || card.productAccent || "#1b7a4e";
 
   const labels: Record<CardTemplate, string> = {
@@ -100,43 +130,59 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
     booklet: "Booklet",
     printingPlate: "Printing Plate",
     caseHit: "Case Hit",
-    oneOfOne: "1/1",
+    oneOfOne: "1 of 1",
   };
 
   const showFoil =
     card.foil ||
     celebration === "foil" ||
     celebration === "glow" ||
+    rarityFrame === "uncommon" ||
+    rarityFrame === "rare" ||
     ["refractor", "parallel", "insert", "oneOfOne", "caseHit", "patchAuto"].includes(template);
 
-  const showChrome = ["refractor", "oneOfOne", "caseHit"].includes(template) || card.foil;
+  const showChrome =
+    ["refractor", "oneOfOne", "caseHit", "parallel"].includes(template) ||
+    card.foil ||
+    rarityFrame === "ultra" ||
+    rarityFrame === "mythic" ||
+    rarityFrame === "legendary";
+
   const showHolo =
     ["refractor", "oneOfOne", "caseHit", "insert"].includes(template) ||
+    rarityFrame === "mythic" ||
+    rarityFrame === "legendary" ||
     celebration === "jackpot" ||
     celebration === "hit";
 
   return {
     template,
     label: labels[template],
+    rarityFrame,
     showFoil,
     showChrome,
     showHolo,
-    showTexture: ["patch", "patchAuto", "booklet", "printingPlate"].includes(template),
+    showTexture: ["patch", "patchAuto", "booklet", "printingPlate", "caseHit"].includes(template) ||
+      rarityFrame === "ultra",
     showAutoStroke: template === "autograph" || template === "patchAuto",
     showPatchWindow: template === "patch" || template === "patchAuto" || template === "booklet",
     showPlateGrain: template === "printingPlate",
+    showEmboss: true,
+    showRimLight: rarityFrame !== "common",
     borderTone:
-      template === "oneOfOne"
+      template === "oneOfOne" || rarityFrame === "legendary"
         ? "rainbow"
         : template === "caseHit"
           ? "case"
           : template === "printingPlate"
             ? "plate"
-            : template === "autograph" || template === "patchAuto"
-              ? "gold"
-              : showChrome
-                ? "metal"
-                : "standard",
+            : rarityFrame === "mythic" || template === "autograph" || template === "patchAuto"
+              ? "mythic"
+              : rarityFrame === "ultra" || rarityFrame === "rare"
+                ? "gold"
+                : showChrome
+                  ? "metal"
+                  : "standard",
     accent,
   };
 }
