@@ -1,9 +1,10 @@
 # Topps Chrome UEFA Club Competitions 2024–25 Hobby Box
 
-Draft Eleven focuses this product before expanding the catalog. Configuration lives in
-`data/products/topps-chrome-ucl-2024-25/` and drives both seeding and the pack engine.
+Draft Eleven simulates this product from editable JSON under
+`data/products/topps-chrome-ucl-2024-25/`. The pack engine loads those files —
+future products are new data folders, not code changes.
 
-## Published hobby configuration (source)
+## Published hobby configuration
 
 | Spec | Value |
 | --- | --- |
@@ -15,12 +16,14 @@ Draft Eleven focuses this product before expanding the catalog. Configuration li
 | Pulsar Refractors | **3 per box** |
 | Inserts | **9 per box** |
 
-Additional fill behavior (configurable in `product.json`):
+Approximate published rates used for fill/weighting:
 
-- Refractors appear in remaining slots at a rate that feels like ~1:3 packs
-- Commons / veterans dominate base pulls via `pullWeight` on each player
-- Stars, rookies, legends stay scarcer in base; they concentrate in inserts/autos
-- Rare bonus hits (patch, booklet, case hit, extra numbered) can appear beyond guarantees
+- Base Refractor ≈ 1:2 packs
+- Pulsar ≈ 1:6 packs (guaranteed 3/box)
+- Wonderkids ≈ 1:5 · Golazo ≈ 1:10 · Final Destination / Circle of Power Power On / Youth League ≈ 1:20
+- High Voltage ≈ 1:120 · Shockwave / Radiating Rookies ≈ 1:480
+- Shadow Etch ≈ 1:240 · Tifo ≈ 1:1200 · Helix / Munich / White Noise / Grail = deep case hits
+- Club & Country / SuperFractor = 1/1
 
 ## Config files
 
@@ -28,14 +31,42 @@ Additional fill behavior (configurable in `product.json`):
 data/products/topps-chrome-ucl-2024-25/
   product.json   # box size, guarantees, fill odds, odds labels
   players.json   # clubs + players with tier + pullWeight
-  sets.json      # sets, parallels, checklist filters
+  sets.json      # baseParallels + every insert / case hit / auto set
 ```
 
-Edit these JSON files and re-run `npm run db:seed` — no component changes required.
+Each set/parallel may declare:
+
+- `pool` — `base` | `refractor` | `pulsar` | `numbered` | `insert` | `autograph` | `booklet` | `case_hit`
+- `insertWeight` — relative odds among insert guarantees
+- `visualTheme` — CSS class `d11-theme-*` + reveal style in `src/lib/visual-themes.ts`
+- `setParallels` — full rainbow for that insert/auto line
+
+Edit JSON → `npm run db:seed`. Theme CSS lives in `globals.css`; reveal motion in `CardReveal`.
+
+## Catalog coverage (hobby)
+
+**Base rainbow:** Base, Refractor, Pulsar, Violet→Red Lava, RayWave hobby exclusives, XI, Club & Country, SuperFractor.
+
+**Inserts:** Wonderkids, Golazo, Final Destination, Circle of Power (Power On / High Voltage / Shockwave), Bowman UEFA Youth League (+ numbered insert rainbows where published).
+
+**Case hits / SPs:** Hero Variations, Radiating Rookies, Shadow Etch, Tifo, Helix, Munich at Night, White Noise, Hidden Gems (Amber/Sapphire/Ruby), The Grail, Trophies.
+
+**Autographs:** Chrome, Wonderkids, Future Stars, Marks of Excellence, Dual / Triple / Quad, Quad Pundit (+ Refractor rainbows).
+
+**Memorabilia:** Campeone Autograph Book.
+
+Excluded on purpose (other SKUs): Speckle (Jumbo), Wave (Blaster), Prism (retail), Soccer Brush (Blaster), Youthquake / Global Attraction / Geometric (Breakers), Black Lazer (Jumbo), Hongbao exclusives.
 
 ## Engine behavior
 
-- **Open Box** places guarantee slots first across the 20 packs, then fills the rest
-- **Rip 1 Pack** uses `singlePackApprox` odds (no full-box guarantee enforcement)
-- End-of-box summary shows guarantee tracker, rarity breakdown, estimated value,
-  full pull list, and product collection progress
+- **Open Box** places guarantees first, then fills remaining slots from config odds
+- **Rip 1 Pack** uses `singlePackApprox` (no full-box guarantee enforcement)
+- Commons dominate via player `pullWeight`; stars/rookies/legends concentrate in inserts & autos
+- End-of-box summary: guarantee tracker, rarity mix, estimated value, collection progress
+
+## Adding another product
+
+1. Create `data/products/<slug>/{product,players,sets}.json`
+2. Reuse the same schema (see types in `src/lib/product-config.ts`)
+3. Add any new `visualTheme` keys to `visual-themes.ts` + `.d11-theme-*` CSS
+4. Run `npm run db:seed`

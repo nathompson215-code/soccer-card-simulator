@@ -307,9 +307,11 @@ async function main() {
       const parallelDefs =
         setDef.parallels === "baseParallels"
           ? setsCfg.baseParallels
-          : setDef.parallel
-            ? [setDef.parallel]
-            : [];
+          : setDef.setParallels?.length
+            ? setDef.setParallels
+            : setDef.parallel
+              ? [setDef.parallel]
+              : [];
 
       const parallels = [];
       for (const par of parallelDefs) {

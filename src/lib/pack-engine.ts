@@ -60,6 +60,7 @@ export function celebrationFor(
     cardType.includes("PATCH") ||
     cardType === "BOOKLET" ||
     cardType === "CASE_HIT" ||
+    cardType === "IMAGE_VARIATION" ||
     rarity === "MYTHIC"
   )
     return "hit";
@@ -78,6 +79,7 @@ export function isHit(rarity: string, cardType: string, printRun: number | null)
     cardType.includes("PATCH") ||
     cardType.includes("RELIC") ||
     cardType === "CASE_HIT" ||
+    cardType === "IMAGE_VARIATION" ||
     cardType === "BOOKLET" ||
     cardType === "ONE_OF_ONE"
   );
@@ -145,22 +147,37 @@ async function loadProductPool(productId: string) {
   return { product, allCards, config, pools };
 }
 
-function parallelPoolHint(parallelSlug: string, cardType: string): HitPool | null {
+function resolveCardPool(
+  card: CardRow,
+  config: LoadedProductConfig | null,
+): HitPool | null {
+  const setSlug = card.checklistEntry.cardSet.slug;
+  const parallelSlug = card.parallel.slug;
+  const cardType = card.parallel.cardType;
+
+  if (config) {
+    // Prefer parallel-specific pool (base rainbow + insert numbered variants)
+    const keyed = config.parallelPoolBySlug[`${setSlug}:${parallelSlug}`];
+    if (keyed) return keyed;
+    const parallelPool = config.parallelPoolBySlug[parallelSlug];
+    if (parallelPool) return parallelPool;
+    const setPool = config.setPoolBySlug[setSlug];
+    if (setPool) return setPool;
+  }
+
   if (parallelSlug === "base") return "base";
   if (parallelSlug === "refractor") return "refractor";
   if (parallelSlug === "pulsar") return "pulsar";
-  if (
-    ["violet", "pink", "aqua", "green", "gold", "orange", "black", "superfractor"].includes(
-      parallelSlug,
-    )
-  ) {
-    return "numbered";
+  if (card.parallel.printRun || card.numbering?.printRun) {
+    if (!cardType.includes("AUTOGRAPH") && cardType !== "INSERT" && cardType !== "CASE_HIT" && cardType !== "BOOKLET" && !cardType.includes("PATCH")) {
+      return "numbered";
+    }
   }
   if (cardType === "INSERT") return "insert";
   if (cardType.includes("AUTOGRAPH")) return "autograph";
   if (cardType.includes("PATCH") || cardType.includes("RELIC")) return "patch";
   if (cardType === "BOOKLET") return "booklet";
-  if (cardType === "CASE_HIT") return "case_hit";
+  if (cardType === "CASE_HIT" || cardType === "IMAGE_VARIATION") return "case_hit";
   return null;
 }
 
@@ -178,21 +195,8 @@ function buildPools(allCards: CardRow[], config: LoadedProductConfig | null): Po
   };
 
   for (const card of allCards) {
-    const hint = parallelPoolHint(card.parallel.slug, card.parallel.cardType);
+    const hint = resolveCardPool(card, config);
     if (hint) pools[hint].push(card);
-  }
-
-  // Prefer config parallel.pool when available via slug match in base parallels
-  if (config) {
-    const bySlug = new Map(
-      config.sets.baseParallels.map((p) => [p.slug, p.pool] as const),
-    );
-    for (const card of allCards) {
-      const pool = bySlug.get(card.parallel.slug);
-      if (pool && pool !== parallelPoolHint(card.parallel.slug, card.parallel.cardType)) {
-        // keep primary classification
-      }
-    }
   }
 
   return pools;
@@ -209,9 +213,22 @@ function pickFromPool(
   rng: () => number,
   config: LoadedProductConfig | null,
   weightedPlayers: boolean,
+  preferInsertMix = false,
 ): CardRow | null {
   const available = pool.filter((c) => !used.has(c.id));
   if (!available.length) return null;
+
+  if (preferInsertMix && config) {
+    const weighted = available.map((card) => {
+      const setSlug = card.checklistEntry.cardSet.slug;
+      const insertW = config.setInsertWeightBySlug[setSlug] ?? 1;
+      return {
+        card,
+        weight: insertW * (card.parallel.weight || 1) * playerWeight(card, config),
+      };
+    });
+    return pickWeighted(weighted, rng).card;
+  }
 
   if (weightedPlayers) {
     const weighted = available.map((card) => ({
@@ -347,7 +364,14 @@ export async function openBoxFromDb(
     const g = guarantees[gIndex];
     const result = guaranteeResults[gIndex];
     for (let n = 0; n < g.count; n++) {
-      const card = pickFromPool(pools[g.pool], used, rng, config, g.pool === "insert");
+      const card = pickFromPool(
+        pools[g.pool],
+        used,
+        rng,
+        config,
+        g.pool === "insert" || g.pool === "base",
+        g.pool === "insert",
+      );
       if (!card) continue;
       const pull = makePull(card, used, rng);
       if (!pull) continue;
@@ -476,12 +500,12 @@ function matchesPool(pull: PullResultDTO, pool: HitPool) {
       !type.includes("PATCH") &&
       type !== "BOOKLET" &&
       type !== "CASE_HIT" &&
-      type !== "INSERT"
+      type !== "IMAGE_VARIATION"
     );
   }
   if (pool === "patch") return type.includes("PATCH") || type.includes("RELIC");
   if (pool === "booklet") return type === "BOOKLET";
-  if (pool === "case_hit") return type === "CASE_HIT";
+  if (pool === "case_hit") return type === "CASE_HIT" || type === "IMAGE_VARIATION";
   if (pool === "base") return slug === "base";
   return false;
 }

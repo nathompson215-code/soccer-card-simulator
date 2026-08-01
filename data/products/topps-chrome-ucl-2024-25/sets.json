@@ -9,7 +9,8 @@
       "rarity": "COMMON",
       "cardType": "BASE",
       "weight": 1,
-      "pool": "base"
+      "pool": "base",
+      "visualTheme": "base"
     },
     {
       "slug": "refractor",
@@ -20,18 +21,20 @@
       "rarity": "UNCOMMON",
       "cardType": "REFRACTOR",
       "weight": 0.28,
-      "pool": "refractor"
+      "pool": "refractor",
+      "visualTheme": "refractor"
     },
     {
       "slug": "pulsar",
       "name": "Pulsar Refractor",
       "printRun": null,
-      "colorHex": "#7B5CFF",
+      "colorHex": "#8B5CF6",
       "isFoil": true,
       "rarity": "UNCOMMON",
       "cardType": "REFRACTOR",
-      "weight": 0.12,
-      "pool": "pulsar"
+      "weight": 0.14,
+      "pool": "pulsar",
+      "visualTheme": "pulsar"
     },
     {
       "slug": "violet",
@@ -39,10 +42,11 @@
       "printRun": 299,
       "colorHex": "#7B2D8E",
       "isFoil": true,
-      "rarity": "RARE",
+      "rarity": "UNCOMMON",
       "cardType": "PARALLEL",
-      "weight": 0.04,
-      "pool": "numbered"
+      "weight": 0.017,
+      "pool": "numbered",
+      "visualTheme": "violet"
     },
     {
       "slug": "pink",
@@ -50,10 +54,35 @@
       "printRun": 250,
       "colorHex": "#E91E8C",
       "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.014,
+      "pool": "numbered",
+      "visualTheme": "pink"
+    },
+    {
+      "slug": "pink-lava",
+      "name": "Pink Lava Refractor",
+      "printRun": 250,
+      "colorHex": "#FF1493",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.014,
+      "pool": "numbered",
+      "visualTheme": "pink-lava"
+    },
+    {
+      "slug": "night-vision-raywave",
+      "name": "Night Vision RayWave Refractor",
+      "printRun": 225,
+      "colorHex": "#39FF14",
+      "isFoil": true,
       "rarity": "RARE",
       "cardType": "PARALLEL",
-      "weight": 0.035,
-      "pool": "numbered"
+      "weight": 0.018,
+      "pool": "numbered",
+      "visualTheme": "night-vision-raywave"
     },
     {
       "slug": "aqua",
@@ -63,8 +92,69 @@
       "isFoil": true,
       "rarity": "RARE",
       "cardType": "PARALLEL",
-      "weight": 0.028,
-      "pool": "numbered"
+      "weight": 0.011,
+      "pool": "numbered",
+      "visualTheme": "aqua"
+    },
+    {
+      "slug": "aqua-lava",
+      "name": "Aqua Lava Refractor",
+      "printRun": 199,
+      "colorHex": "#00E5CC",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.011,
+      "pool": "numbered",
+      "visualTheme": "aqua-lava"
+    },
+    {
+      "slug": "neon-pink-raywave",
+      "name": "Neon Pink RayWave Refractor",
+      "printRun": 175,
+      "colorHex": "#FF10F0",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.014,
+      "pool": "numbered",
+      "visualTheme": "neon-pink-raywave"
+    },
+    {
+      "slug": "blue",
+      "name": "Blue Refractor",
+      "printRun": 150,
+      "colorHex": "#1565C0",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.008,
+      "pool": "numbered",
+      "visualTheme": "blue"
+    },
+    {
+      "slug": "blue-lava",
+      "name": "Blue Lava Refractor",
+      "printRun": 150,
+      "colorHex": "#1E88E5",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.008,
+      "pool": "numbered",
+      "visualTheme": "blue-lava"
+    },
+    {
+      "slug": "neon-green-raywave",
+      "name": "Neon Green RayWave Refractor",
+      "printRun": 125,
+      "colorHex": "#00FF7F",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.01,
+      "pool": "numbered",
+      "visualTheme": "neon-green-raywave"
     },
     {
       "slug": "green",
@@ -74,8 +164,57 @@
       "isFoil": true,
       "rarity": "ULTRA_RARE",
       "cardType": "PARALLEL",
-      "weight": 0.016,
-      "pool": "numbered"
+      "weight": 0.005,
+      "pool": "numbered",
+      "visualTheme": "green"
+    },
+    {
+      "slug": "green-lava",
+      "name": "Green Lava Refractor",
+      "printRun": 99,
+      "colorHex": "#00C853",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.005,
+      "pool": "numbered",
+      "visualTheme": "green-lava"
+    },
+    {
+      "slug": "magenta",
+      "name": "Magenta Refractor",
+      "printRun": 75,
+      "colorHex": "#C2185B",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.004,
+      "pool": "numbered",
+      "visualTheme": "magenta"
+    },
+    {
+      "slug": "magenta-lava",
+      "name": "Magenta Lava Refractor",
+      "printRun": 75,
+      "colorHex": "#E91E63",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.004,
+      "pool": "numbered",
+      "visualTheme": "magenta-lava"
+    },
+    {
+      "slug": "toppsfractor",
+      "name": "ToppsFractor",
+      "printRun": 52,
+      "colorHex": "#DAA520",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.0027,
+      "pool": "numbered",
+      "visualTheme": "toppsfractor"
     },
     {
       "slug": "gold",
@@ -85,8 +224,21 @@
       "isFoil": true,
       "rarity": "ULTRA_RARE",
       "cardType": "PARALLEL",
-      "weight": 0.01,
-      "pool": "numbered"
+      "weight": 0.0027,
+      "pool": "numbered",
+      "visualTheme": "gold"
+    },
+    {
+      "slug": "gold-lava",
+      "name": "Gold Lava Refractor",
+      "printRun": 50,
+      "colorHex": "#FFD700",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.0027,
+      "pool": "numbered",
+      "visualTheme": "gold-lava"
     },
     {
       "slug": "orange",
@@ -96,8 +248,33 @@
       "isFoil": true,
       "rarity": "MYTHIC",
       "cardType": "PARALLEL",
-      "weight": 0.005,
-      "pool": "numbered"
+      "weight": 0.0012,
+      "pool": "numbered",
+      "visualTheme": "orange"
+    },
+    {
+      "slug": "orange-lava",
+      "name": "Orange Lava Refractor",
+      "printRun": 25,
+      "colorHex": "#FF6D00",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0012,
+      "pool": "numbered",
+      "visualTheme": "orange-lava"
+    },
+    {
+      "slug": "xi",
+      "name": "XI Refractor",
+      "printRun": 11,
+      "colorHex": "#4A148C",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.00054,
+      "pool": "numbered",
+      "visualTheme": "xi"
     },
     {
       "slug": "black",
@@ -107,8 +284,57 @@
       "isFoil": true,
       "rarity": "MYTHIC",
       "cardType": "PARALLEL",
-      "weight": 0.0025,
-      "pool": "numbered"
+      "weight": 0.00051,
+      "pool": "numbered",
+      "visualTheme": "black"
+    },
+    {
+      "slug": "black-lava",
+      "name": "Black Lava Refractor",
+      "printRun": 10,
+      "colorHex": "#0D0D0D",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.00051,
+      "pool": "numbered",
+      "visualTheme": "black-lava"
+    },
+    {
+      "slug": "red",
+      "name": "Red Refractor",
+      "printRun": 5,
+      "colorHex": "#C62828",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.00024,
+      "pool": "numbered",
+      "visualTheme": "red"
+    },
+    {
+      "slug": "red-lava",
+      "name": "Red Lava Refractor",
+      "printRun": 5,
+      "colorHex": "#E53935",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.00024,
+      "pool": "numbered",
+      "visualTheme": "red-lava"
+    },
+    {
+      "slug": "club-country",
+      "name": "Club & Country Refractor",
+      "printRun": 1,
+      "colorHex": "#001F5B",
+      "isFoil": true,
+      "rarity": "LEGENDARY",
+      "cardType": "ONE_OF_ONE",
+      "weight": 0.000039,
+      "pool": "numbered",
+      "visualTheme": "club-country"
     },
     {
       "slug": "superfractor",
@@ -118,8 +344,9 @@
       "isFoil": true,
       "rarity": "LEGENDARY",
       "cardType": "ONE_OF_ONE",
-      "weight": 0.0004,
-      "pool": "numbered"
+      "weight": 0.000039,
+      "pool": "numbered",
+      "visualTheme": "superfractor"
     }
   ],
   "sets": [
@@ -128,155 +355,2189 @@
       "name": "Base Set",
       "setType": "BASE",
       "sortOrder": 1,
-      "playerFilter": { "all": true },
-      "parallels": "baseParallels"
+      "playerFilter": {
+        "all": true
+      },
+      "parallels": "baseParallels",
+      "visualTheme": "base",
+      "notes": "200-card style base checklist (sim roster). Hobby exclusives: Night Vision / Neon Pink / Neon Green RayWave."
+    },
+    {
+      "slug": "hero-variations",
+      "name": "Base Hero Variations",
+      "setType": "IMAGE_VARIATION",
+      "sortOrder": 2,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "rookie"
+        ],
+        "limit": 18
+      },
+      "setParallels": [
+        {
+          "slug": "hero",
+          "name": "Hero Variation",
+          "printRun": null,
+          "colorHex": "#FF6F00",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "IMAGE_VARIATION",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "hero"
+        }
+      ],
+      "visualTheme": "hero",
+      "pool": "case_hit",
+      "notes": "Comic-style hero SP. Published ~1:682 hobby packs."
     },
     {
       "slug": "wonderkids",
       "name": "Wonderkids",
       "setType": "INSERT",
-      "sortOrder": 2,
-      "playerFilter": { "tiers": ["rookie"] },
-      "parallel": {
-        "slug": "insert-base",
-        "name": "Wonderkids",
-        "printRun": null,
-        "colorHex": "#3DCF8E",
-        "isFoil": true,
-        "rarity": "RARE",
-        "cardType": "INSERT",
-        "weight": 1,
-        "pool": "insert"
-      }
+      "sortOrder": 10,
+      "playerFilter": {
+        "tiers": [
+          "rookie"
+        ]
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Wonderkids",
+          "printRun": null,
+          "colorHex": "#3DCF8E",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "wonderkids"
+        },
+        {
+          "slug": "aqua",
+          "name": "Wonderkids Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "blue",
+          "name": "Wonderkids Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.03,
+          "pool": "numbered",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "green",
+          "name": "Wonderkids Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.02,
+          "pool": "numbered",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "magenta",
+          "name": "Wonderkids Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "gold",
+          "name": "Wonderkids Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "orange",
+          "name": "Wonderkids Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.005,
+          "pool": "numbered",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "black",
+          "name": "Wonderkids Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.002,
+          "pool": "numbered",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Wonderkids Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.001,
+          "pool": "numbered",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Wonderkids SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0001,
+          "pool": "numbered",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "wonderkids",
+      "pool": "insert",
+      "insertWeight": 5,
+      "notes": "Most common insert (~1:5 hobby packs)."
     },
     {
       "slug": "golazo",
       "name": "Golazo",
       "setType": "INSERT",
-      "sortOrder": 3,
-      "playerFilter": { "tiers": ["star", "legend"] },
-      "parallel": {
-        "slug": "insert-base",
-        "name": "Golazo",
-        "printRun": null,
-        "colorHex": "#F0D78C",
-        "isFoil": true,
-        "rarity": "RARE",
-        "cardType": "INSERT",
-        "weight": 1,
-        "pool": "insert"
-      }
+      "sortOrder": 11,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Golazo",
+          "printRun": null,
+          "colorHex": "#F0D78C",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "golazo"
+        },
+        {
+          "slug": "aqua",
+          "name": "Golazo Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "blue",
+          "name": "Golazo Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.03,
+          "pool": "numbered",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "green",
+          "name": "Golazo Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.02,
+          "pool": "numbered",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "magenta",
+          "name": "Golazo Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "gold",
+          "name": "Golazo Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "orange",
+          "name": "Golazo Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.005,
+          "pool": "numbered",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "black",
+          "name": "Golazo Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.002,
+          "pool": "numbered",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Golazo Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.001,
+          "pool": "numbered",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Golazo SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0001,
+          "pool": "numbered",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "golazo",
+      "pool": "insert",
+      "insertWeight": 2.5,
+      "notes": "~1:10 hobby packs."
     },
     {
       "slug": "final-destination",
       "name": "Final Destination",
       "setType": "INSERT",
-      "sortOrder": 4,
-      "playerFilter": { "tiers": ["star", "veteran", "legend"] },
-      "parallel": {
-        "slug": "insert-base",
-        "name": "Final Destination",
-        "printRun": null,
-        "colorHex": "#4FC3F7",
-        "isFoil": true,
-        "rarity": "RARE",
-        "cardType": "INSERT",
-        "weight": 1,
-        "pool": "insert"
-      }
+      "sortOrder": 12,
+      "playerFilter": {
+        "tiers": [
+          "veteran",
+          "star",
+          "rookie"
+        ],
+        "limit": 30
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Final Destination",
+          "printRun": null,
+          "colorHex": "#4FC3F7",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "final-destination"
+        },
+        {
+          "slug": "aqua",
+          "name": "Final Destination Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "blue",
+          "name": "Final Destination Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.03,
+          "pool": "numbered",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "green",
+          "name": "Final Destination Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.02,
+          "pool": "numbered",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "magenta",
+          "name": "Final Destination Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "gold",
+          "name": "Final Destination Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "orange",
+          "name": "Final Destination Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.005,
+          "pool": "numbered",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "black",
+          "name": "Final Destination Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.002,
+          "pool": "numbered",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Final Destination Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.001,
+          "pool": "numbered",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Final Destination SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0001,
+          "pool": "numbered",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "final-destination",
+      "pool": "insert",
+      "insertWeight": 1.25,
+      "notes": "~1:20 hobby packs. Munich final cityscape theme."
+    },
+    {
+      "slug": "circle-of-power",
+      "name": "Circle of Power — Power On",
+      "setType": "INSERT",
+      "sortOrder": 13,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 24
+      },
+      "setParallels": [
+        {
+          "slug": "power-on",
+          "name": "Circle of Power Power On",
+          "printRun": null,
+          "colorHex": "#FFD54F",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "circle-power"
+        }
+      ],
+      "visualTheme": "circle-power",
+      "pool": "insert",
+      "insertWeight": 1.25,
+      "notes": "Stage 1 electric insert (~1:20 packs / ~1 per hobby box)."
+    },
+    {
+      "slug": "circle-of-power-high-voltage",
+      "name": "Circle of Power — High Voltage",
+      "setType": "INSERT",
+      "sortOrder": 14,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 24
+      },
+      "setParallels": [
+        {
+          "slug": "high-voltage",
+          "name": "Circle of Power High Voltage",
+          "printRun": null,
+          "colorHex": "#FFEA00",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "high-voltage"
+        }
+      ],
+      "visualTheme": "high-voltage",
+      "pool": "case_hit",
+      "notes": "Stage 2 (~1:120 packs / ~1:6 boxes)."
+    },
+    {
+      "slug": "circle-of-power-shockwave",
+      "name": "Circle of Power — Shockwave",
+      "setType": "CASE_HIT",
+      "sortOrder": 15,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 24
+      },
+      "setParallels": [
+        {
+          "slug": "shockwave",
+          "name": "Circle of Power Shockwave",
+          "printRun": null,
+          "colorHex": "#FFFF00",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "shockwave"
+        }
+      ],
+      "visualTheme": "shockwave",
+      "pool": "case_hit",
+      "notes": "Stage 3 case hit (~1:480 packs / ~1:2 cases)."
     },
     {
       "slug": "youth-league",
-      "name": "UEFA Youth League",
+      "name": "Bowman UEFA Youth League",
       "setType": "INSERT",
-      "sortOrder": 5,
-      "playerFilter": { "tiers": ["rookie", "veteran"] },
-      "parallel": {
-        "slug": "insert-base",
-        "name": "Youth League",
-        "printRun": null,
-        "colorHex": "#81C784",
-        "isFoil": false,
-        "rarity": "RARE",
-        "cardType": "INSERT",
-        "weight": 1,
-        "pool": "insert"
-      }
+      "sortOrder": 16,
+      "playerFilter": {
+        "tiers": [
+          "rookie"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Bowman UEFA Youth League",
+          "printRun": null,
+          "colorHex": "#81C784",
+          "isFoil": false,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "youth-league"
+        },
+        {
+          "slug": "magenta",
+          "name": "Youth League Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "gold",
+          "name": "Youth League Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "orange",
+          "name": "Youth League Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.005,
+          "pool": "numbered",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "black",
+          "name": "Youth League Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.002,
+          "pool": "numbered",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Youth League Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.001,
+          "pool": "numbered",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Youth League SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0001,
+          "pool": "numbered",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "youth-league",
+      "pool": "insert",
+      "insertWeight": 1,
+      "notes": "Hobby exclusive (~1:20 packs)."
     },
     {
-      "slug": "chrome-autographs",
-      "name": "Chrome Autographs",
-      "setType": "AUTOGRAPH",
-      "sortOrder": 6,
-      "playerFilter": { "tiers": ["star", "legend", "rookie", "veteran"], "limit": 24 },
-      "autograph": true,
-      "parallel": {
-        "slug": "on-card-auto",
-        "name": "On-Card Autograph",
-        "printRun": 99,
-        "colorHex": "#D4AF37",
-        "isFoil": true,
-        "rarity": "MYTHIC",
-        "cardType": "AUTOGRAPH",
-        "weight": 1,
-        "pool": "autograph"
-      }
-    },
-    {
-      "slug": "match-worn-patches",
-      "name": "Match-Worn Patches",
-      "setType": "RELIC",
-      "sortOrder": 7,
-      "playerFilter": { "tiers": ["star", "legend", "veteran"], "limit": 16 },
-      "memorabilia": "PATCH",
-      "parallel": {
-        "slug": "patch",
-        "name": "Match-Worn Patch",
-        "printRun": 49,
-        "colorHex": "#C62828",
-        "isFoil": false,
-        "rarity": "MYTHIC",
-        "cardType": "PATCH",
-        "weight": 1,
-        "pool": "patch"
-      }
-    },
-    {
-      "slug": "dual-booklets",
-      "name": "Campeones Booklets",
-      "setType": "BOOKLET",
-      "sortOrder": 8,
-      "playerFilter": { "tiers": ["legend", "star"], "limit": 8 },
-      "memorabilia": "BOOKLET",
-      "parallel": {
-        "slug": "booklet",
-        "name": "Booklet",
-        "printRun": 25,
-        "colorHex": "#5C6BC0",
-        "isFoil": true,
-        "rarity": "ULTRA_RARE",
-        "cardType": "BOOKLET",
-        "weight": 1,
-        "pool": "booklet"
-      }
+      "slug": "radiating-rookies",
+      "name": "Radiating Rookies",
+      "setType": "CASE_HIT",
+      "sortOrder": 20,
+      "playerFilter": {
+        "tiers": [
+          "rookie"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Radiating Rookies",
+          "printRun": null,
+          "colorHex": "#FF7043",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "radiating-rookies"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Radiating Rookies SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.05,
+          "pool": "case_hit",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "radiating-rookies",
+      "pool": "case_hit",
+      "notes": "Hobby exclusive short print (~1:480 packs)."
     },
     {
       "slug": "shadow-etch",
       "name": "Shadow Etch",
       "setType": "CASE_HIT",
-      "sortOrder": 9,
-      "playerFilter": { "tiers": ["star", "legend", "rookie"], "limit": 10 },
-      "parallel": {
-        "slug": "case-hit",
-        "name": "Shadow Etch",
-        "printRun": 10,
-        "colorHex": "#212121",
-        "isFoil": true,
-        "rarity": "LEGENDARY",
-        "cardType": "CASE_HIT",
-        "weight": 1,
-        "pool": "case_hit"
-      }
+      "sortOrder": 21,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "rookie"
+        ],
+        "limit": 14
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Shadow Etch",
+          "printRun": null,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "shadow-etch"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Shadow Etch SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.04,
+          "pool": "case_hit",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "shadow-etch",
+      "pool": "case_hit",
+      "notes": "~1:240 hobby packs (~1 per case)."
+    },
+    {
+      "slug": "tifo",
+      "name": "Tifo",
+      "setType": "CASE_HIT",
+      "sortOrder": 22,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Tifo",
+          "printRun": null,
+          "colorHex": "#B71C1C",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "tifo"
+        }
+      ],
+      "visualTheme": "tifo",
+      "pool": "case_hit",
+      "notes": "~1:1200 hobby packs."
+    },
+    {
+      "slug": "helix",
+      "name": "Helix",
+      "setType": "CASE_HIT",
+      "sortOrder": 23,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star",
+          "rookie"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Helix",
+          "printRun": null,
+          "colorHex": "#00BCD4",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "helix"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Helix SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.03,
+          "pool": "case_hit",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "helix",
+      "pool": "case_hit",
+      "notes": "~1:3722 hobby packs."
+    },
+    {
+      "slug": "munich-at-night",
+      "name": "Munich at Night",
+      "setType": "CASE_HIT",
+      "sortOrder": 24,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Munich at Night",
+          "printRun": null,
+          "colorHex": "#1A237E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "munich-night"
+        }
+      ],
+      "visualTheme": "munich-night",
+      "pool": "case_hit",
+      "notes": "Hobby exclusive (~1:1920 packs)."
+    },
+    {
+      "slug": "white-noise",
+      "name": "White Noise",
+      "setType": "CASE_HIT",
+      "sortOrder": 25,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "rookie"
+        ],
+        "limit": 10
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "White Noise",
+          "printRun": null,
+          "colorHex": "#F5F5F5",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "white-noise"
+        }
+      ],
+      "visualTheme": "white-noise",
+      "pool": "case_hit",
+      "notes": "~1:2419 hobby packs."
+    },
+    {
+      "slug": "hidden-gems",
+      "name": "Hidden Gems",
+      "setType": "CASE_HIT",
+      "sortOrder": 26,
+      "playerFilter": {
+        "tiers": [
+          "rookie",
+          "legend",
+          "star"
+        ],
+        "limit": 6
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Hidden Gems",
+          "printRun": null,
+          "colorHex": "#26A69A",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "hidden-gems"
+        },
+        {
+          "slug": "amber",
+          "name": "Hidden Gems Amber",
+          "printRun": 10,
+          "colorHex": "#FFB300",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "CASE_HIT",
+          "weight": 0.2,
+          "pool": "case_hit",
+          "visualTheme": "amber"
+        },
+        {
+          "slug": "sapphire",
+          "name": "Hidden Gems Sapphire",
+          "printRun": 5,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 0.1,
+          "pool": "case_hit",
+          "visualTheme": "sapphire"
+        },
+        {
+          "slug": "ruby",
+          "name": "Hidden Gems Ruby",
+          "printRun": 1,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.02,
+          "pool": "case_hit",
+          "visualTheme": "ruby"
+        }
+      ],
+      "visualTheme": "hidden-gems",
+      "pool": "case_hit",
+      "notes": "Short-print continuity insert with Amber/Sapphire/Ruby."
+    },
+    {
+      "slug": "the-grail",
+      "name": "The Grail",
+      "setType": "CASE_HIT",
+      "sortOrder": 27,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 4
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "The Grail",
+          "printRun": 1,
+          "colorHex": "#FFD700",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "the-grail"
+        }
+      ],
+      "visualTheme": "the-grail",
+      "pool": "case_hit",
+      "notes": "Cross-product puzzle piece (~1:25k packs). Hobby pieces G-6/G-7."
+    },
+    {
+      "slug": "trophies",
+      "name": "Trophies",
+      "setType": "CASE_HIT",
+      "sortOrder": 28,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 3
+      },
+      "setParallels": [
+        {
+          "slug": "case-hit",
+          "name": "Trophies",
+          "printRun": null,
+          "colorHex": "#C9A227",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "trophies"
+        }
+      ],
+      "visualTheme": "trophies",
+      "pool": "case_hit",
+      "notes": "UEFA competition trophy inserts (CL / EL / Conference)."
+    },
+    {
+      "slug": "chrome-autographs",
+      "name": "Chrome Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 40,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "rookie",
+          "veteran"
+        ],
+        "limit": 36
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "on-card-auto",
+          "name": "Chrome Autograph",
+          "printRun": 99,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "chrome-auto"
+        },
+        {
+          "slug": "pink",
+          "name": "Chrome Autograph Pink",
+          "printRun": 250,
+          "colorHex": "#E91E8C",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "pink"
+        },
+        {
+          "slug": "pink-lava",
+          "name": "Chrome Autograph Pink Lava",
+          "printRun": 250,
+          "colorHex": "#FF1493",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.32,
+          "pool": "autograph",
+          "visualTheme": "pink-lava"
+        },
+        {
+          "slug": "aqua",
+          "name": "Chrome Autograph Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.28,
+          "pool": "autograph",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "aqua-lava",
+          "name": "Chrome Autograph Aqua Lava",
+          "printRun": 199,
+          "colorHex": "#00E5CC",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.26,
+          "pool": "autograph",
+          "visualTheme": "aqua-lava"
+        },
+        {
+          "slug": "blue",
+          "name": "Chrome Autograph Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.22,
+          "pool": "autograph",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "blue-lava",
+          "name": "Chrome Autograph Blue Lava",
+          "printRun": 150,
+          "colorHex": "#1E88E5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.2,
+          "pool": "autograph",
+          "visualTheme": "blue-lava"
+        },
+        {
+          "slug": "green",
+          "name": "Chrome Autograph Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.16,
+          "pool": "autograph",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "green-lava",
+          "name": "Chrome Autograph Green Lava",
+          "printRun": 99,
+          "colorHex": "#00C853",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.15,
+          "pool": "autograph",
+          "visualTheme": "green-lava"
+        },
+        {
+          "slug": "magenta",
+          "name": "Chrome Autograph Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "magenta-lava",
+          "name": "Chrome Autograph Magenta Lava",
+          "printRun": 75,
+          "colorHex": "#E91E63",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.11,
+          "pool": "autograph",
+          "visualTheme": "magenta-lava"
+        },
+        {
+          "slug": "toppsfractor",
+          "name": "Chrome Autograph ToppsFractor",
+          "printRun": 52,
+          "colorHex": "#DAA520",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "toppsfractor"
+        },
+        {
+          "slug": "gold",
+          "name": "Chrome Autograph Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "gold-lava",
+          "name": "Chrome Autograph Gold Lava",
+          "printRun": 50,
+          "colorHex": "#FFD700",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.07,
+          "pool": "autograph",
+          "visualTheme": "gold-lava"
+        },
+        {
+          "slug": "orange",
+          "name": "Chrome Autograph Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "orange-lava",
+          "name": "Chrome Autograph Orange Lava",
+          "printRun": 25,
+          "colorHex": "#FF6D00",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange-lava"
+        },
+        {
+          "slug": "black",
+          "name": "Chrome Autograph Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "black-lava",
+          "name": "Chrome Autograph Black Lava",
+          "printRun": 10,
+          "colorHex": "#0D0D0D",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black-lava"
+        },
+        {
+          "slug": "red",
+          "name": "Chrome Autograph Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "red-lava",
+          "name": "Chrome Autograph Red Lava",
+          "printRun": 5,
+          "colorHex": "#E53935",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red-lava"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Chrome Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.001,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "chrome-auto",
+      "pool": "autograph",
+      "notes": "Primary hobby autograph line (~1:126 packs ≈ 1 per box)."
+    },
+    {
+      "slug": "wonderkids-autographs",
+      "name": "Wonderkids Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 41,
+      "playerFilter": {
+        "tiers": [
+          "rookie"
+        ],
+        "limit": 12
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "on-card-auto",
+          "name": "Wonderkids Autograph",
+          "printRun": 75,
+          "colorHex": "#3DCF8E",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "wonderkids-auto"
+        },
+        {
+          "slug": "pink",
+          "name": "Wonderkids Autograph Pink",
+          "printRun": 250,
+          "colorHex": "#E91E8C",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "pink"
+        },
+        {
+          "slug": "pink-lava",
+          "name": "Wonderkids Autograph Pink Lava",
+          "printRun": 250,
+          "colorHex": "#FF1493",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.32,
+          "pool": "autograph",
+          "visualTheme": "pink-lava"
+        },
+        {
+          "slug": "aqua",
+          "name": "Wonderkids Autograph Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.28,
+          "pool": "autograph",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "aqua-lava",
+          "name": "Wonderkids Autograph Aqua Lava",
+          "printRun": 199,
+          "colorHex": "#00E5CC",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.26,
+          "pool": "autograph",
+          "visualTheme": "aqua-lava"
+        },
+        {
+          "slug": "blue",
+          "name": "Wonderkids Autograph Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.22,
+          "pool": "autograph",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "blue-lava",
+          "name": "Wonderkids Autograph Blue Lava",
+          "printRun": 150,
+          "colorHex": "#1E88E5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.2,
+          "pool": "autograph",
+          "visualTheme": "blue-lava"
+        },
+        {
+          "slug": "green",
+          "name": "Wonderkids Autograph Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.16,
+          "pool": "autograph",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "green-lava",
+          "name": "Wonderkids Autograph Green Lava",
+          "printRun": 99,
+          "colorHex": "#00C853",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.15,
+          "pool": "autograph",
+          "visualTheme": "green-lava"
+        },
+        {
+          "slug": "magenta",
+          "name": "Wonderkids Autograph Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "magenta-lava",
+          "name": "Wonderkids Autograph Magenta Lava",
+          "printRun": 75,
+          "colorHex": "#E91E63",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.11,
+          "pool": "autograph",
+          "visualTheme": "magenta-lava"
+        },
+        {
+          "slug": "toppsfractor",
+          "name": "Wonderkids Autograph ToppsFractor",
+          "printRun": 52,
+          "colorHex": "#DAA520",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "toppsfractor"
+        },
+        {
+          "slug": "gold",
+          "name": "Wonderkids Autograph Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "gold-lava",
+          "name": "Wonderkids Autograph Gold Lava",
+          "printRun": 50,
+          "colorHex": "#FFD700",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.07,
+          "pool": "autograph",
+          "visualTheme": "gold-lava"
+        },
+        {
+          "slug": "orange",
+          "name": "Wonderkids Autograph Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "orange-lava",
+          "name": "Wonderkids Autograph Orange Lava",
+          "printRun": 25,
+          "colorHex": "#FF6D00",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange-lava"
+        },
+        {
+          "slug": "black",
+          "name": "Wonderkids Autograph Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "black-lava",
+          "name": "Wonderkids Autograph Black Lava",
+          "printRun": 10,
+          "colorHex": "#0D0D0D",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black-lava"
+        },
+        {
+          "slug": "red",
+          "name": "Wonderkids Autograph Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "red-lava",
+          "name": "Wonderkids Autograph Red Lava",
+          "printRun": 5,
+          "colorHex": "#E53935",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red-lava"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Wonderkids Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.001,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "wonderkids-auto",
+      "pool": "autograph"
+    },
+    {
+      "slug": "future-stars-autographs",
+      "name": "Future Stars Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 42,
+      "playerFilter": {
+        "tiers": [
+          "rookie"
+        ],
+        "limit": 10
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "on-card-auto",
+          "name": "Future Stars Autograph",
+          "printRun": 99,
+          "colorHex": "#29B6F6",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "future-stars-auto"
+        },
+        {
+          "slug": "pink",
+          "name": "Future Stars Autograph Pink",
+          "printRun": 250,
+          "colorHex": "#E91E8C",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "pink"
+        },
+        {
+          "slug": "pink-lava",
+          "name": "Future Stars Autograph Pink Lava",
+          "printRun": 250,
+          "colorHex": "#FF1493",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.32,
+          "pool": "autograph",
+          "visualTheme": "pink-lava"
+        },
+        {
+          "slug": "aqua",
+          "name": "Future Stars Autograph Aqua",
+          "printRun": 199,
+          "colorHex": "#00B8C4",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.28,
+          "pool": "autograph",
+          "visualTheme": "aqua"
+        },
+        {
+          "slug": "aqua-lava",
+          "name": "Future Stars Autograph Aqua Lava",
+          "printRun": 199,
+          "colorHex": "#00E5CC",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.26,
+          "pool": "autograph",
+          "visualTheme": "aqua-lava"
+        },
+        {
+          "slug": "blue",
+          "name": "Future Stars Autograph Blue",
+          "printRun": 150,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.22,
+          "pool": "autograph",
+          "visualTheme": "blue"
+        },
+        {
+          "slug": "blue-lava",
+          "name": "Future Stars Autograph Blue Lava",
+          "printRun": 150,
+          "colorHex": "#1E88E5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.2,
+          "pool": "autograph",
+          "visualTheme": "blue-lava"
+        },
+        {
+          "slug": "green",
+          "name": "Future Stars Autograph Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.16,
+          "pool": "autograph",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "green-lava",
+          "name": "Future Stars Autograph Green Lava",
+          "printRun": 99,
+          "colorHex": "#00C853",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.15,
+          "pool": "autograph",
+          "visualTheme": "green-lava"
+        },
+        {
+          "slug": "magenta",
+          "name": "Future Stars Autograph Magenta",
+          "printRun": 75,
+          "colorHex": "#C2185B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "magenta"
+        },
+        {
+          "slug": "magenta-lava",
+          "name": "Future Stars Autograph Magenta Lava",
+          "printRun": 75,
+          "colorHex": "#E91E63",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.11,
+          "pool": "autograph",
+          "visualTheme": "magenta-lava"
+        },
+        {
+          "slug": "toppsfractor",
+          "name": "Future Stars Autograph ToppsFractor",
+          "printRun": 52,
+          "colorHex": "#DAA520",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "toppsfractor"
+        },
+        {
+          "slug": "gold",
+          "name": "Future Stars Autograph Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "gold-lava",
+          "name": "Future Stars Autograph Gold Lava",
+          "printRun": 50,
+          "colorHex": "#FFD700",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.07,
+          "pool": "autograph",
+          "visualTheme": "gold-lava"
+        },
+        {
+          "slug": "orange",
+          "name": "Future Stars Autograph Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "orange-lava",
+          "name": "Future Stars Autograph Orange Lava",
+          "printRun": 25,
+          "colorHex": "#FF6D00",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "orange-lava"
+        },
+        {
+          "slug": "black",
+          "name": "Future Stars Autograph Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "black-lava",
+          "name": "Future Stars Autograph Black Lava",
+          "printRun": 10,
+          "colorHex": "#0D0D0D",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "black-lava"
+        },
+        {
+          "slug": "red",
+          "name": "Future Stars Autograph Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "red-lava",
+          "name": "Future Stars Autograph Red Lava",
+          "printRun": 5,
+          "colorHex": "#E53935",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.008,
+          "pool": "autograph",
+          "visualTheme": "red-lava"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Future Stars Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.001,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "future-stars-auto",
+      "pool": "autograph",
+      "notes": "~1:3846 hobby packs."
+    },
+    {
+      "slug": "marks-of-excellence",
+      "name": "Marks of Excellence",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 43,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 8
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "on-card-auto",
+          "name": "Marks of Excellence Autograph",
+          "printRun": 99,
+          "colorHex": "#8D6E63",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "marks-excellence"
+        },
+        {
+          "slug": "green",
+          "name": "Marks of Excellence Green",
+          "printRun": 99,
+          "colorHex": "#22A06B",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.5,
+          "pool": "autograph",
+          "visualTheme": "green"
+        },
+        {
+          "slug": "gold",
+          "name": "Marks of Excellence Gold",
+          "printRun": 50,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.3,
+          "pool": "autograph",
+          "visualTheme": "gold"
+        },
+        {
+          "slug": "orange",
+          "name": "Marks of Excellence Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.15,
+          "pool": "autograph",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "purple",
+          "name": "Marks of Excellence Purple",
+          "printRun": 10,
+          "colorHex": "#6A1B9A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "xi"
+        },
+        {
+          "slug": "red",
+          "name": "Marks of Excellence Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "black",
+          "name": "Marks of Excellence Black",
+          "printRun": 1,
+          "colorHex": "#111111",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.01,
+          "pool": "autograph",
+          "visualTheme": "black"
+        }
+      ],
+      "visualTheme": "marks-excellence",
+      "pool": "autograph",
+      "notes": "~1:12387 hobby packs."
+    },
+    {
+      "slug": "chrome-dual-autographs",
+      "name": "Chrome Dual Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 44,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 10
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "dual-auto",
+          "name": "Chrome Dual Autograph",
+          "printRun": 25,
+          "colorHex": "#AB47BC",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "dual-auto"
+        },
+        {
+          "slug": "orange",
+          "name": "Dual Autograph Orange",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.4,
+          "pool": "autograph",
+          "visualTheme": "orange"
+        },
+        {
+          "slug": "black",
+          "name": "Dual Autograph Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.2,
+          "pool": "autograph",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Dual Autograph Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.1,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Dual Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.02,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "dual-auto",
+      "pool": "autograph",
+      "notes": "Extremely rare multi-signer (~1:120k packs)."
+    },
+    {
+      "slug": "chrome-triple-autographs",
+      "name": "Chrome Triple Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 45,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 8
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "triple-auto",
+          "name": "Chrome Triple Autograph",
+          "printRun": 10,
+          "colorHex": "#7E57C2",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "TRIPLE_AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "triple-auto"
+        },
+        {
+          "slug": "black",
+          "name": "Triple Autograph Black",
+          "printRun": 10,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "TRIPLE_AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "black"
+        },
+        {
+          "slug": "red",
+          "name": "Triple Autograph Red",
+          "printRun": 5,
+          "colorHex": "#C62828",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "TRIPLE_AUTOGRAPH",
+          "weight": 0.2,
+          "pool": "autograph",
+          "visualTheme": "red"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Triple Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.03,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "triple-auto",
+      "pool": "autograph",
+      "notes": "~1:30k hobby packs."
+    },
+    {
+      "slug": "chrome-quad-autographs",
+      "name": "Chrome Quad Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 46,
+      "playerFilter": {
+        "tiers": [
+          "legend"
+        ],
+        "limit": 4
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "quad-auto",
+          "name": "Chrome Quad Autograph",
+          "printRun": 5,
+          "colorHex": "#5E35B1",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "QUAD_AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "quad-auto"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Quad Autograph SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.05,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "quad-auto",
+      "pool": "autograph",
+      "notes": "Debut quad-signed Chrome (~1:345k packs)."
+    },
+    {
+      "slug": "quad-pundit-autographs",
+      "name": "Quad Pundit Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 47,
+      "playerFilter": {
+        "tiers": [
+          "legend"
+        ],
+        "limit": 2
+      },
+      "autograph": true,
+      "setParallels": [
+        {
+          "slug": "quad-pundit",
+          "name": "Quad Pundit Autograph",
+          "printRun": 5,
+          "colorHex": "#455A64",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "QUAD_AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "quad-pundit"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Quad Pundit SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.05,
+          "pool": "autograph",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "quad-pundit",
+      "pool": "autograph",
+      "notes": "Ultra-rare pundit quad (~1:806k packs)."
+    },
+    {
+      "slug": "campeone-booklets",
+      "name": "Campeone Autograph Book",
+      "setType": "BOOKLET",
+      "sortOrder": 50,
+      "playerFilter": {
+        "tiers": [
+          "legend",
+          "star"
+        ],
+        "limit": 6
+      },
+      "autograph": true,
+      "memorabilia": "BOOKLET",
+      "setParallels": [
+        {
+          "slug": "booklet",
+          "name": "Campeone Autograph Book",
+          "printRun": 25,
+          "colorHex": "#5C6BC0",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "BOOKLET",
+          "weight": 1,
+          "pool": "booklet",
+          "visualTheme": "booklet"
+        },
+        {
+          "slug": "superfractor",
+          "name": "Campeone Book SuperFractor",
+          "printRun": 1,
+          "colorHex": "#F5D76E",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.04,
+          "pool": "booklet",
+          "visualTheme": "superfractor"
+        }
+      ],
+      "visualTheme": "booklet",
+      "pool": "booklet",
+      "notes": "Four-signature booklet (~1:241k packs). Redemption in real product."
     }
   ]
 }
