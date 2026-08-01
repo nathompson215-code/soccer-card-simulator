@@ -182,8 +182,8 @@ function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
         <div className="absolute inset-0 pack-hologram opacity-80" />
         <div className="foil-shine absolute inset-0 mix-blend-screen opacity-60" />
         <div className="absolute inset-6 rounded-xl border border-white/15" />
-        <div className="display absolute inset-0 grid place-items-center text-4xl text-white/85">
-          CHROME
+        <div className="display absolute inset-0 grid place-items-center text-3xl text-white/85 md:text-4xl">
+          D11
         </div>
         {celebration !== "none" ? (
           <motion.div

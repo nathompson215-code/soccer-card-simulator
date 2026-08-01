@@ -46,6 +46,8 @@ export interface CardDTO {
   playerSlug: string;
   playerName: string;
   playerPosition: Position;
+  playerEra: string;
+  isRookie: boolean;
   clubName: string | null;
   nationalTeamName: string | null;
   tournamentName: string | null;

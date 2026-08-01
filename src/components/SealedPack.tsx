@@ -54,6 +54,7 @@ export function SealedPack({
       className={`relative h-60 w-44 ${state === "idle" ? "float-y" : ""}`}
       animate={shake}
       style={{ perspective: 900 }}
+      aria-label={`${manufacturer} sealed pack`}
     >
       <div
         className="absolute -inset-8 rounded-full opacity-60 blur-2xl"
@@ -83,11 +84,13 @@ export function SealedPack({
         <div className="absolute inset-x-8 top-11 h-px bg-white/20" />
 
         <div className="absolute left-1/2 top-16 -translate-x-1/2 rounded-full border border-gold/50 bg-black/30 px-3 py-1 text-[9px] uppercase tracking-[0.28em] text-gold-soft">
-          {brandLabel}
+          {brandLabel === "Chrome" || brandLabel.toLowerCase().includes("chrome")
+            ? "D11 Chrome"
+            : brandLabel}
         </div>
 
         <div className="display absolute inset-x-3 top-[42%] text-center text-3xl leading-none text-white drop-shadow-lg">
-          {manufacturer.toUpperCase()}
+          DRAFT ELEVEN
         </div>
         <div className="absolute inset-x-4 top-[58%] text-center text-[10px] uppercase tracking-[0.24em] text-white/70">
           {subtitle}

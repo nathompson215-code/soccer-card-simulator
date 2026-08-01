@@ -66,6 +66,8 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     playerSlug: player.slug,
     playerName: player.fullName,
     playerPosition: player.position,
+    playerEra: player.era,
+    isRookie: player.era === "ROOKIE" || player.era === "PROSPECT",
     clubName: player.club?.name ?? null,
     nationalTeamName: player.nationalTeam?.name ?? null,
     tournamentName: product.tournament?.name ?? null,

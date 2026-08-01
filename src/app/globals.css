@@ -319,6 +319,226 @@ a {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
+/* ---------------------------------------------------------------------------
+   Draft Eleven trading card art system
+--------------------------------------------------------------------------- */
+
+.d11-card-art {
+  background: #0a1210;
+  color: white;
+}
+
+.d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--card-accent) 45%, transparent), transparent 55%),
+    linear-gradient(165deg, #15221c 0%, #0a1210 48%, #070d0a 100%);
+}
+
+.d11-template-base .d11-card-bg {
+  background:
+    radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.08), transparent 40%),
+    linear-gradient(165deg, #1a2a22, #0a1210 55%);
+}
+
+.d11-template-insert .d11-card-bg {
+  background:
+    conic-gradient(from 120deg at 50% 0%, color-mix(in oklab, var(--card-accent) 55%, #000), #0a1210 40%, color-mix(in oklab, var(--card-accent) 35%, #111)),
+    linear-gradient(180deg, #122018, #070d0a);
+}
+
+.d11-template-parallel .d11-card-bg {
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--card-accent) 70%, white), #101820 45%, #070d0a);
+}
+
+.d11-template-refractor .d11-card-bg {
+  background:
+    linear-gradient(135deg, #d7e8ff 0%, #9fd0ff 18%, #c9f7e2 36%, #ffe4a8 54%, #ffb7d5 72%, #b8a6ff 88%, #d7e8ff 100%);
+  opacity: 1;
+}
+
+.d11-template-refractor .d11-card-bg {
+  background-size: 200% 200%;
+  animation: prism-drift 5s linear infinite;
+  filter: saturate(1.15);
+}
+
+.d11-template-autograph .d11-card-bg,
+.d11-template-patch-auto .d11-card-bg {
+  background:
+    radial-gradient(circle at 70% 20%, rgba(240, 215, 140, 0.28), transparent 45%),
+    linear-gradient(160deg, #2a2418, #100e0a 60%, #070705);
+}
+
+.d11-template-patch .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 80%, rgba(141, 110, 99, 0.35), transparent 50%),
+    linear-gradient(160deg, #241c18, #0d0b0a);
+}
+
+.d11-template-booklet .d11-card-bg {
+  background: linear-gradient(90deg, #1a1510 0%, #2a2218 8%, #15120e 16%, #0d0b0a 100%);
+}
+
+.d11-template-plate .d11-card-bg {
+  background:
+    linear-gradient(135deg, #7fd3ff 0%, #2a6f9e 35%, #0c2a3d 70%, #08151d 100%);
+}
+
+.d11-template-case .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 215, 120, 0.35), transparent 40%),
+    linear-gradient(160deg, #3a2a10, #120e08 60%, #070705);
+}
+
+.d11-template-oneofone .d11-card-bg {
+  background:
+    conic-gradient(from 0deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6, #ff6b6b);
+  background-size: 140% 140%;
+  animation: prism-drift 4s linear infinite;
+}
+
+.d11-card-texture {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.025) 2px,
+      rgba(255, 255, 255, 0.025) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.04) 3px,
+      rgba(0, 0, 0, 0.04) 4px
+    );
+  mix-blend-mode: soft-light;
+}
+
+.d11-plate-grain {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.2) 0 1px, transparent 2px);
+  background-size: 18px 18px, 22px 22px, 16px 16px;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+.d11-chrome-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.18) 40%,
+    rgba(180, 220, 255, 0.28) 48%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  animation: foil-sweep 3.2s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.d11-holo-wave {
+  background:
+    linear-gradient(
+      125deg,
+      rgba(255, 80, 120, 0.2),
+      rgba(255, 220, 80, 0.18),
+      rgba(80, 255, 180, 0.18),
+      rgba(80, 160, 255, 0.22),
+      rgba(200, 100, 255, 0.2)
+    );
+  background-size: 280% 280%;
+  animation: prism-drift 4.8s linear infinite;
+}
+
+.d11-rookie-badge {
+  border-radius: 999px;
+  border: 1px solid rgba(240, 215, 140, 0.65);
+  background: linear-gradient(180deg, rgba(240, 215, 140, 0.95), rgba(212, 175, 55, 0.9));
+  padding: 0.1rem 0.4rem;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #1a1408;
+}
+
+.d11-patch-window {
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.d11-patch-swatch {
+  height: 70%;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      transparent 2px 5px
+    ),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.25), transparent);
+}
+
+.d11-patch-label {
+  display: grid;
+  height: 30%;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.65);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.d11-auto-stroke {
+  height: 14%;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.25));
+}
+
+.d11-booklet-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 7%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.35));
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 25;
+}
+
+.d11-oneofone-ribbon {
+  position: absolute;
+  top: 18%;
+  right: -8%;
+  z-index: 25;
+  rotate: 35deg;
+  background: linear-gradient(90deg, #111, #d4af37, #111);
+  padding: 0.2rem 1.4rem;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff8dc;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.d11-case-burst {
+  pointer-events: none;
+  position: absolute;
+  inset: 8%;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 215, 140, 0.35);
+  box-shadow: inset 0 0 30px rgba(240, 215, 140, 0.12);
+  z-index: 18;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .foil-shine,
   .foil-prism,
@@ -329,7 +549,11 @@ a {
   .pack-charge-ring::after,
   .suspense-rays,
   .card-sparkle,
-  .card-reveal-pop {
+  .card-reveal-pop,
+  .d11-chrome-sheen,
+  .d11-holo-wave,
+  .d11-template-refractor .d11-card-bg,
+  .d11-template-oneofone .d11-card-bg {
     animation: none !important;
   }
 }
