@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { playerPortraitCandidates } from "@/lib/player-assets";
 
 /** Deterministic 32-bit hash for stable portrait palettes. */
 function hash32(input: string): number {
@@ -36,9 +37,22 @@ export function PlayerPortrait({
   position: string;
   accent: string;
   clubName?: string | null;
+  /** Preferred src (card front art or `/players/{slug}.webp`). */
   imageUrl?: string | null;
   className?: string;
 }) {
+  const candidates = useMemo(() => {
+    const list: string[] = [];
+    if (imageUrl?.trim()) list.push(imageUrl.trim());
+    for (const url of playerPortraitCandidates(playerSlug)) {
+      if (!list.includes(url)) list.push(url);
+    }
+    return list;
+  }, [imageUrl, playerSlug]);
+
+  const [srcIndex, setSrcIndex] = useState(0);
+  const failed = srcIndex >= candidates.length;
+
   const uid = useMemo(() => {
     const raw = (playerSlug || playerName).replace(/[^a-zA-Z0-9_-]/g, "");
     return raw || `p${hash32(playerName).toString(36)}`;
@@ -59,13 +73,17 @@ export function PlayerPortrait({
     return { skin, hair, jersey, jerseyDark, stripe, pitch, crowd, hue, number: (h % 28) + 1 };
   }, [playerSlug, playerName, position, accent]);
 
-  if (imageUrl) {
+  const activeSrc = !failed ? candidates[srcIndex] : null;
+
+  if (activeSrc) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={imageUrl}
+        key={activeSrc}
+        src={activeSrc}
         alt={playerName}
         className={`h-full w-full object-cover object-top ${className}`}
+        onError={() => setSrcIndex((i) => i + 1)}
       />
     );
   }
@@ -95,14 +113,12 @@ export function PlayerPortrait({
         </defs>
 
         <rect width="240" height="300" fill={`url(#sky-${uid})`} />
-        {/* stadium lights / crowd suggestion */}
         <ellipse cx="40" cy="70" rx="36" ry="18" fill="rgba(255,255,255,0.04)" />
         <ellipse cx="200" cy="60" rx="42" ry="20" fill="rgba(255,255,255,0.05)" />
         <rect x="0" y="185" width="240" height="115" fill="rgba(0,0,0,0.18)" />
         <path d="M0 186 L240 186 L240 300 L0 300 Z" fill="rgba(20,80,45,0.22)" />
         <rect width="240" height="300" fill={`url(#spot-${uid})`} />
 
-        {/* torso / jersey */}
         <path
           d="M28 300 C42 205 68 168 120 162 C172 168 198 205 212 300 Z"
           fill={`url(#jersey-${uid})`}
@@ -111,7 +127,12 @@ export function PlayerPortrait({
           d="M78 188 C95 172 145 172 162 188 L170 230 C145 214 95 214 70 230 Z"
           fill="rgba(255,255,255,0.14)"
         />
-        <path d="M70 230 L120 205 L170 230" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+        <path
+          d="M70 230 L120 205 L170 230"
+          fill="none"
+          stroke="rgba(255,255,255,0.2)"
+          strokeWidth="2"
+        />
         <text
           x="120"
           y="268"
@@ -124,10 +145,8 @@ export function PlayerPortrait({
           {palette.number}
         </text>
 
-        {/* neck + head */}
         <rect x="109" y="128" width="22" height="30" rx="7" fill={palette.skin} />
         <ellipse cx="120" cy="104" rx="33" ry="38" fill={palette.skin} />
-        {/* short athletic hair */}
         <path
           d="M88 98 C92 68 104 58 120 56 C136 58 148 68 152 98 C144 84 132 78 120 78 C108 78 96 84 88 98 Z"
           fill={palette.hair}

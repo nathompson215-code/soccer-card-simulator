@@ -48,6 +48,8 @@ export interface CardDTO {
   playerPosition: Position;
   playerEra: string;
   isRookie: boolean;
+  /** Convention path `/players/{slug}.webp` (or DB front art when set). */
+  playerImageUrl: string;
   clubName: string | null;
   nationalTeamName: string | null;
   tournamentName: string | null;

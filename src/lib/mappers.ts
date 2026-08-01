@@ -14,6 +14,7 @@ import type {
   Tournament,
 } from "@prisma/client";
 import type { CardDTO, ProductDTO } from "@/lib/types";
+import { resolveCardPortraitSrc } from "@/lib/player-assets";
 
 type CardWithRelations = Card & {
   numbering: NumberingSpec | null;
@@ -68,6 +69,10 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     playerPosition: player.position,
     playerEra: player.era,
     isRookie: player.era === "ROOKIE" || player.era === "PROSPECT",
+    playerImageUrl: resolveCardPortraitSrc({
+      playerSlug: player.slug,
+      frontImageUrl: card.frontImageUrl,
+    }),
     clubName: player.club?.name ?? null,
     nationalTeamName: player.nationalTeam?.name ?? null,
     tournamentName: product.tournament?.name ?? null,

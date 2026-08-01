@@ -52,11 +52,12 @@ export function TradingCardArt({
       <div className="absolute inset-[5%] overflow-hidden rounded-[10px] border border-white/15">
         <div className="absolute inset-0">
           <PlayerPortrait
+            key={card.playerImageUrl}
             playerName={card.playerName}
             playerSlug={card.playerSlug}
             position={card.playerPosition}
             accent={visual.accent}
-            imageUrl={card.frontImageUrl}
+            imageUrl={card.playerImageUrl}
           />
         </div>
 
