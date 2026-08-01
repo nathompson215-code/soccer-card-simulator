@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 
-/** Deterministic 32-bit hash for stable portrait palettes. */
 function hash32(input: string): number {
   let h = 2166136261;
   for (let i = 0; i < input.length; i++) {
@@ -18,16 +17,17 @@ function hsl(h: number, s: number, l: number, a = 1) {
 }
 
 const POS_KIT: Record<string, [number, number]> = {
-  GK: [46, 68],
-  DEF: [214, 56],
-  MID: [150, 48],
-  FWD: [8, 64],
+  GK: [46, 70],
+  DEF: [214, 58],
+  MID: [150, 50],
+  FWD: [8, 66],
 };
 
+type Hair = "fade" | "waves" | "short" | "flow";
+
 /**
- * Premium sports-card placeholder when no authorized photo exists.
- * Silhouette + photographic stadium depth (not cartoon avatars / initials).
- * Real scans always win via `imageUrl`.
+ * Premium illustrated sports-card portrait fallback.
+ * Authorized photos (`imageUrl`) always take priority.
  */
 export function PlayerPortrait({
   playerName,
@@ -50,32 +50,41 @@ export function PlayerPortrait({
     return raw || `p${hash32(playerName).toString(36)}`;
   }, [playerSlug, playerName]);
 
-  const palette = useMemo(() => {
+  const p = useMemo(() => {
     const h = hash32(playerSlug || playerName);
     const kit = POS_KIT[position] ?? [160, 55];
-    const hue = (kit[0] + (h % 28) - 14 + 360) % 360;
-    const jersey = accent || hsl(hue, kit[1], 40);
-    const jerseyDark = hsl(hue, kit[1] + 10, 16);
-    const jerseyLight = hsl(hue, Math.min(72, kit[1] + 8), 58);
-    const skinTone = h % 5;
-    const skinL = [62, 48, 36, 24, 14][skinTone];
-    const skin = hsl(24, 38, skinL);
-    const skinDeep = hsl(20, 42, Math.max(8, skinL - 16));
+    const hue = (kit[0] + (h % 26) - 13 + 360) % 360;
+    const tone = h % 6;
+    const skins: Array<[number, number, number]> = [
+      [28, 40, 78],
+      [26, 46, 66],
+      [24, 50, 52],
+      [22, 48, 40],
+      [20, 42, 28],
+      [18, 34, 18],
+    ];
+    const [sh, ss, sl] = skins[tone];
+    const hairs: Hair[] = ["fade", "waves", "short", "flow"];
     return {
       hue,
-      jersey,
-      jerseyDark,
-      jerseyLight,
-      stripe: hsl((hue + 36) % 360, 52, 64),
-      night: hsl(218, 38, 5),
-      pitch: hsl(146, 42, 9),
-      warm: hsl(34, 80, 56),
-      cool: hsl(hue, 55, 62),
-      skin,
-      skinDeep,
+      skin: hsl(sh, ss, sl),
+      skinMid: hsl(sh, ss + 4, Math.max(14, sl - 10)),
+      skinDeep: hsl(sh + 4, ss + 10, Math.max(10, sl - 20)),
+      skinLite: hsl(sh + 8, Math.max(18, ss - 10), Math.min(90, sl + 16)),
+      hair: (h >> 2) % 3 === 1 ? hsl(30, 45, 28 + (h % 12)) : hsl(22, 14, 5 + (h % 8)),
+      hairStyle: hairs[h % hairs.length],
+      jersey: accent || hsl(hue, kit[1], 40),
+      jerseyDark: hsl(hue, kit[1] + 8, 16),
+      jerseyLite: hsl(hue, Math.min(75, kit[1] + 6), 56),
+      stripe: hsl((hue + 38) % 360, 55, 66),
+      night: hsl(220, 36, 6),
+      pitch: hsl(145, 40, 10),
+      warm: hsl(36, 78, 58),
+      rim: hsl(hue, 70, 70),
       number: (h % 28) + 1,
-      lean: h % 3 === 1,
+      beard: (h >> 3) % 5 === 0,
       look: h % 2 === 0 ? -1 : 1,
+      broad: h % 3 !== 1,
     };
   }, [playerSlug, playerName, position, accent]);
 
@@ -88,212 +97,132 @@ export function PlayerPortrait({
     );
   }
 
-  const scaleX = palette.lean ? 0.94 : 1.04;
+  const sx = p.broad ? 1.04 : 0.96;
 
   return (
     <div className={`d11-portrait-illustrated relative h-full w-full ${className}`} aria-hidden>
       <svg viewBox="0 0 320 420" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id={`sky-${uid}`} x1="0" y1="0" x2="0.2" y2="1">
-            <stop offset="0%" stopColor={hsl(palette.hue, 30, 10)} />
-            <stop offset="40%" stopColor={palette.night} />
-            <stop offset="75%" stopColor={palette.pitch} />
-            <stop offset="100%" stopColor={hsl(150, 50, 4)} />
+          <linearGradient id={`bg-${uid}`} x1="0.05" y1="0" x2="0.2" y2="1">
+            <stop offset="0%" stopColor={hsl(p.hue, 28, 12)} />
+            <stop offset="38%" stopColor={p.night} />
+            <stop offset="72%" stopColor={p.pitch} />
+            <stop offset="100%" stopColor={hsl(152, 45, 5)} />
           </linearGradient>
-          <radialGradient id={`key-${uid}`} cx="34%" cy="12%" r="62%">
-            <stop offset="0%" stopColor={hsl(40, 70, 92, 0.7)} />
-            <stop offset="35%" stopColor={hsl(36, 65, 55, 0.22)} />
+          <radialGradient id={`key-${uid}`} cx="36%" cy="14%" r="58%">
+            <stop offset="0%" stopColor={hsl(40, 60, 92, 0.65)} />
+            <stop offset="40%" stopColor={hsl(36, 55, 55, 0.18)} />
             <stop offset="100%" stopColor="rgba(0,0,0,0)" />
           </radialGradient>
-          <radialGradient id={`rim-${uid}`} cx="88%" cy="30%" r="45%">
-            <stop offset="0%" stopColor={hsl(palette.hue, 80, 72, 0.65)} />
-            <stop offset="55%" stopColor={hsl(palette.hue, 60, 40, 0.15)} />
+          <radialGradient id={`rimg-${uid}`} cx="86%" cy="28%" r="42%">
+            <stop offset="0%" stopColor={hsl(p.hue, 75, 70, 0.55)} />
             <stop offset="100%" stopColor="rgba(0,0,0,0)" />
           </radialGradient>
-          <linearGradient id={`body-${uid}`} x1="0.2" y1="0" x2="0.85" y2="1">
-            <stop offset="0%" stopColor={palette.jerseyLight} />
-            <stop offset="20%" stopColor={palette.stripe} />
-            <stop offset="35%" stopColor={palette.jersey} />
-            <stop offset="100%" stopColor={palette.jerseyDark} />
+          <linearGradient id={`jer-${uid}`} x1="0.2" y1="0" x2="0.85" y2="1">
+            <stop offset="0%" stopColor={p.jerseyLite} />
+            <stop offset="18%" stopColor={p.stripe} />
+            <stop offset="32%" stopColor={p.jersey} />
+            <stop offset="100%" stopColor={p.jerseyDark} />
           </linearGradient>
-          <linearGradient id={`skin-${uid}`} x1="0.25" y1="0" x2="0.9" y2="1">
-            <stop offset="0%" stopColor={palette.skin} />
-            <stop offset="100%" stopColor={palette.skinDeep} />
-          </linearGradient>
-          <linearGradient id={`shade-${uid}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
-            <stop offset="50%" stopColor="rgba(0,0,0,0)" />
-            <stop offset="100%" stopColor="rgba(0,0,0,0.55)" />
+          <linearGradient id={`sk-${uid}`} x1="0.25" y1="0" x2="0.9" y2="1">
+            <stop offset="0%" stopColor={p.skinLite} />
+            <stop offset="45%" stopColor={p.skin} />
+            <stop offset="100%" stopColor={p.skinDeep} />
           </linearGradient>
           <linearGradient id={`fog-${uid}`} x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stopColor="rgba(0,0,0,0.7)" />
-            <stop offset="55%" stopColor="rgba(0,0,0,0.15)" />
+            <stop offset="0%" stopColor="rgba(0,0,0,0.65)" />
+            <stop offset="50%" stopColor="rgba(0,0,0,0.12)" />
             <stop offset="100%" stopColor="rgba(0,0,0,0)" />
           </linearGradient>
-          <filter id={`glow-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3.5" />
+          <filter id={`b-${uid}`} x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.8" />
           </filter>
-          <filter id={`soft-${uid}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="1.2" />
+          <filter id={`s-${uid}`} x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur stdDeviation="0.9" />
           </filter>
-          <clipPath id={`frame-${uid}`}>
-            <rect width="320" height="420" />
-          </clipPath>
-          <radialGradient id={`vig-${uid}`} cx="50%" cy="40%" r="75%">
-            <stop offset="55%" stopColor="rgba(0,0,0,0)" />
-            <stop offset="100%" stopColor="rgba(0,0,0,0.5)" />
+          <radialGradient id={`vig-${uid}`} cx="50%" cy="38%" r="72%">
+            <stop offset="50%" stopColor="rgba(0,0,0,0)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0.48)" />
           </radialGradient>
         </defs>
 
-        <g clipPath={`url(#frame-${uid})`}>
-          {/* Photography-style stadium plate */}
-          <rect width="320" height="420" fill={`url(#sky-${uid})`} />
-          <ellipse cx="40" cy="95" rx="130" ry="58" fill="rgba(255,255,255,0.05)" filter={`url(#glow-${uid})`} />
-          <ellipse cx="290" cy="78" rx="140" ry="62" fill="rgba(255,255,255,0.055)" filter={`url(#glow-${uid})`} />
-          <ellipse cx="160" cy="48" rx="160" ry="42" fill="rgba(255,255,255,0.03)" />
-          {/* crowd bowl */}
-          <path d="M-40 210 Q160 145 360 210 L360 265 Q160 205 -40 265 Z" fill="rgba(255,255,255,0.04)" />
-          <path d="M0 240 Q160 188 320 240 L320 420 L0 420 Z" fill="rgba(0,0,0,0.45)" />
-          <path d="M0 268 Q160 222 320 268 L320 420 L0 420 Z" fill="rgba(8,58,30,0.55)" />
-          <path
-            d="M18 300 H302 M42 332 H278 M66 364 H254"
-            fill="none"
-            stroke="rgba(255,255,255,0.05)"
-            strokeWidth="1.5"
-          />
-          {/* light shafts */}
-          <path d="M20 -40 L110 200" stroke={palette.warm} strokeWidth="40" opacity="0.1" filter={`url(#glow-${uid})`} />
-          <path d="M270 -50 L190 170" stroke={palette.cool} strokeWidth="48" opacity="0.11" filter={`url(#glow-${uid})`} />
-          <rect width="320" height="420" fill={`url(#key-${uid})`} />
-          <rect width="320" height="420" fill={`url(#rim-${uid})`} />
+        <rect width="320" height="420" fill={`url(#bg-${uid})`} />
+        <ellipse cx="45" cy="95" rx="120" ry="52" fill="rgba(255,255,255,0.05)" filter={`url(#b-${uid})`} />
+        <ellipse cx="285" cy="80" rx="130" ry="56" fill="rgba(255,255,255,0.055)" filter={`url(#b-${uid})`} />
+        <path d="M-20 215 Q160 155 340 215 L340 265 Q160 210 -20 265 Z" fill="rgba(255,255,255,0.035)" />
+        <path d="M0 245 Q160 195 320 245 L320 420 L0 420 Z" fill="rgba(0,0,0,0.42)" />
+        <path d="M0 272 Q160 228 320 272 L320 420 L0 420 Z" fill="rgba(10,62,32,0.5)" />
+        <path d="M22 305 H298 M48 338 H272 M74 370 H246" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1.5" />
+        <path d="M25 -30 L105 185" stroke={p.warm} strokeWidth="36" opacity="0.09" filter={`url(#b-${uid})`} />
+        <path d="M265 -40 L195 165" stroke={p.rim} strokeWidth="42" opacity="0.1" filter={`url(#b-${uid})`} />
+        <rect width="320" height="420" fill={`url(#key-${uid})`} />
+        <rect width="320" height="420" fill={`url(#rimg-${uid})`} />
 
-          {/* Athlete — chest-up sports-card crop, silhouette-led */}
-          <g transform={`translate(160 430) scale(${scaleX} 1) translate(-160 -430)`}>
-            {/* depth shadow */}
-            <path
-              d="M0 430 C20 300 65 245 160 232 C255 245 300 300 320 430 Z"
-              fill="rgba(0,0,0,0.5)"
-              transform="translate(8 6)"
-              filter={`url(#soft-${uid})`}
-            />
-            {/* jersey torso */}
-            <path
-              d="M6 430 C26 298 70 242 160 230 C250 242 294 298 314 430 Z"
-              fill={`url(#body-${uid})`}
-            />
-            {/* collar / V */}
-            <path
-              d="M105 252 C128 228 192 228 215 252 L232 310 C192 284 128 284 88 310 Z"
-              fill="rgba(255,255,255,0.14)"
-            />
-            <path
-              d="M114 258 C136 240 184 240 206 258"
-              fill="none"
-              stroke="rgba(255,255,255,0.38)"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-            />
-            {/* sleeve seams */}
-            <path d="M42 320 C76 286 100 270 116 262" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="5" strokeLinecap="round" />
-            <path d="M278 320 C244 286 220 270 204 262" fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth="5" strokeLinecap="round" />
-            {/* crest */}
-            <ellipse cx="160" cy="312" rx="16" ry="18" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <text
-              x="160"
-              y="400"
-              textAnchor="middle"
-              fill="rgba(255,255,255,0.78)"
-              fontFamily="var(--font-bebas), Impact, sans-serif"
-              fontSize="64"
-              fontWeight="700"
-              letterSpacing="4"
-            >
-              {palette.number}
-            </text>
-            <path d="M136 255 C144 330 146 375 148 430" fill="none" stroke="rgba(0,0,0,0.25)" strokeWidth="14" strokeLinecap="round" opacity="0.5" />
-            <path d="M194 258 C188 335 184 380 182 430" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="12" strokeLinecap="round" />
-          </g>
-
-          {/* Neck + head as shaded form (no cartoon features) */}
-          <g transform={`translate(${palette.look * 4} 0)`}>
-            <path d="M138 205 C145 228 150 245 160 250 C170 245 175 228 182 205 Z" fill={`url(#skin-${uid})`} />
-            {/* head oval with soft lighting — no eyes/mouth dots */}
-            <ellipse cx="160" cy="155" rx="50" ry="58" fill={`url(#skin-${uid})`} />
-            {/* hair mass as dark silhouette cap */}
-            <path
-              d="M110 155 C114 95 134 78 160 74 C186 78 206 95 210 155 C200 122 182 112 160 112 C138 112 120 122 110 155 Z"
-              fill={hsl(20, 12, 6)}
-            />
-            <path
-              d="M110 152 C116 138 128 130 140 128 L140 162 C128 162 116 158 110 152 Z"
-              fill={hsl(20, 12, 6)}
-            />
-            <path
-              d="M210 152 C204 138 192 130 180 128 L180 162 C192 162 204 158 210 152 Z"
-              fill={hsl(20, 12, 6)}
-            />
-            {/* facial plane shading only — premium illustrated look */}
-            <ellipse
-              cx={160 + palette.look * -16}
-              cy="168"
-              rx="16"
-              ry="22"
-              fill="rgba(0,0,0,0.22)"
-              filter={`url(#soft-${uid})`}
-            />
-            <ellipse
-              cx={160 + palette.look * 18}
-              cy="160"
-              rx="12"
-              ry="24"
-              fill="rgba(255,255,255,0.14)"
-              filter={`url(#soft-${uid})`}
-            />
-            {/* brow ridge suggestion */}
-            <path
-              d="M128 148 C140 142 152 142 158 146"
-              fill="none"
-              stroke="rgba(0,0,0,0.28)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              opacity="0.55"
-            />
-            <path
-              d="M162 146 C168 142 180 142 192 148"
-              fill="none"
-              stroke="rgba(0,0,0,0.28)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              opacity="0.55"
-            />
-            {/* nose bridge shadow */}
-            <path
-              d="M156 152 C159 168 161 176 164 180"
-              fill="none"
-              stroke="rgba(0,0,0,0.22)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-          </g>
-
-          {/* Rim light edge on silhouette */}
-          <path
-            d="M248 200 C258 250 268 320 276 430"
-            fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth="10"
-            strokeLinecap="round"
-            opacity="0.45"
-            filter={`url(#soft-${uid})`}
-          />
-          <ellipse cx="205" cy="158" rx="7" ry="28" fill="rgba(255,255,255,0.18)" filter={`url(#soft-${uid})`} />
-
-          {/* Grade overlays */}
-          <rect width="320" height="420" fill={`url(#shade-${uid})`} />
-          <rect width="320" height="420" fill={`url(#fog-${uid})`} />
-          <rect width="320" height="420" fill={`url(#key-${uid})`} opacity="0.28" />
-          <rect width="320" height="420" fill={`url(#vig-${uid})`} />
+        {/* Torso */}
+        <g transform={`translate(160 425) scale(${sx} 1) translate(-160 -425)`}>
+          <path d="M4 425 C24 300 68 244 160 232 C252 244 296 300 316 425 Z" fill="rgba(0,0,0,0.4)" transform="translate(7 5)" filter={`url(#s-${uid})`} />
+          <path d="M10 425 C30 298 72 242 160 230 C248 242 290 298 310 425 Z" fill={`url(#jer-${uid})`} />
+          <path d="M108 252 C130 230 190 230 212 252 L228 305 C190 280 130 280 92 305 Z" fill="rgba(255,255,255,0.14)" />
+          <path d="M116 258 C138 242 182 242 204 258" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2.4" strokeLinecap="round" />
+          <path d="M46 318 C78 286 100 272 114 264" fill="none" stroke="rgba(0,0,0,0.28)" strokeWidth="4.5" strokeLinecap="round" />
+          <path d="M274 318 C242 286 220 272 206 264" fill="none" stroke="rgba(0,0,0,0.28)" strokeWidth="4.5" strokeLinecap="round" />
+          <ellipse cx="160" cy="308" rx="15" ry="17" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.38)" strokeWidth="1.3" />
+          <text x="160" y="398" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontFamily="var(--font-bebas), Impact, sans-serif" fontSize="60" fontWeight="700" letterSpacing="3">
+            {p.number}
+          </text>
+          <path d="M138 254 C146 325 148 370 150 425" fill="none" stroke="rgba(0,0,0,0.22)" strokeWidth="12" strokeLinecap="round" opacity="0.5" />
+          <path d="M192 256 C186 330 182 375 180 425" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="10" strokeLinecap="round" />
         </g>
+
+        {/* Neck + head */}
+        <g transform={`translate(${p.look * 3} 0)`}>
+          <path d="M140 204 C146 226 150 242 160 246 C170 242 174 226 180 204 Z" fill={`url(#sk-${uid})`} />
+          <ellipse cx="160" cy="152" rx="49" ry="56" fill={`url(#sk-${uid})`} />
+
+          {/* Hair */}
+          {p.hairStyle === "fade" ? (
+            <path d="M111 150 C115 92 134 74 160 70 C186 74 205 92 209 150 C199 120 181 110 160 110 C139 110 121 120 111 150 Z" fill={p.hair} />
+          ) : null}
+          {p.hairStyle === "waves" ? (
+            <path d="M110 152 C114 86 136 66 160 64 C188 66 210 90 212 152 C214 195 202 230 194 250 C184 205 178 168 174 150 C166 172 154 172 146 150 C140 170 130 210 120 248 C114 215 108 180 110 152 Z" fill={p.hair} />
+          ) : null}
+          {p.hairStyle === "short" ? (
+            <>
+              <ellipse cx="160" cy="118" rx="45" ry="30" fill={p.hair} />
+              <path d="M114 145 C120 110 140 96 160 94 C180 96 200 110 206 145" fill={p.hair} />
+            </>
+          ) : null}
+          {p.hairStyle === "flow" ? (
+            <path d="M108 150 C114 80 138 60 164 58 C194 62 214 92 216 150 C220 205 206 250 196 275 C186 220 182 175 176 148 C166 175 148 172 138 146 C128 178 120 225 110 270 C104 220 102 180 108 150 Z" fill={p.hair} />
+          ) : null}
+          <path d="M111 148 C117 134 128 126 140 124 L140 158 C128 158 116 154 111 148 Z" fill={p.hair} />
+          <path d="M209 148 C203 134 192 126 180 124 L180 158 C192 158 204 154 209 148 Z" fill={p.hair} />
+
+          {/* Soft facial planes (illustrated, not avatar dots) */}
+          <ellipse cx={160 + p.look * -15} cy="166" rx="15" ry="20" fill="rgba(0,0,0,0.18)" filter={`url(#s-${uid})`} />
+          <ellipse cx={160 + p.look * 17} cy="158" rx="11" ry="22" fill="rgba(255,255,255,0.12)" filter={`url(#s-${uid})`} />
+          <path d="M128 147 C140 140 152 140 158 145" fill="none" stroke={p.hair} strokeWidth="2.6" strokeLinecap="round" opacity="0.7" />
+          <path d="M162 145 C168 140 180 140 192 147" fill="none" stroke={p.hair} strokeWidth="2.6" strokeLinecap="round" opacity="0.7" />
+          {/* Eye sockets as soft lids */}
+          <path d="M132 154 C138 150 148 150 154 154" fill="none" stroke="rgba(0,0,0,0.35)" strokeWidth="2.2" strokeLinecap="round" />
+          <path d="M166 154 C172 150 182 150 188 154" fill="none" stroke="rgba(0,0,0,0.35)" strokeWidth="2.2" strokeLinecap="round" />
+          <ellipse cx="143" cy="156" rx="3.2" ry="3.6" fill="#1a1410" opacity="0.85" />
+          <ellipse cx="177" cy="156" rx="3.2" ry="3.6" fill="#1a1410" opacity="0.85" />
+          <ellipse cx="141.8" cy="154.8" rx="1" ry="1.1" fill="rgba(255,255,255,0.3)" />
+          <ellipse cx="175.8" cy="154.8" rx="1" ry="1.1" fill="rgba(255,255,255,0.3)" />
+          <path d="M156 156 C159 168 161 174 164 178" fill="none" stroke="rgba(0,0,0,0.25)" strokeWidth="2" strokeLinecap="round" />
+          <ellipse cx="163" cy="180" rx="4.5" ry="2.6" fill="rgba(0,0,0,0.2)" />
+          <path d="M147 190 C155 195 165 195 173 190" fill="none" stroke="#5a3a30" strokeWidth="2.2" strokeLinecap="round" opacity="0.5" />
+          {p.beard ? (
+            <path d="M124 178 C136 210 184 210 196 178 C180 200 140 200 124 178 Z" fill={p.hair} opacity="0.38" />
+          ) : null}
+          <ellipse cx="202" cy="160" rx="7" ry="22" fill="rgba(255,255,255,0.14)" filter={`url(#s-${uid})`} />
+        </g>
+
+        <path d="M252 290 C262 335 270 380 276 425" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="12" strokeLinecap="round" opacity="0.35" filter={`url(#s-${uid})`} />
+        <rect width="320" height="420" fill={`url(#fog-${uid})`} />
+        <rect width="320" height="420" fill={`url(#key-${uid})`} opacity="0.22" />
+        <rect width="320" height="420" fill={`url(#vig-${uid})`} />
       </svg>
     </div>
   );

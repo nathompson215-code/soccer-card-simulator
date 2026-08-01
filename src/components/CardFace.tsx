@@ -71,13 +71,21 @@ export function CardFace({
         ? "hit-pulse border-gold card-frame-mythic"
         : visual.borderTone === "gold" || visual.borderTone === "case"
           ? "hit-pulse border-gold"
-          : visual.borderTone === "metal" || celebration === "foil"
-            ? "border-sky-300/50 card-frame-foil"
-            : visual.borderTone === "plate"
-              ? "border-cyan-200/40"
-              : celebration === "glow"
-                ? "border-pitch-400/60"
-                : "border-white/20";
+          : visual.borderTone === "orange"
+            ? "hit-pulse border-orange-400/70"
+            : visual.borderTone === "red"
+              ? "hit-pulse border-red-400/70"
+              : visual.borderTone === "black"
+                ? "border-white/25 card-frame-black"
+                : visual.borderTone === "prism"
+                  ? "hit-pulse border-fuchsia-300/50 card-frame-prism"
+                  : visual.borderTone === "metal" || celebration === "foil"
+                    ? "border-sky-300/50 card-frame-foil"
+                    : visual.borderTone === "plate"
+                      ? "border-cyan-200/40"
+                      : celebration === "glow"
+                        ? "border-pitch-400/60"
+                        : "border-white/20";
 
   return (
     <motion.div
@@ -106,7 +114,7 @@ export function CardFace({
       className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
     >
       <div
-        className={`d11-card-shell relative h-full w-full overflow-hidden rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
+        className={`d11-card-shell relative h-full w-full overflow-hidden rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} skin-shell-${visual.skin} ${borderClass} ${
           revealActive ? "card-reveal-pop" : ""
         }`}
       >
@@ -132,9 +140,13 @@ export function CardFace({
           <div className="d11-holo-wave pointer-events-none absolute inset-0 z-30 opacity-45 mix-blend-overlay" />
         ) : null}
 
+        {visual.showPrism ? (
+          <div className="d11-prism-sweep pointer-events-none absolute inset-0 z-30 opacity-40 mix-blend-color-dodge" />
+        ) : null}
+
         <div className="d11-soft-light pointer-events-none absolute inset-0 z-30" />
 
-        {interactiveFoil && (visual.showFoil || visual.showChrome || visual.showHolo) ? (
+        {interactiveFoil && (visual.showFoil || visual.showChrome || visual.showHolo || visual.showPrism) ? (
           <motion.div
             className="pointer-events-none absolute inset-0 z-30 mix-blend-soft-light"
             style={{ background: shine }}
