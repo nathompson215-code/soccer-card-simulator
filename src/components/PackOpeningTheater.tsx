@@ -390,12 +390,12 @@ export function PackOpeningTheater({
                 </div>
 
                 <div className="safe-bottom shrink-0 border-t border-white/10 bg-[#07110d]/90 px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
-                  <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
+                  <div className="mx-auto grid w-full max-w-3xl grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center">
                     <button
                       type="button"
                       disabled={!cardReady || revealAll}
                       onClick={nextCard}
-                      className="min-h-11 flex-1 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:flex-none sm:min-w-[160px]"
+                      className="min-h-11 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-[160px] sm:flex-none"
                     >
                       {revealIndex < currentPulls.length - 1
                         ? "Next Card"
@@ -407,7 +407,7 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={revealAll || phase !== "revealing"}
                       onClick={startRevealAll}
-                      className="min-h-11 flex-1 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-5 py-2.5 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-4 py-2.5 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
                     >
                       Reveal All
                     </button>
@@ -415,14 +415,14 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={cardReady || skipAnimation}
                       onClick={skipCurrentAnimation}
-                      className="min-h-11 flex-1 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
                     >
                       Skip Animation
                     </button>
                     <button
                       type="button"
                       onClick={finishSession}
-                      className="min-h-11 flex-1 rounded-full border border-gold/40 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none"
+                      className="min-h-11 rounded-full border border-gold/40 bg-gold/10 px-4 py-2.5 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none col-span-2 sm:col-span-1"
                     >
                       Finish / Add to Collection
                     </button>

@@ -343,16 +343,17 @@ a {
 }
 
 .d11-card-size-theater {
-  width: min(78vw, 18.5rem, calc(52dvh * 5 / 7));
+  /* ~55–60% of reveal stage height; 5:7 trading-card ratio */
+  width: min(82vw, 20rem, calc(54dvh * 5 / 7));
   aspect-ratio: 5 / 7;
   height: auto;
-  max-height: min(56dvh, 22rem);
+  max-height: min(58dvh, 24rem);
 }
 
 @supports (width: 1cqh) {
   .d11-card-size-theater {
-    width: min(78cqi, 18.5rem, calc(58cqh * 5 / 7));
-    max-height: min(58cqh, 22rem);
+    width: min(82cqi, 20rem, calc(60cqh * 5 / 7));
+    max-height: min(60cqh, 24rem);
   }
 }
 
