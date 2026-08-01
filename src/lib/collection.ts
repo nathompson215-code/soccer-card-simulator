@@ -103,6 +103,13 @@ export async function getCollection() {
   };
 }
 
+/** Nav badge only — avoids shipping the full owned-card payload on every route. */
+export async function getCollectionOwnedCount() {
+  const user = await getDemoUser();
+  const totalOwned = await prisma.userCard.count({ where: { userId: user.id } });
+  return { totalOwned };
+}
+
 export async function toggleFavorite(cardId: string) {
   const user = await getDemoUser();
   const existing = await prisma.favorite.findUnique({
