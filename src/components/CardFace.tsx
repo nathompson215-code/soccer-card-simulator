@@ -21,8 +21,9 @@ interface CardFaceProps {
 const SIZE_CLASS: Record<NonNullable<CardFaceProps["size"]>, string> = {
   sm: "w-[148px] h-[207px]",
   md: "w-[210px] h-[294px]",
-  lg: "w-[min(78vw,300px)] h-[min(109vw,420px)]",
-  xl: "w-[min(86vw,360px)] h-[min(120vw,504px)]",
+  lg: "w-[min(72vw,280px)] aspect-[5/7] h-auto max-h-[min(48dvh,380px)]",
+  /** Pack-opening theater: fit full card + chrome in ~55–60% of stage height */
+  xl: "d11-card-size-theater",
 };
 
 export function CardFace({

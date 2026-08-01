@@ -336,6 +336,52 @@ a {
   isolation: isolate;
 }
 
+/* Pack theater: full card always visible (~55–60% of stage), 5:7 ratio */
+.d11-reveal-stage {
+  container-type: size;
+  container-name: reveal-stage;
+}
+
+.d11-card-size-theater {
+  /* ~55–60% of reveal stage height; 5:7 trading-card ratio */
+  width: min(82vw, 20rem, calc(54dvh * 5 / 7));
+  aspect-ratio: 5 / 7;
+  height: auto;
+  max-height: min(58dvh, 24rem);
+}
+
+@supports (width: 1cqh) {
+  .d11-card-size-theater {
+    width: min(82cqi, 20rem, calc(60cqh * 5 / 7));
+    max-height: min(60cqh, 24rem);
+  }
+}
+
+.d11-portrait-photo {
+  position: relative;
+  isolation: isolate;
+}
+
+.d11-portrait-photo img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.d11-portrait-illustrated {
+  position: relative;
+  overflow: hidden;
+  background: #0a1014;
+}
+
+.d11-portrait-illustrated svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .d11-card-art {
   background: #070d0a;
   color: white;
