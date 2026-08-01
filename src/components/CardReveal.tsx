@@ -148,8 +148,8 @@ export function CardReveal({
   };
 
   return (
-    <div className="relative flex w-full flex-col items-center">
-      <div className="mb-4 text-center md:mb-5">
+    <div className="relative flex h-full min-h-0 w-full flex-col items-center">
+      <div className="mb-2 shrink-0 text-center md:mb-3">
         <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
           {packLabel} · {cardLabel}
         </div>
@@ -161,7 +161,7 @@ export function CardReveal({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
-              className="display mt-2 text-2xl text-ink-muted md:text-3xl"
+              className="display mt-1 text-xl text-ink-muted md:text-2xl"
             >
               Something special...
             </motion.div>
@@ -172,7 +172,7 @@ export function CardReveal({
               initial={{ opacity: 0, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className={`display mt-2 text-3xl md:text-4xl ${
+              className={`display mt-1 text-2xl md:text-3xl ${
                 celebration === "jackpot" || celebration === "hit" ? "text-gold" : "text-pitch-400"
               }`}
             >
@@ -182,7 +182,7 @@ export function CardReveal({
         </AnimatePresence>
       </div>
 
-      <div className="relative flex min-h-[380px] w-full items-center justify-center md:min-h-[480px]">
+      <div className="relative flex min-h-0 w-full flex-1 items-center justify-center">
         {step === "suspense" ? (
           <button
             type="button"
@@ -208,7 +208,7 @@ export function CardReveal({
             <CardFace
               card={pull.card}
               serialDisplay={pull.serialDisplay}
-              size="xl"
+              size="theater"
               celebration={celebration}
               interactiveFoil={celebration !== "none"}
               revealActive={step === "shown"}
@@ -239,7 +239,7 @@ export function CardReveal({
 function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
   return (
     <motion.div
-      className="relative h-[min(109vw,420px)] w-[min(78vw,300px)] md:h-[504px] md:w-[360px]"
+      className="relative aspect-[5/7] h-auto w-[min(72vw,280px,calc((100dvh-22rem)*5/7))] md:w-[min(56vw,300px,calc((100dvh-18rem)*5/7))]"
       animate={
         celebration === "none"
           ? { scale: 1, rotate: 0 }

@@ -9,7 +9,7 @@ import type { CardDTO, Celebration } from "@/lib/types";
 interface CardFaceProps {
   card: CardDTO;
   serialDisplay?: string | null;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "theater";
   celebration?: Celebration;
   onClick?: () => void;
   className?: string;
@@ -23,6 +23,9 @@ const SIZE_CLASS: Record<NonNullable<CardFaceProps["size"]>, string> = {
   md: "w-[210px] h-[294px]",
   lg: "w-[min(78vw,300px)] h-[min(109vw,420px)]",
   xl: "w-[min(86vw,360px)] h-[min(120vw,504px)]",
+  // Pack-opening viewport fit: keep 5:7 trading-card ratio, always on-screen with chrome.
+  theater:
+    "aspect-[5/7] h-auto w-[min(72vw,280px,calc((100dvh-22rem)*5/7))] md:w-[min(56vw,300px,calc((100dvh-18rem)*5/7))]",
 };
 
 export function CardFace({
