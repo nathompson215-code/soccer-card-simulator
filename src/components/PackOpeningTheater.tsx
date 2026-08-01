@@ -407,7 +407,7 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={revealAll || phase !== "revealing"}
                       onClick={startRevealAll}
-                      className="min-h-12 flex-1 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-5 py-3 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 flex-1 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-5 py-2.5 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
                     >
                       Reveal All
                     </button>
@@ -415,14 +415,14 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={cardReady || skipAnimation}
                       onClick={skipCurrentAnimation}
-                      className="min-h-12 flex-1 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 flex-1 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
                     >
                       Skip Animation
                     </button>
                     <button
                       type="button"
                       onClick={finishSession}
-                      className="min-h-12 flex-1 rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none"
+                      className="min-h-11 flex-1 rounded-full border border-gold/40 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none"
                     >
                       Finish / Add to Collection
                     </button>
