@@ -300,7 +300,7 @@ export async function getPlayerBySlug(slug: string): Promise<PlayerDTO | null> {
 }
 
 export async function getDemoUser() {
-  const email = process.env.NEXT_PUBLIC_DEMO_USER_EMAIL ?? "collector@strikercards.local";
+  const email = process.env.NEXT_PUBLIC_DEMO_USER_EMAIL ?? "collector@drafteleven.local";
   return prisma.user.upsert({
     where: { email },
     update: {},

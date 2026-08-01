@@ -1,4 +1,4 @@
-# Striker Cards — Soccer Card Collection Simulator
+# Draft Eleven — Soccer Card Collection Simulator
 
 A PostgreSQL-backed soccer trading card simulator and archive. Browse products, open packs with database-driven odds, and build a persistent collection.
 
@@ -45,4 +45,4 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Demo user
 
-Seed creates `collector@strikercards.local`. Pack openings save `UserCard` rows for that user.
+Seed creates `collector@drafteleven.local`. Pack openings save `UserCard` rows for that user.
