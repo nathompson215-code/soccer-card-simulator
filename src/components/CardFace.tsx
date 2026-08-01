@@ -2,15 +2,9 @@
 
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { useRef, type MouseEvent } from "react";
-import { cardTypeLabel, formatMoney, rarityLabel } from "@/lib/format";
+import { TradingCardArt } from "@/components/TradingCardArt";
+import { resolveCardVisual } from "@/lib/card-visual";
 import type { CardDTO, Celebration } from "@/lib/types";
-
-const POS_COLORS: Record<string, string> = {
-  GK: "#F9A825",
-  DEF: "#1E88E5",
-  MID: "#43A047",
-  FWD: "#E53935",
-};
 
 interface CardFaceProps {
   card: CardDTO;
@@ -41,13 +35,13 @@ export function CardFace({
         ? "w-[240px] h-[336px]"
         : "w-[180px] h-[252px]";
 
-  const serial = serialDisplay ?? (card.printRun ? `?/${card.printRun}` : null);
+  const visual = resolveCardVisual(card, celebration);
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
   const smx = useSpring(mx, { stiffness: 180, damping: 22 });
   const smy = useSpring(my, { stiffness: 180, damping: 22 });
-  const shine = useMotionTemplate`radial-gradient(420px circle at ${smx}% ${smy}%, rgba(255,255,255,0.38), transparent 42%)`;
+  const shine = useMotionTemplate`radial-gradient(460px circle at ${smx}% ${smy}%, rgba(255,255,255,0.42), transparent 42%)`;
   const tiltX = useSpring(0, { stiffness: 200, damping: 20 });
   const tiltY = useSpring(0, { stiffness: 200, damping: 20 });
 
@@ -70,15 +64,17 @@ export function CardFace({
   };
 
   const borderClass =
-    celebration === "jackpot"
+    celebration === "jackpot" || visual.borderTone === "rainbow"
       ? "hit-pulse border-gold card-frame-jackpot"
-      : celebration === "hit"
+      : celebration === "hit" || visual.borderTone === "gold" || visual.borderTone === "case"
         ? "hit-pulse border-gold"
-        : celebration === "foil"
+        : visual.borderTone === "metal" || celebration === "foil"
           ? "border-sky-300/50 card-frame-foil"
-          : celebration === "glow"
-            ? "border-pitch-400/60"
-            : "border-white/15";
+          : visual.borderTone === "plate"
+            ? "border-cyan-200/40"
+            : celebration === "glow"
+              ? "border-pitch-400/60"
+              : "border-white/20";
 
   return (
     <motion.div
@@ -110,93 +106,39 @@ export function CardFace({
         className={`relative h-full w-full overflow-hidden rounded-[14px] border shadow-2xl transition ${borderClass} ${
           revealActive ? "card-reveal-pop" : ""
         }`}
-        style={{
-          background: `linear-gradient(160deg, ${card.parallelColor}44, #0b1a14 45%, #07110d)`,
-        }}
       >
-        <div
-          className="absolute inset-0 opacity-80"
-          style={{
-            background: `
-              radial-gradient(circle at 50% 20%, ${card.parallelColor}66, transparent 45%),
-              linear-gradient(180deg, ${card.productAccent ?? "#1b7a4e"}66 0%, transparent 40%),
-              repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 14px,
-                rgba(255,255,255,0.03) 14px,
-                rgba(255,255,255,0.03) 15px
-              )
-            `,
-          }}
+        <TradingCardArt
+          card={card}
+          visual={visual}
+          serialDisplay={serialDisplay}
+          compact={size === "sm"}
         />
 
-        {card.foil || celebration === "foil" || celebration === "glow" ? (
+        {visual.showFoil ? (
           <>
-            <div className="foil-prism pointer-events-none absolute inset-0 opacity-55 mix-blend-color-dodge" />
-            <div className="foil-shine pointer-events-none absolute inset-0 mix-blend-screen opacity-70" />
-            {interactiveFoil ? (
-              <motion.div
-                className="pointer-events-none absolute inset-0 mix-blend-soft-light"
-                style={{ background: shine }}
-              />
-            ) : null}
+            <div className="foil-prism pointer-events-none absolute inset-0 z-30 opacity-45 mix-blend-color-dodge" />
+            <div className="foil-shine pointer-events-none absolute inset-0 z-30 mix-blend-screen opacity-65" />
           </>
         ) : null}
 
+        {visual.showChrome ? (
+          <div className="d11-chrome-sheen pointer-events-none absolute inset-0 z-30 opacity-50" />
+        ) : null}
+
+        {visual.showHolo ? (
+          <div className="d11-holo-wave pointer-events-none absolute inset-0 z-30 opacity-40 mix-blend-overlay" />
+        ) : null}
+
+        {interactiveFoil && (visual.showFoil || visual.showChrome || visual.showHolo) ? (
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-30 mix-blend-soft-light"
+            style={{ background: shine }}
+          />
+        ) : null}
+
         {(celebration === "jackpot" || celebration === "hit") && (
-          <div className="pointer-events-none absolute inset-0 card-sparkle opacity-70" />
+          <div className="pointer-events-none absolute inset-0 z-30 card-sparkle opacity-70" />
         )}
-
-        <div className="relative flex h-full flex-col p-2.5">
-          <div className="flex items-start justify-between gap-2">
-            <div className="text-[9px] uppercase tracking-[0.18em] text-white/70">
-              {card.manufacturerName}
-            </div>
-            <div
-              className="rounded px-1.5 py-0.5 text-[9px] font-bold text-pitch-950"
-              style={{ background: POS_COLORS[card.playerPosition] ?? "#43A047" }}
-            >
-              {card.playerPosition}
-            </div>
-          </div>
-
-          <div className="mt-2 flex flex-1 flex-col items-center justify-center">
-            <div
-              className="mb-2 grid h-16 w-16 place-items-center rounded-full border border-white/20 text-xl font-bold text-white shadow-lg md:h-20 md:w-20"
-              style={{
-                background: `linear-gradient(145deg, ${card.parallelColor}, #0b1a14)`,
-              }}
-            >
-              {card.playerName.split(" ").slice(-1)[0].slice(0, 1)}
-            </div>
-            <div className="display text-center text-[1.35rem] leading-none text-white drop-shadow md:text-[1.55rem]">
-              {card.playerName}
-            </div>
-            <div className="mt-1 text-center text-[10px] text-white/70">
-              {card.clubName}
-              {card.nationalTeamName ? ` · ${card.nationalTeamName}` : ""}
-            </div>
-          </div>
-
-          <div className="mt-auto space-y-1">
-            <div className="flex items-center justify-between text-[10px] text-white/80">
-              <span>#{card.cardNumber}</span>
-              <span className="truncate pl-2">{card.parallelName}</span>
-            </div>
-            <div className="flex items-center justify-between rounded-md bg-black/35 px-2 py-1 text-[10px]">
-              <span className="text-gold-soft">{rarityLabel(card.rarity)}</span>
-              <span className="text-white/80">{formatMoney(card.estimatedValueCents)}</span>
-            </div>
-            {serial && !serial.startsWith("?") ? (
-              <div className="text-center text-[11px] font-semibold tracking-wider text-gold">
-                {serial}
-              </div>
-            ) : (
-              <div className="text-center text-[10px] text-white/50">{cardTypeLabel(card.cardType)}</div>
-            )}
-          </div>
-        </div>
       </div>
     </motion.div>
   );

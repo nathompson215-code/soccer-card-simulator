@@ -440,7 +440,7 @@ async function main() {
           colorHex: "#C0C0C0",
           isFoil: true,
           rarity: Rarity.UNCOMMON,
-          cardType: CardType.PARALLEL,
+          cardType: CardType.REFRACTOR,
           weight: 0.12,
         },
         {
@@ -518,6 +518,120 @@ async function main() {
         weight: 1,
       },
     });
+
+    const caseHits =
+      seed.format === ProductFormat.ALBUM
+        ? null
+        : await prisma.cardSet.create({
+            data: {
+              productId: product.id,
+              slug: "stadium-shockers",
+              name: "Stadium Shockers",
+              setType: SetType.CASE_HIT,
+              sortOrder: 4,
+            },
+          });
+    const booklets =
+      seed.format === ProductFormat.ALBUM
+        ? null
+        : await prisma.cardSet.create({
+            data: {
+              productId: product.id,
+              slug: "dual-booklets",
+              name: "Dual Booklets",
+              setType: SetType.BOOKLET,
+              sortOrder: 5,
+            },
+          });
+    const plates =
+      seed.format === ProductFormat.ALBUM
+        ? null
+        : await prisma.cardSet.create({
+            data: {
+              productId: product.id,
+              slug: "cyan-plates",
+              name: "Cyan Plates",
+              setType: SetType.PRINTING_PLATE,
+              sortOrder: 6,
+            },
+          });
+    const patchAutos =
+      seed.format === ProductFormat.ALBUM
+        ? null
+        : await prisma.cardSet.create({
+            data: {
+              productId: product.id,
+              slug: "inked-relics",
+              name: "Inked Relics",
+              setType: SetType.AUTOGRAPH,
+              sortOrder: 7,
+            },
+          });
+
+    const caseParallel = caseHits
+      ? await prisma.parallel.create({
+          data: {
+            productId: product.id,
+            cardSetId: caseHits.id,
+            slug: "case-hit",
+            name: "Case Hit",
+            printRun: 10,
+            colorHex: "#FFB300",
+            isFoil: true,
+            rarity: Rarity.LEGENDARY,
+            cardType: CardType.CASE_HIT,
+            weight: 1,
+          },
+        })
+      : null;
+    const bookletParallel = booklets
+      ? await prisma.parallel.create({
+          data: {
+            productId: product.id,
+            cardSetId: booklets.id,
+            slug: "booklet",
+            name: "Booklet",
+            printRun: 25,
+            colorHex: "#5D4037",
+            isFoil: true,
+            rarity: Rarity.ULTRA_RARE,
+            cardType: CardType.BOOKLET,
+            weight: 1,
+          },
+        })
+      : null;
+    const plateParallel = plates
+      ? await prisma.parallel.create({
+          data: {
+            productId: product.id,
+            cardSetId: plates.id,
+            slug: "cyan-plate",
+            name: "Cyan Plate",
+            printRun: 1,
+            colorHex: "#4FC3F7",
+            isFoil: false,
+            rarity: Rarity.LEGENDARY,
+            cardType: CardType.PRINTING_PLATE,
+            weight: 1,
+          },
+        })
+      : null;
+    const patchAutoParallel = patchAutos
+      ? await prisma.parallel.create({
+          data: {
+            productId: product.id,
+            cardSetId: patchAutos.id,
+            slug: "patch-auto",
+            name: "Patch Autograph",
+            printRun: 25,
+            colorHex: "#A1887F",
+            isFoil: true,
+            rarity: Rarity.MYTHIC,
+            cardType: CardType.PATCH,
+            weight: 1,
+          },
+        })
+      : null;
 
     await prisma.packOddsRule.createMany({
       data: [
@@ -655,6 +769,95 @@ async function main() {
       await prisma.numberingSpec.create({
         data: { cardId: relicCard.id, printRun: 49 },
       });
+
+      if (i < 3 && caseHits && caseParallel) {
+        const caseEntry = await prisma.checklistEntry.create({
+          data: {
+            cardSetId: caseHits.id,
+            playerId: player.id,
+            cardNumber: `CH-${i + 1}`,
+            sortOrder: i + 1,
+          },
+        });
+        const caseCard = await prisma.card.create({
+          data: {
+            checklistEntryId: caseEntry.id,
+            parallelId: caseParallel.id,
+            slug: `${product.slug}__stadium-shockers__${i + 1}__case-hit`,
+            estimatedValueCents: estimateValueCents(Rarity.LEGENDARY, 10, seed.year),
+          },
+        });
+        await prisma.numberingSpec.create({ data: { cardId: caseCard.id, printRun: 10 } });
+      }
+
+      if (i < 2 && booklets && bookletParallel) {
+        const bookletEntry = await prisma.checklistEntry.create({
+          data: {
+            cardSetId: booklets.id,
+            playerId: player.id,
+            cardNumber: `BK-${i + 1}`,
+            sortOrder: i + 1,
+          },
+        });
+        const bookletCard = await prisma.card.create({
+          data: {
+            checklistEntryId: bookletEntry.id,
+            parallelId: bookletParallel.id,
+            slug: `${product.slug}__dual-booklets__${i + 1}__booklet`,
+            estimatedValueCents: estimateValueCents(Rarity.ULTRA_RARE, 25, seed.year),
+          },
+        });
+        await prisma.numberingSpec.create({ data: { cardId: bookletCard.id, printRun: 25 } });
+      }
+
+      if (i < 2 && plates && plateParallel) {
+        const plateEntry = await prisma.checklistEntry.create({
+          data: {
+            cardSetId: plates.id,
+            playerId: player.id,
+            cardNumber: `PL-${i + 1}`,
+            sortOrder: i + 1,
+          },
+        });
+        const plateCard = await prisma.card.create({
+          data: {
+            checklistEntryId: plateEntry.id,
+            parallelId: plateParallel.id,
+            slug: `${product.slug}__cyan-plates__${i + 1}__cyan-plate`,
+            estimatedValueCents: estimateValueCents(Rarity.LEGENDARY, 1, seed.year),
+          },
+        });
+        await prisma.numberingSpec.create({ data: { cardId: plateCard.id, printRun: 1 } });
+      }
+
+      if (i < 2 && patchAutos && patchAutoParallel) {
+        const paEntry = await prisma.checklistEntry.create({
+          data: {
+            cardSetId: patchAutos.id,
+            playerId: player.id,
+            cardNumber: `PA-${i + 1}`,
+            sortOrder: i + 1,
+          },
+        });
+        await prisma.autographSpec.create({
+          data: { checklistEntryId: paEntry.id, signerCount: 1, onCard: true },
+        });
+        await prisma.memorabiliaSpec.create({
+          data: {
+            checklistEntryId: paEntry.id,
+            memorabiliaType: MemorabiliaType.PATCH,
+          },
+        });
+        const paCard = await prisma.card.create({
+          data: {
+            checklistEntryId: paEntry.id,
+            parallelId: patchAutoParallel.id,
+            slug: `${product.slug}__inked-relics__${i + 1}__patch-auto`,
+            estimatedValueCents: estimateValueCents(Rarity.MYTHIC, 25, seed.year),
+          },
+        });
+        await prisma.numberingSpec.create({ data: { cardId: paCard.id, printRun: 25 } });
+      }
     }
   }
 
