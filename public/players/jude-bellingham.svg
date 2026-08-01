@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="600" viewBox="0 0 240 300">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(159 35% 28%)"/>
+      <stop offset="45%" stop-color="hsl(159 20% 12%)"/>
+      <stop offset="100%" stop-color="hsl(140 35% 18%)"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="50%" cy="28%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <linearGradient id="jersey" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(187 60% 68%)"/>
+      <stop offset="22%" stop-color="#FEBE10"/>
+      <stop offset="100%" stop-color="hsl(159 55% 22%)"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="300" fill="url(#sky)"/>
+  <ellipse cx="40" cy="70" rx="36" ry="18" fill="rgba(255,255,255,0.04)"/>
+  <ellipse cx="200" cy="60" rx="42" ry="20" fill="rgba(255,255,255,0.05)"/>
+  <rect x="0" y="185" width="240" height="115" fill="rgba(0,0,0,0.18)"/>
+  <path d="M0 186 L240 186 L240 300 L0 300 Z" fill="rgba(20,80,45,0.22)"/>
+  <rect width="240" height="300" fill="url(#spot)"/>
+  <path d="M28 300 C42 205 68 168 120 162 C172 168 198 205 212 300 Z" fill="url(#jersey)"/>
+  <path d="M78 188 C95 172 145 172 162 188 L170 230 C145 214 95 214 70 230 Z" fill="rgba(255,255,255,0.14)"/>
+  <path d="M70 230 L120 205 L170 230" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <text x="120" y="268" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Arial Black, Impact, sans-serif" font-size="34" font-weight="700">6</text>
+  <rect x="109" y="128" width="22" height="30" rx="7" fill="hsl(33 51% 47%)"/>
+  <ellipse cx="120" cy="104" rx="33" ry="38" fill="hsl(33 51% 47%)"/>
+  <path d="M88 98 C92 68 104 58 120 56 C136 58 148 68 152 98 C144 84 132 78 120 78 C108 78 96 84 88 98 Z" fill="hsl(27 28% 13%)"/>
+  <path d="M88 96 C94 90 100 88 106 87 L106 102 C98 102 92 100 88 96 Z" fill="hsl(27 28% 13%)"/>
+  <path d="M152 96 C146 90 140 88 134 87 L134 102 C142 102 148 100 152 96 Z" fill="hsl(27 28% 13%)"/>
+  <ellipse cx="109" cy="108" rx="3" ry="3.5" fill="#1a1512" opacity="0.8"/>
+  <ellipse cx="131" cy="108" rx="3" ry="3.5" fill="#1a1512" opacity="0.8"/>
+  <path d="M113 124 C117 128 123 128 127 124" fill="none" stroke="#6b4336" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+  <rect width="240" height="300" fill="url(#shade)" opacity="0.55"/>
+  <rect width="240" height="300" fill="url(#spot)" opacity="0.25"/>
+  <text x="12" y="20" fill="rgba(255,255,255,0.55)" font-family="Arial, sans-serif" font-size="8" letter-spacing="1.5">DRAFT ELEVEN</text>
+  <text x="228" y="20" text-anchor="end" fill="rgba(255,255,255,0.45)" font-family="Arial, sans-serif" font-size="8">BELLINGHAM</text>
+</svg>
