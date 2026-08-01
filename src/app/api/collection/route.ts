@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCollection, toggleFavorite, toggleWishlist } from "@/lib/collection";
+import { getCollection, getCollectionOwnedCount, toggleFavorite, toggleWishlist } from "@/lib/collection";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const summaryOnly = new URL(request.url).searchParams.get("summary") === "1";
+    if (summaryOnly) {
+      return NextResponse.json(await getCollectionOwnedCount());
+    }
     const collection = await getCollection();
     return NextResponse.json(collection);
   } catch (error) {
