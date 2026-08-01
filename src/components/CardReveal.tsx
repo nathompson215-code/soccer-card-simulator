@@ -99,6 +99,9 @@ export function CardReveal({
   continueLabel?: string;
 }) {
   const [step, setStep] = useState<RevealStep>(() => (skipAnimation ? "shown" : "suspense"));
+  const readySent = useRef(false);
+  const theme = resolveVisualTheme(pull.card.subset, pull.card.parallelSlug);
+  const themeSpec = getThemeSpec(theme);
   const celebration = (() => {
     const boost = themeSpec.celebrationBoost;
     if (!boost) return pull.celebration;
@@ -108,9 +111,6 @@ export function CardReveal({
     return order[Math.max(pullRank, boostRank)] ?? pull.celebration;
   })();
   const headline = celebrationHeadline(celebration);
-  const readySent = useRef(false);
-  const theme = resolveVisualTheme(pull.card.subset, pull.card.parallelSlug);
-  const themeSpec = getThemeSpec(theme);
   const motionProps = revealMotion(themeSpec.reveal, skipAnimation);
 
   useEffect(() => {
