@@ -42,7 +42,7 @@ export function CardFace({
         : "w-[180px] h-[252px]";
 
   const serial = serialDisplay ?? (card.printRun ? `?/${card.printRun}` : null);
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
   const smx = useSpring(mx, { stiffness: 180, damping: 22 });
@@ -51,7 +51,7 @@ export function CardFace({
   const tiltX = useSpring(0, { stiffness: 200, damping: 20 });
   const tiltY = useSpring(0, { stiffness: 200, damping: 20 });
 
-  const onMove = (e: MouseEvent<HTMLButtonElement>) => {
+  const onMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!interactiveFoil || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const px = ((e.clientX - rect.left) / rect.width) * 100;
@@ -81,19 +81,30 @@ export function CardFace({
             : "border-white/15";
 
   return (
-    <motion.button
+    <motion.div
       ref={ref}
-      type="button"
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
       onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onClick();
+              }
+            }
+          : undefined
+      }
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      whileHover={onClick && !interactiveFoil ? { y: -6, rotateY: 6 } : undefined}
+      whileHover={onClick && !interactiveFoil ? { y: -6 } : undefined}
       style={
         interactiveFoil
           ? { rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }
           : undefined
       }
-      className={`relative ${dims} shrink-0 text-left ${className}`}
+      className={`relative ${dims} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
     >
       <div
         className={`relative h-full w-full overflow-hidden rounded-[14px] border shadow-2xl transition ${borderClass} ${
@@ -187,6 +198,6 @@ export function CardFace({
           </div>
         </div>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }

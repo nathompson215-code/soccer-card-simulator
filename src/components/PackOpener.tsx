@@ -165,13 +165,17 @@ export function PackOpener({ product }: { product: ProductDTO }) {
             <button
               type="button"
               onClick={() => {
-                const next = packSounds.toggleMute();
-                setMuted(next);
+                void packSounds.unlock();
+                setMuted((prev) => {
+                  const next = !prev;
+                  packSounds.setMuted(next);
+                  return next;
+                });
               }}
               className="rounded-full border border-white/15 px-4 py-2 text-sm text-ink-muted hover:text-ink"
               aria-pressed={muted}
             >
-              {muted ? "Sound Off" : "Sound On"}
+              {muted ? "Unmute" : "Mute"}
             </button>
             {phase === "idle" ? (
               <>
@@ -255,8 +259,9 @@ export function PackOpener({ product }: { product: ProductDTO }) {
               />
               <motion.p
                 className="relative z-10 mt-8 display text-3xl text-pitch-400"
-                animate={{ opacity: [0.55, 1, 0.55] }}
-                transition={{ duration: 1.1, repeat: Infinity }}
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0.55 }}
+                transition={{ duration: 0.7, repeat: Infinity, repeatType: "reverse" }}
               >
                 {ripState === "charging"
                   ? packAura === "jackpot" || packAura === "hit"

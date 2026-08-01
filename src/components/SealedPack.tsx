@@ -24,15 +24,20 @@ export function SealedPack({
   const shake =
     state === "charging"
       ? {
-          x: [0, -2 * intensity, 3 * intensity, -3 * intensity, 2 * intensity, 0],
-          rotate: [0, -1.5, 1.5, -1, 1, 0],
-          transition: { duration: 0.45, repeat: Infinity, ease: "easeInOut" as const },
+          x: intensity * 2.5,
+          rotate: intensity * 1.2,
+          transition: {
+            duration: 0.12,
+            repeat: Infinity,
+            repeatType: "reverse" as const,
+            ease: "easeInOut" as const,
+          },
         }
       : state === "ripping"
         ? {
-            scale: [1, 1.08, 1.2],
-            rotate: [0, -4, 6, -2, 0],
-            filter: ["blur(0px)", "blur(0px)", "blur(2px)"],
+            scale: 1.18,
+            rotate: 3,
+            filter: "blur(1px)",
             transition: { duration: 0.55, ease: "easeIn" as const },
           }
         : state === "burst"

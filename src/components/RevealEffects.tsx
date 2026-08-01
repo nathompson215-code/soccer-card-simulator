@@ -54,8 +54,8 @@ export function RevealEffects({
             animate={{
               x: Math.cos(angle) * dist,
               y: Math.sin(angle) * dist - 20,
-              opacity: [0, 1, 0],
-              scale: [0.4, 1.2, 0.2],
+              opacity: 0,
+              scale: 0.2,
             }}
             transition={{
               duration: 0.9 + (i % 4) * 0.12,

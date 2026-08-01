@@ -55,6 +55,7 @@ export function CardReveal({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25 }}
               className="display mt-2 text-2xl text-ink-muted"
             >
               Something special...
@@ -63,8 +64,9 @@ export function CardReveal({
           {step === "shown" && headline ? (
             <motion.div
               key="headline"
-              initial={{ opacity: 0, scale: 0.85, y: 10 }}
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
               className={`display mt-2 text-3xl ${
                 celebration === "jackpot" || celebration === "hit" ? "text-gold" : "text-pitch-400"
               }`}
@@ -82,21 +84,10 @@ export function CardReveal({
           <motion.div
             key={`face-${pull.card.id}`}
             initial={{ rotateY: 90, scale: 0.86, opacity: 0.2 }}
-            animate={{
-              rotateY: 0,
-              scale:
-                step === "shown" && (celebration === "hit" || celebration === "jackpot")
-                  ? [1, 1.035, 1]
-                  : 1,
-              opacity: 1,
-            }}
-            transition={
-              step === "shown" && (celebration === "hit" || celebration === "jackpot")
-                ? { duration: 0.55, ease: "easeOut" }
-                : { type: "spring", stiffness: 140, damping: 16 }
-            }
+            animate={{ rotateY: 0, scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 140, damping: 16 }}
             style={{ transformStyle: "preserve-3d" }}
-            className="relative"
+            className={`relative ${step === "shown" ? "card-reveal-pop" : ""}`}
           >
             {step === "shown" ? <RevealEffects celebration={celebration} active /> : null}
             <CardFace
@@ -111,19 +102,19 @@ export function CardReveal({
         )}
       </div>
 
-      <motion.button
+      <button
         type="button"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: step === "shown" ? 1 : 0.35, y: 0 }}
         disabled={step !== "shown"}
         onClick={() => {
           packSounds.playUiTap();
           onContinue();
         }}
-        className="mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40"
+        className={`mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 ${
+          step === "shown" ? "opacity-100" : "opacity-35"
+        }`}
       >
         {step === "shown" ? continueLabel : "Revealing..."}
-      </motion.button>
+      </button>
     </div>
   );
 }
@@ -134,13 +125,22 @@ function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
       className="relative h-[336px] w-[240px]"
       animate={
         celebration === "none"
-          ? { scale: 1 }
+          ? { scale: 1, rotate: 0 }
           : {
-              scale: [1, 1.03, 1],
-              rotate: [0, -1.5, 1.5, 0],
+              scale: 1.02,
+              rotate: celebration === "jackpot" ? 1.2 : 0.8,
             }
       }
-      transition={{ duration: celebration === "jackpot" ? 0.35 : 0.55, repeat: Infinity }}
+      transition={
+        celebration === "none"
+          ? { duration: 0.2 }
+          : {
+              duration: celebration === "jackpot" ? 0.35 : 0.55,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }
+      }
     >
       <div className="card-back relative h-full w-full overflow-hidden rounded-[14px] border border-white/20 shadow-2xl">
         <div className="absolute inset-0 pack-hologram opacity-80" />
@@ -152,8 +152,9 @@ function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
         {celebration !== "none" ? (
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: [0.2, 0.7, 0.2] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
+            animate={{ opacity: 0.55 }}
+            initial={{ opacity: 0.2 }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
             style={{
               background:
                 celebration === "jackpot" || celebration === "hit"
