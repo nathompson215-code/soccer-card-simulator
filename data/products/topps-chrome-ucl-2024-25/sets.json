@@ -1,0 +1,282 @@
+{
+  "baseParallels": [
+    {
+      "slug": "base",
+      "name": "Base",
+      "printRun": null,
+      "colorHex": "#E8E4D9",
+      "isFoil": false,
+      "rarity": "COMMON",
+      "cardType": "BASE",
+      "weight": 1,
+      "pool": "base"
+    },
+    {
+      "slug": "refractor",
+      "name": "Refractor",
+      "printRun": null,
+      "colorHex": "#C0C7D1",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "REFRACTOR",
+      "weight": 0.28,
+      "pool": "refractor"
+    },
+    {
+      "slug": "pulsar",
+      "name": "Pulsar Refractor",
+      "printRun": null,
+      "colorHex": "#7B5CFF",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "REFRACTOR",
+      "weight": 0.12,
+      "pool": "pulsar"
+    },
+    {
+      "slug": "violet",
+      "name": "Violet Refractor",
+      "printRun": 299,
+      "colorHex": "#7B2D8E",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "numbered"
+    },
+    {
+      "slug": "pink",
+      "name": "Pink Refractor",
+      "printRun": 250,
+      "colorHex": "#E91E8C",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.035,
+      "pool": "numbered"
+    },
+    {
+      "slug": "aqua",
+      "name": "Aqua Refractor",
+      "printRun": 199,
+      "colorHex": "#00B8C4",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.028,
+      "pool": "numbered"
+    },
+    {
+      "slug": "green",
+      "name": "Green Refractor",
+      "printRun": 99,
+      "colorHex": "#22A06B",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.016,
+      "pool": "numbered"
+    },
+    {
+      "slug": "gold",
+      "name": "Gold Refractor",
+      "printRun": 50,
+      "colorHex": "#D4AF37",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.01,
+      "pool": "numbered"
+    },
+    {
+      "slug": "orange",
+      "name": "Orange Refractor",
+      "printRun": 25,
+      "colorHex": "#F15A29",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.005,
+      "pool": "numbered"
+    },
+    {
+      "slug": "black",
+      "name": "Black Refractor",
+      "printRun": 10,
+      "colorHex": "#1A1A1A",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0025,
+      "pool": "numbered"
+    },
+    {
+      "slug": "superfractor",
+      "name": "SuperFractor",
+      "printRun": 1,
+      "colorHex": "#F5D76E",
+      "isFoil": true,
+      "rarity": "LEGENDARY",
+      "cardType": "ONE_OF_ONE",
+      "weight": 0.0004,
+      "pool": "numbered"
+    }
+  ],
+  "sets": [
+    {
+      "slug": "base",
+      "name": "Base Set",
+      "setType": "BASE",
+      "sortOrder": 1,
+      "playerFilter": { "all": true },
+      "parallels": "baseParallels"
+    },
+    {
+      "slug": "wonderkids",
+      "name": "Wonderkids",
+      "setType": "INSERT",
+      "sortOrder": 2,
+      "playerFilter": { "tiers": ["rookie"] },
+      "parallel": {
+        "slug": "insert-base",
+        "name": "Wonderkids",
+        "printRun": null,
+        "colorHex": "#3DCF8E",
+        "isFoil": true,
+        "rarity": "RARE",
+        "cardType": "INSERT",
+        "weight": 1,
+        "pool": "insert"
+      }
+    },
+    {
+      "slug": "golazo",
+      "name": "Golazo",
+      "setType": "INSERT",
+      "sortOrder": 3,
+      "playerFilter": { "tiers": ["star", "legend"] },
+      "parallel": {
+        "slug": "insert-base",
+        "name": "Golazo",
+        "printRun": null,
+        "colorHex": "#F0D78C",
+        "isFoil": true,
+        "rarity": "RARE",
+        "cardType": "INSERT",
+        "weight": 1,
+        "pool": "insert"
+      }
+    },
+    {
+      "slug": "final-destination",
+      "name": "Final Destination",
+      "setType": "INSERT",
+      "sortOrder": 4,
+      "playerFilter": { "tiers": ["star", "veteran", "legend"] },
+      "parallel": {
+        "slug": "insert-base",
+        "name": "Final Destination",
+        "printRun": null,
+        "colorHex": "#4FC3F7",
+        "isFoil": true,
+        "rarity": "RARE",
+        "cardType": "INSERT",
+        "weight": 1,
+        "pool": "insert"
+      }
+    },
+    {
+      "slug": "youth-league",
+      "name": "UEFA Youth League",
+      "setType": "INSERT",
+      "sortOrder": 5,
+      "playerFilter": { "tiers": ["rookie", "veteran"] },
+      "parallel": {
+        "slug": "insert-base",
+        "name": "Youth League",
+        "printRun": null,
+        "colorHex": "#81C784",
+        "isFoil": false,
+        "rarity": "RARE",
+        "cardType": "INSERT",
+        "weight": 1,
+        "pool": "insert"
+      }
+    },
+    {
+      "slug": "chrome-autographs",
+      "name": "Chrome Autographs",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 6,
+      "playerFilter": { "tiers": ["star", "legend", "rookie", "veteran"], "limit": 24 },
+      "autograph": true,
+      "parallel": {
+        "slug": "on-card-auto",
+        "name": "On-Card Autograph",
+        "printRun": 99,
+        "colorHex": "#D4AF37",
+        "isFoil": true,
+        "rarity": "MYTHIC",
+        "cardType": "AUTOGRAPH",
+        "weight": 1,
+        "pool": "autograph"
+      }
+    },
+    {
+      "slug": "match-worn-patches",
+      "name": "Match-Worn Patches",
+      "setType": "RELIC",
+      "sortOrder": 7,
+      "playerFilter": { "tiers": ["star", "legend", "veteran"], "limit": 16 },
+      "memorabilia": "PATCH",
+      "parallel": {
+        "slug": "patch",
+        "name": "Match-Worn Patch",
+        "printRun": 49,
+        "colorHex": "#C62828",
+        "isFoil": false,
+        "rarity": "MYTHIC",
+        "cardType": "PATCH",
+        "weight": 1,
+        "pool": "patch"
+      }
+    },
+    {
+      "slug": "dual-booklets",
+      "name": "Campeones Booklets",
+      "setType": "BOOKLET",
+      "sortOrder": 8,
+      "playerFilter": { "tiers": ["legend", "star"], "limit": 8 },
+      "memorabilia": "BOOKLET",
+      "parallel": {
+        "slug": "booklet",
+        "name": "Booklet",
+        "printRun": 25,
+        "colorHex": "#5C6BC0",
+        "isFoil": true,
+        "rarity": "ULTRA_RARE",
+        "cardType": "BOOKLET",
+        "weight": 1,
+        "pool": "booklet"
+      }
+    },
+    {
+      "slug": "shadow-etch",
+      "name": "Shadow Etch",
+      "setType": "CASE_HIT",
+      "sortOrder": 9,
+      "playerFilter": { "tiers": ["star", "legend", "rookie"], "limit": 10 },
+      "parallel": {
+        "slug": "case-hit",
+        "name": "Shadow Etch",
+        "printRun": 10,
+        "colorHex": "#212121",
+        "isFoil": true,
+        "rarity": "LEGENDARY",
+        "cardType": "CASE_HIT",
+        "weight": 1,
+        "pool": "case_hit"
+      }
+    }
+  ]
+}

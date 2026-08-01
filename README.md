@@ -46,3 +46,14 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Demo user
 
 Seed creates `collector@drafteleven.local`. Pack openings save `UserCard` rows for that user.
+
+## Perfected product: Topps Chrome UCL 2024–25
+
+Hobby box config (20 packs × 4 cards, published guarantees) is driven by JSON under
+`data/products/topps-chrome-ucl-2024-25/`. See **[docs/CHROME_UCL_HOBBY.md](docs/CHROME_UCL_HOBBY.md)**.
+
+```bash
+npm run db:seed
+```
+
+Open the product page and choose **Open Box** for the full hobby theater + box summary.

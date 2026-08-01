@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { openBoxFromDb, openPackFromDb, savePullsToCollection } from "@/lib/pack-engine";
+import {
+  getProductCollectionProgress,
+  openBoxFromDb,
+  openPackFromDb,
+  savePullsToCollection,
+} from "@/lib/pack-engine";
 import { getDemoUser, getProductBySlug } from "@/lib/queries";
 
 export async function POST(request: Request) {
@@ -19,21 +24,36 @@ export async function POST(request: Request) {
     }
 
     const user = await getDemoUser();
+    const before = await getProductCollectionProgress(user.id, product.id);
     const mode = body.mode ?? "pack";
-    const packs =
-      mode === "box"
-        ? await openBoxFromDb(product.id)
-        : [await openPackFromDb(product.id)];
+
+    let packs;
+    let boxSummary = null;
+
+    if (mode === "box") {
+      const opened = await openBoxFromDb(product.id);
+      packs = opened.packs;
+      boxSummary = opened.summary;
+    } else {
+      packs = [await openPackFromDb(product.id)];
+    }
 
     for (const pack of packs) {
       await savePullsToCollection(user.id, product.id, pack.cards);
     }
+
+    const after = await getProductCollectionProgress(user.id, product.id);
 
     return NextResponse.json({
       product,
       mode,
       packs,
       totalCards: packs.reduce((sum, p) => sum + p.cards.length, 0),
+      boxSummary,
+      collectionProgress: {
+        ...after,
+        newUniquesThisOpen: Math.max(0, after.uniqueOwned - before.uniqueOwned),
+      },
     });
   } catch (error) {
     console.error(error);

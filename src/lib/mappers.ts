@@ -46,6 +46,7 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     setType: cardSet.setType,
     parallelId: parallel.id,
     parallelName: parallel.name,
+    parallelSlug: parallel.slug,
     parallelColor: parallel.colorHex ?? "#E8E4D9",
     foil: parallel.isFoil,
     rarity: parallel.rarity,
