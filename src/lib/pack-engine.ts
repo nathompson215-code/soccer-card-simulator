@@ -219,7 +219,6 @@ export async function savePullsToCollection(
 ) {
   const created = await prisma.$transaction(
     pulls.map((pull) => {
-      const printRun = pull.card.printRun;
       const serialNumber = pull.serialDisplay
         ? Number(pull.serialDisplay.split("/")[0])
         : null;
