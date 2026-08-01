@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Kylian Mbappé">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f241c"/>
+      <stop offset="55%" stop-color="#163528"/>
+      <stop offset="100%" stop-color="#FEBE10"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect width="800" height="1000" fill="url(#spot)"/>
+  <circle cx="400" cy="380" r="160" fill="#d7b39a"/>
+  <ellipse cx="400" cy="720" rx="220" ry="260" fill="#FEBE10"/>
+  <rect x="340" y="520" width="120" height="90" rx="24" fill="#d7b39a"/>
+  <text x="400" y="410" text-anchor="middle" fill="#1a1512" font-family="Arial,sans-serif" font-size="72" font-weight="700">KM</text>
+  <text x="400" y="930" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="Arial,sans-serif" font-size="42" font-weight="700">Kylian Mbappé</text>
+  <text x="400" y="970" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="Arial,sans-serif" font-size="24" letter-spacing="4">FWD · SAMPLE ASSET</text>
+</svg>

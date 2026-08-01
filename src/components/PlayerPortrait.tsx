@@ -29,6 +29,7 @@ export function PlayerPortrait({
   position,
   accent,
   imageUrl,
+  imageUrlHd,
   className = "",
 }: {
   playerName: string;
@@ -37,6 +38,7 @@ export function PlayerPortrait({
   accent: string;
   clubName?: string | null;
   imageUrl?: string | null;
+  imageUrlHd?: string | null;
   className?: string;
 }) {
   const uid = useMemo(() => {
@@ -64,8 +66,11 @@ export function PlayerPortrait({
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={imageUrl}
+        srcSet={imageUrlHd ? `${imageUrl} 1x, ${imageUrlHd} 2x` : undefined}
         alt={playerName}
         className={`h-full w-full object-cover object-top ${className}`}
+        decoding="async"
+        loading="lazy"
       />
     );
   }

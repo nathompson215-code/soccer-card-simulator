@@ -131,6 +131,9 @@ export function CardReveal({
               celebration={celebration}
               interactiveFoil={celebration !== "none"}
               revealActive={step === "shown"}
+              preferHd
+              enableFlip={step === "shown"}
+              enableZoom={step === "shown"}
             />
           </motion.div>
         )}

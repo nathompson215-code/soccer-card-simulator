@@ -46,3 +46,21 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Demo user
 
 Seed creates `collector@drafteleven.local`. Pack openings save `UserCard` rows for that user.
+
+## Image assets
+
+Authorized player photos, full card scans, product art, and logos live under `/public`
+(players, cards, products, manufacturers, clubs, national-teams, logos). Paths are
+stored on database models — components never hard-code image files.
+
+See **[docs/ASSETS.md](docs/ASSETS.md)** for naming conventions and the bulk upload
+process. Player/club slugs use ASCII (`NFD` accent stripping), e.g. `Kylian Mbappé` →
+`kylian-mbappe`. Generate the small SVG sample set with:
+
+```bash
+npm run assets:sample
+npm run db:seed
+```
+
+When a card has `frontImageUrl`, the UI shows the real 5∶7 scan (with flip / zoom /
+HiDPI). The generated Draft Eleven template is only a fallback.

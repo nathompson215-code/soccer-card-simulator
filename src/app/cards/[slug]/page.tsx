@@ -23,8 +23,15 @@ export default async function CardDetailPage({
         ← All cards
       </Link>
 
-      <div className="mt-6 grid gap-10 lg:grid-cols-[280px_1fr]">
-        <CardFace card={card} size="lg" />
+      <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(240px,320px)_1fr]">
+        <CardFace
+          card={card}
+          size="xl"
+          enableFlip
+          enableZoom
+          preferHd
+          interactiveFoil
+        />
         <div>
           <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
             {card.manufacturerName} · {card.year}

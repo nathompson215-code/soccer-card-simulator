@@ -10,11 +10,52 @@ import {
   TournamentType,
   PlayerEra,
 } from "@prisma/client";
+import {
+  brandLogoPath,
+  cardBackHdPath,
+  cardBackPath,
+  cardFrontHdPath,
+  cardFrontPath,
+  clubLogoPath,
+  manufacturerLogoPath,
+  nationalTeamLogoPath,
+  playerImageHdPath,
+  playerImagePath,
+  productBoxImagePath,
+  productImagePath,
+  productPackImagePath,
+} from "../src/lib/assets";
 
 const prisma = new PrismaClient();
 
+/** Sample authorized SVG stand-ins (see docs/ASSETS.md). */
+const SAMPLE_CARD_SLUGS = new Set([
+  "topps-chrome-ucl-2024-25__base__1__base",
+  "topps-chrome-ucl-2024-25__base__2__base",
+  "topps-chrome-ucl-2024-25__base__3__silver",
+  "topps-chrome-ucl-2024-25__signature-stars__1__on-card-auto",
+]);
+
+const SAMPLE_PLAYER_SLUGS = new Set([
+  "lionel-messi",
+  "cristiano-ronaldo",
+  "kylian-mbappe",
+]);
+
+function sampleCardImages(slug: string) {
+  if (!SAMPLE_CARD_SLUGS.has(slug)) return {};
+  return {
+    frontImageUrl: cardFrontPath(slug, "svg"),
+    backImageUrl: cardBackPath(slug, "svg"),
+    frontImageUrlHd: cardFrontHdPath(slug, "svg"),
+    backImageUrlHd: cardBackHdPath(slug, "svg"),
+  };
+}
+
 function slugify(value: string) {
   return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
@@ -123,6 +164,9 @@ async function main() {
           name: name as string,
           leagueId: (leagueId as string | null) ?? undefined,
           countryId: (countryId as string | null) ?? undefined,
+          logoUrl: ["inter-miami", "real-madrid", "barcelona"].includes(slug as string)
+            ? clubLogoPath(slug as string, "svg")
+            : undefined,
         },
       }),
     ),
@@ -144,6 +188,9 @@ async function main() {
               : c.code === "BR" || c.code === "AR"
                 ? "CONMEBOL"
                 : null,
+          logoUrl: ["Argentina", "Portugal", "France"].includes(c.name)
+            ? nationalTeamLogoPath(slugify(c.name), "svg")
+            : undefined,
         },
       }),
     ),
@@ -199,10 +246,11 @@ async function main() {
         : countries.find((c) => c.name === def.country) ?? egypt;
     const nt = ntByName[def.country] ?? egyptNt;
     const parts = def.name.split(" ");
+    const slug = slugify(def.name);
     players.push(
       await prisma.player.create({
         data: {
-          slug: slugify(def.name),
+          slug,
           fullName: def.name,
           firstName: parts[0],
           lastName: parts.slice(1).join(" "),
@@ -212,6 +260,10 @@ async function main() {
           position: def.position,
           era: def.era,
           birthYear: def.birthYear,
+          imageUrl: SAMPLE_PLAYER_SLUGS.has(slug) ? playerImagePath(slug, "svg") : undefined,
+          imageUrlHd: SAMPLE_PLAYER_SLUGS.has(slug)
+            ? playerImageHdPath(slug, "svg")
+            : undefined,
         },
       }),
     );
@@ -224,6 +276,7 @@ async function main() {
       foundedYear: 1938,
       country: "USA",
       colorHex: "#C8102E",
+      logoUrl: manufacturerLogoPath("topps", "svg"),
     },
   });
   const panini = await prisma.manufacturer.create({
@@ -233,11 +286,17 @@ async function main() {
       foundedYear: 1961,
       country: "Italy",
       colorHex: "#003DA5",
+      logoUrl: manufacturerLogoPath("panini", "svg"),
     },
   });
 
   const chromeBrand = await prisma.brand.create({
-    data: { slug: "chrome-ucl", name: "Chrome UCL", manufacturerId: topps.id },
+    data: {
+      slug: "chrome-ucl",
+      name: "Chrome UCL",
+      manufacturerId: topps.id,
+      logoUrl: brandLogoPath("chrome-ucl", "svg"),
+    },
   });
   const stickerBrand = await prisma.brand.create({
     data: {
@@ -360,6 +419,14 @@ async function main() {
         featured: seed.featured,
         packsPerBox: seed.packsPerBox,
         cardsPerPack: seed.cardsPerPack,
+        ...(seed.slug === "topps-chrome-ucl-2024-25"
+          ? {
+              imageUrl: productImagePath(seed.slug, "svg"),
+              packImageUrl: productPackImagePath(seed.slug, "svg"),
+              boxImageUrl: productBoxImagePath(seed.slug, "svg"),
+              logoUrl: brandLogoPath("chrome-ucl", "svg"),
+            }
+          : {}),
       },
     });
 
@@ -679,16 +746,18 @@ async function main() {
       });
 
       for (const parallel of baseParallels) {
+        const cardSlug = `${product.slug}__base__${i + 1}__${parallel.slug}`;
         const card = await prisma.card.create({
           data: {
             checklistEntryId: entry.id,
             parallelId: parallel.id,
-            slug: `${product.slug}__base__${i + 1}__${parallel.slug}`,
+            slug: cardSlug,
             estimatedValueCents: estimateValueCents(
               parallel.rarity,
               parallel.printRun,
               seed.year,
             ),
+            ...sampleCardImages(cardSlug),
           },
         });
         if (parallel.printRun) {
@@ -732,12 +801,14 @@ async function main() {
       await prisma.autographSpec.create({
         data: { checklistEntryId: autoEntry.id, signerCount: 1, onCard: true },
       });
+      const autoCardSlug = `${product.slug}__signature-stars__${i + 1}__on-card-auto`;
       const autoCard = await prisma.card.create({
         data: {
           checklistEntryId: autoEntry.id,
           parallelId: autoParallel.id,
-          slug: `${product.slug}__signature-stars__${i + 1}__on-card-auto`,
+          slug: autoCardSlug,
           estimatedValueCents: estimateValueCents(Rarity.MYTHIC, 99, seed.year),
+          ...sampleCardImages(autoCardSlug),
         },
       });
       await prisma.numberingSpec.create({

@@ -10,6 +10,7 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
+    "assets:sample": "node scripts/generate-sample-assets.cjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {

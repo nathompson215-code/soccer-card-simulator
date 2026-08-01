@@ -34,6 +34,8 @@ export interface CardDTO {
   estimatedValueCents: number;
   frontImageUrl: string | null;
   backImageUrl: string | null;
+  frontImageUrlHd: string | null;
+  backImageUrlHd: string | null;
   productId: string;
   productSlug: string;
   productName: string;
@@ -42,14 +44,19 @@ export interface CardDTO {
   manufacturerId: string;
   manufacturerSlug: string;
   manufacturerName: string;
+  manufacturerLogoUrl: string | null;
   playerId: string;
   playerSlug: string;
   playerName: string;
   playerPosition: Position;
   playerEra: string;
+  playerImageUrl: string | null;
+  playerImageUrlHd: string | null;
   isRookie: boolean;
   clubName: string | null;
+  clubLogoUrl: string | null;
   nationalTeamName: string | null;
+  nationalTeamLogoUrl: string | null;
   tournamentName: string | null;
 }
 
@@ -66,8 +73,18 @@ export interface ProductDTO {
   cardsPerPack: number;
   accentHex: string | null;
   featured: boolean;
-  manufacturer: { id: string; slug: string; name: string; colorHex: string | null };
-  brand: { id: string; slug: string; name: string } | null;
+  imageUrl: string | null;
+  packImageUrl: string | null;
+  boxImageUrl: string | null;
+  logoUrl: string | null;
+  manufacturer: {
+    id: string;
+    slug: string;
+    name: string;
+    colorHex: string | null;
+    logoUrl: string | null;
+  };
+  brand: { id: string; slug: string; name: string; logoUrl: string | null } | null;
   tournament: { id: string; slug: string; name: string } | null;
   league: { id: string; slug: string; name: string } | null;
   cardCount: number;
@@ -81,8 +98,12 @@ export interface PlayerDTO {
   position: Position;
   era: string;
   birthYear: number | null;
+  imageUrl: string | null;
+  imageUrlHd: string | null;
   clubName: string | null;
+  clubLogoUrl: string | null;
   nationalTeamName: string | null;
+  nationalTeamLogoUrl: string | null;
   nationalityName: string | null;
   leagueName: string | null;
   cardCount: number;
@@ -95,6 +116,8 @@ export interface ManufacturerDTO {
   foundedYear: number | null;
   country: string | null;
   colorHex: string | null;
+  logoUrl: string | null;
+  imageUrl: string | null;
   productCount: number;
 }
 

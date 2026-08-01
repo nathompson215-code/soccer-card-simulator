@@ -54,6 +54,8 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     estimatedValueCents: card.estimatedValueCents,
     frontImageUrl: card.frontImageUrl,
     backImageUrl: card.backImageUrl,
+    frontImageUrlHd: card.frontImageUrlHd,
+    backImageUrlHd: card.backImageUrlHd,
     productId: product.id,
     productSlug: product.slug,
     productName: product.name,
@@ -62,14 +64,19 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     manufacturerId: product.manufacturer.id,
     manufacturerSlug: product.manufacturer.slug,
     manufacturerName: product.manufacturer.name,
+    manufacturerLogoUrl: product.manufacturer.logoUrl,
     playerId: player.id,
     playerSlug: player.slug,
     playerName: player.fullName,
     playerPosition: player.position,
     playerEra: player.era,
+    playerImageUrl: player.imageUrl,
+    playerImageUrlHd: player.imageUrlHd,
     isRookie: player.era === "ROOKIE" || player.era === "PROSPECT",
     clubName: player.club?.name ?? null,
+    clubLogoUrl: player.club?.logoUrl ?? null,
     nationalTeamName: player.nationalTeam?.name ?? null,
+    nationalTeamLogoUrl: player.nationalTeam?.logoUrl ?? null,
     tournamentName: product.tournament?.name ?? null,
   };
 }
@@ -126,17 +133,23 @@ export function toProductDTO(
     cardsPerPack: product.cardsPerPack,
     accentHex: product.accentHex,
     featured: product.featured,
+    imageUrl: product.imageUrl,
+    packImageUrl: product.packImageUrl,
+    boxImageUrl: product.boxImageUrl,
+    logoUrl: product.logoUrl,
     manufacturer: {
       id: product.manufacturer.id,
       slug: product.manufacturer.slug,
       name: product.manufacturer.name,
       colorHex: product.manufacturer.colorHex,
+      logoUrl: product.manufacturer.logoUrl,
     },
     brand: product.brand
       ? {
           id: product.brand.id,
           slug: product.brand.slug,
           name: product.brand.name,
+          logoUrl: product.brand.logoUrl,
         }
       : null,
     tournament: product.tournament
