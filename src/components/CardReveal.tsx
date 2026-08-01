@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CardFace } from "@/components/CardFace";
 import { RevealEffects } from "@/components/RevealEffects";
 import { celebrationHeadline, packSounds, suspenseMs } from "@/lib/pack-sounds";
@@ -13,38 +13,63 @@ export function CardReveal({
   pull,
   packLabel,
   cardLabel,
+  skipAnimation = false,
+  hideContinue = false,
+  onReady,
   onContinue,
-  continueLabel,
+  continueLabel = "Next Card",
 }: {
   pull: PullResultDTO;
   packLabel: string;
   cardLabel: string;
-  onContinue: () => void;
-  continueLabel: string;
+  skipAnimation?: boolean;
+  hideContinue?: boolean;
+  onReady?: () => void;
+  onContinue?: () => void;
+  continueLabel?: string;
 }) {
-  const [step, setStep] = useState<RevealStep>("suspense");
+  const [step, setStep] = useState<RevealStep>(() => (skipAnimation ? "shown" : "suspense"));
   const celebration = pull.celebration;
   const headline = celebrationHeadline(celebration);
+  const readySent = useRef(false);
 
   useEffect(() => {
+    readySent.current = false;
+    if (skipAnimation) {
+      packSounds.playLand(celebration);
+      return;
+    }
+
     packSounds.playSuspense(celebration);
     const flipTimer = window.setTimeout(() => setStep("flip"), suspenseMs(celebration));
     return () => window.clearTimeout(flipTimer);
-  }, [celebration]);
+  }, [celebration, skipAnimation]);
 
   useEffect(() => {
-    if (step !== "flip") return;
+    if (skipAnimation || step !== "flip") return;
     packSounds.playFlip();
     const land = window.setTimeout(() => {
       packSounds.playLand(celebration);
       setStep("shown");
     }, 420);
     return () => window.clearTimeout(land);
-  }, [step, celebration]);
+  }, [step, celebration, skipAnimation]);
+
+  useEffect(() => {
+    if (step !== "shown" || readySent.current) return;
+    readySent.current = true;
+    onReady?.();
+  }, [step, onReady]);
+
+  const forceShow = () => {
+    if (step === "shown") return;
+    setStep("shown");
+    packSounds.playLand(celebration);
+  };
 
   return (
     <div className="relative flex w-full flex-col items-center">
-      <div className="mb-5 text-center">
+      <div className="mb-4 text-center md:mb-5">
         <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
           {packLabel} · {cardLabel}
         </div>
@@ -56,7 +81,7 @@ export function CardReveal({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
-              className="display mt-2 text-2xl text-ink-muted"
+              className="display mt-2 text-2xl text-ink-muted md:text-3xl"
             >
               Something special...
             </motion.div>
@@ -67,7 +92,7 @@ export function CardReveal({
               initial={{ opacity: 0, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className={`display mt-2 text-3xl ${
+              className={`display mt-2 text-3xl md:text-4xl ${
                 celebration === "jackpot" || celebration === "hit" ? "text-gold" : "text-pitch-400"
               }`}
             >
@@ -77,13 +102,22 @@ export function CardReveal({
         </AnimatePresence>
       </div>
 
-      <div className="relative flex min-h-[360px] w-full items-center justify-center">
-        {step === "suspense" ? <SuspenseCardBack celebration={celebration} /> : null}
+      <div className="relative flex min-h-[320px] w-full items-center justify-center md:min-h-[400px]">
+        {step === "suspense" ? (
+          <button
+            type="button"
+            onClick={forceShow}
+            className="cursor-pointer"
+            aria-label="Skip to reveal"
+          >
+            <SuspenseCardBack celebration={celebration} />
+          </button>
+        ) : null}
 
         {(step === "flip" || step === "shown") && (
           <motion.div
             key={`face-${pull.card.id}`}
-            initial={{ rotateY: 90, scale: 0.86, opacity: 0.2 }}
+            initial={skipAnimation ? false : { rotateY: 90, scale: 0.86, opacity: 0.2 }}
             animate={{ rotateY: 0, scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 140, damping: 16 }}
             style={{ transformStyle: "preserve-3d" }}
@@ -102,19 +136,21 @@ export function CardReveal({
         )}
       </div>
 
-      <button
-        type="button"
-        disabled={step !== "shown"}
-        onClick={() => {
-          packSounds.playUiTap();
-          onContinue();
-        }}
-        className={`mt-8 rounded-full bg-white px-6 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 ${
-          step === "shown" ? "opacity-100" : "opacity-35"
-        }`}
-      >
-        {step === "shown" ? continueLabel : "Revealing..."}
-      </button>
+      {!hideContinue && onContinue ? (
+        <button
+          type="button"
+          disabled={step !== "shown"}
+          onClick={() => {
+            packSounds.playUiTap();
+            onContinue();
+          }}
+          className={`mt-8 min-h-12 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 ${
+            step === "shown" ? "opacity-100" : "opacity-35"
+          }`}
+        >
+          {step === "shown" ? continueLabel : "Revealing..."}
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -122,7 +158,7 @@ export function CardReveal({
 function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
   return (
     <motion.div
-      className="relative h-[336px] w-[240px]"
+      className="relative h-[300px] w-[214px] md:h-[336px] md:w-[240px]"
       animate={
         celebration === "none"
           ? { scale: 1, rotate: 0 }

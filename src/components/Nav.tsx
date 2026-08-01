@@ -29,10 +29,10 @@ export function Nav() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
         <Link href="/" className="group flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-full bg-pitch-600 text-sm font-bold text-white shadow-[0_0_24px_rgba(34,160,107,0.45)] transition group-hover:scale-105">
-            SC
+            D11
           </span>
           <div className="leading-tight">
-            <div className="display text-2xl tracking-[0.08em] text-ink">STRIKER CARDS</div>
+            <div className="display text-2xl tracking-[0.08em] text-ink">DRAFT ELEVEN</div>
             <div className="text-[11px] uppercase tracking-[0.22em] text-ink-muted">
               Soccer Collection Simulator
             </div>

@@ -29,8 +29,8 @@ export default async function HomePage() {
         <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-4 pb-16 pt-24 md:px-6 md:pb-24">
           <div className="max-w-3xl">
             <div className="display text-[clamp(4.5rem,14vw,9rem)] text-ink drop-shadow-[0_10px_40px_rgba(0,0,0,0.45)]">
-              STRIKER
-              <span className="block text-pitch-400">CARDS</span>
+              DRAFT
+              <span className="block text-pitch-400">ELEVEN</span>
             </div>
             <p className="mt-5 max-w-xl text-lg text-ink-muted md:text-xl">
               Open soccer trading card products from a PostgreSQL-backed archive — realistic pack
