@@ -354,10 +354,6 @@ a {
 .d11-template-refractor .d11-card-bg {
   background:
     linear-gradient(135deg, #d7e8ff 0%, #9fd0ff 18%, #c9f7e2 36%, #ffe4a8 54%, #ffb7d5 72%, #b8a6ff 88%, #d7e8ff 100%);
-  opacity: 1;
-}
-
-.d11-template-refractor .d11-card-bg {
   background-size: 200% 200%;
   animation: prism-drift 5s linear infinite;
   filter: saturate(1.15);
