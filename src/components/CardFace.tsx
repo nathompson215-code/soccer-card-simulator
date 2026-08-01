@@ -9,7 +9,7 @@ import type { CardDTO, Celebration } from "@/lib/types";
 interface CardFaceProps {
   card: CardDTO;
   serialDisplay?: string | null;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   celebration?: Celebration;
   onClick?: () => void;
   className?: string;
@@ -17,6 +17,13 @@ interface CardFaceProps {
   interactiveFoil?: boolean;
   revealActive?: boolean;
 }
+
+const SIZE_CLASS: Record<NonNullable<CardFaceProps["size"]>, string> = {
+  sm: "w-[148px] h-[207px]",
+  md: "w-[210px] h-[294px]",
+  lg: "w-[min(78vw,300px)] h-[min(109vw,420px)]",
+  xl: "w-[min(86vw,360px)] h-[min(120vw,504px)]",
+};
 
 export function CardFace({
   card,
@@ -28,20 +35,13 @@ export function CardFace({
   interactiveFoil = false,
   revealActive = false,
 }: CardFaceProps) {
-  const dims =
-    size === "sm"
-      ? "w-[132px] h-[184px]"
-      : size === "lg"
-        ? "w-[240px] h-[336px]"
-        : "w-[180px] h-[252px]";
-
   const visual = resolveCardVisual(card, celebration);
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(40);
   const smx = useSpring(mx, { stiffness: 180, damping: 22 });
   const smy = useSpring(my, { stiffness: 180, damping: 22 });
-  const shine = useMotionTemplate`radial-gradient(460px circle at ${smx}% ${smy}%, rgba(255,255,255,0.42), transparent 42%)`;
+  const shine = useMotionTemplate`radial-gradient(520px circle at ${smx}% ${smy}%, rgba(255,255,255,0.5), transparent 44%)`;
   const tiltX = useSpring(0, { stiffness: 200, damping: 20 });
   const tiltY = useSpring(0, { stiffness: 200, damping: 20 });
 
@@ -52,8 +52,8 @@ export function CardFace({
     const py = ((e.clientY - rect.top) / rect.height) * 100;
     mx.set(px);
     my.set(py);
-    tiltY.set((px - 50) / 4);
-    tiltX.set((50 - py) / 5);
+    tiltY.set((px - 50) / 3.6);
+    tiltX.set((50 - py) / 4.5);
   };
 
   const onLeave = () => {
@@ -66,15 +66,17 @@ export function CardFace({
   const borderClass =
     celebration === "jackpot" || visual.borderTone === "rainbow"
       ? "hit-pulse border-gold card-frame-jackpot"
-      : celebration === "hit" || visual.borderTone === "gold" || visual.borderTone === "case"
-        ? "hit-pulse border-gold"
-        : visual.borderTone === "metal" || celebration === "foil"
-          ? "border-sky-300/50 card-frame-foil"
-          : visual.borderTone === "plate"
-            ? "border-cyan-200/40"
-            : celebration === "glow"
-              ? "border-pitch-400/60"
-              : "border-white/20";
+      : visual.borderTone === "mythic" || celebration === "hit"
+        ? "hit-pulse border-gold card-frame-mythic"
+        : visual.borderTone === "gold" || visual.borderTone === "case"
+          ? "hit-pulse border-gold"
+          : visual.borderTone === "metal" || celebration === "foil"
+            ? "border-sky-300/50 card-frame-foil"
+            : visual.borderTone === "plate"
+              ? "border-cyan-200/40"
+              : celebration === "glow"
+                ? "border-pitch-400/60"
+                : "border-white/20";
 
   return (
     <motion.div
@@ -94,16 +96,16 @@ export function CardFace({
       }
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      whileHover={onClick && !interactiveFoil ? { y: -6 } : undefined}
+      whileHover={onClick && !interactiveFoil ? { y: -8, scale: 1.02 } : undefined}
       style={
         interactiveFoil
           ? { rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }
           : undefined
       }
-      className={`relative ${dims} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
+      className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
     >
       <div
-        className={`relative h-full w-full overflow-hidden rounded-[14px] border shadow-2xl transition ${borderClass} ${
+        className={`d11-card-shell relative h-full w-full overflow-hidden rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
           revealActive ? "card-reveal-pop" : ""
         }`}
       >
@@ -116,18 +118,20 @@ export function CardFace({
 
         {visual.showFoil ? (
           <>
-            <div className="foil-prism pointer-events-none absolute inset-0 z-30 opacity-45 mix-blend-color-dodge" />
-            <div className="foil-shine pointer-events-none absolute inset-0 z-30 mix-blend-screen opacity-65" />
+            <div className="foil-prism pointer-events-none absolute inset-0 z-30 opacity-50 mix-blend-color-dodge" />
+            <div className="foil-shine pointer-events-none absolute inset-0 z-30 mix-blend-screen opacity-70" />
           </>
         ) : null}
 
         {visual.showChrome ? (
-          <div className="d11-chrome-sheen pointer-events-none absolute inset-0 z-30 opacity-50" />
+          <div className="d11-chrome-sheen pointer-events-none absolute inset-0 z-30 opacity-55" />
         ) : null}
 
         {visual.showHolo ? (
-          <div className="d11-holo-wave pointer-events-none absolute inset-0 z-30 opacity-40 mix-blend-overlay" />
+          <div className="d11-holo-wave pointer-events-none absolute inset-0 z-30 opacity-45 mix-blend-overlay" />
         ) : null}
+
+        <div className="d11-soft-light pointer-events-none absolute inset-0 z-30" />
 
         {interactiveFoil && (visual.showFoil || visual.showChrome || visual.showHolo) ? (
           <motion.div
@@ -137,7 +141,7 @@ export function CardFace({
         ) : null}
 
         {(celebration === "jackpot" || celebration === "hit") && (
-          <div className="pointer-events-none absolute inset-0 z-30 card-sparkle opacity-70" />
+          <div className="pointer-events-none absolute inset-0 z-30 card-sparkle opacity-75" />
         )}
       </div>
     </motion.div>

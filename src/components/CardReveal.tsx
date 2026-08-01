@@ -102,7 +102,7 @@ export function CardReveal({
         </AnimatePresence>
       </div>
 
-      <div className="relative flex min-h-[320px] w-full items-center justify-center md:min-h-[400px]">
+      <div className="relative flex min-h-[380px] w-full items-center justify-center md:min-h-[480px]">
         {step === "suspense" ? (
           <button
             type="button"
@@ -127,7 +127,7 @@ export function CardReveal({
             <CardFace
               card={pull.card}
               serialDisplay={pull.serialDisplay}
-              size="lg"
+              size="xl"
               celebration={celebration}
               interactiveFoil={celebration !== "none"}
               revealActive={step === "shown"}
@@ -158,7 +158,7 @@ export function CardReveal({
 function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
   return (
     <motion.div
-      className="relative h-[300px] w-[214px] md:h-[336px] md:w-[240px]"
+      className="relative h-[min(109vw,420px)] w-[min(78vw,300px)] md:h-[504px] md:w-[360px]"
       animate={
         celebration === "none"
           ? { scale: 1, rotate: 0 }
