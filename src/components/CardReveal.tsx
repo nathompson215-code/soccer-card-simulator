@@ -187,18 +187,6 @@ export function CardReveal({
             </motion.div>
           ) : null}
         </AnimatePresence>
-        {step === "shown" ? (
-          <motion.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.08 }}
-            className={`font-semibold tracking-wide text-gold-soft ${
-              hideContinue ? "mt-1 text-sm md:text-base" : "mt-2 text-base md:text-lg"
-            }`}
-          >
-            Est. {formatMoney(pull.card.estimatedValueCents)}
-          </motion.div>
-        ) : null}
       </div>
 
       <div className="d11-reveal-stage relative flex min-h-0 w-full flex-1 items-center justify-center py-2 md:py-3">
@@ -235,6 +223,20 @@ export function CardReveal({
           </motion.div>
         )}
       </div>
+
+      {step === "shown" ? (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="d11-market-value-panel shrink-0"
+        >
+          <div className="d11-market-value-label">Estimated Market Value</div>
+          <div className="d11-market-value-amount">
+            {formatMoney(pull.card.estimatedValueCents)}
+          </div>
+        </motion.div>
+      ) : null}
 
       {!hideContinue && onContinue ? (
         <button
