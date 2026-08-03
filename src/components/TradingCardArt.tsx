@@ -4,6 +4,7 @@ import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { SignatureOverlay } from "@/components/SignatureOverlay";
 import { BookletCardArt } from "@/components/BookletCardArt";
 import type { CardVisual } from "@/lib/card-visual";
+import { resolveSerialDisplay } from "@/lib/format";
 import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
 import type { CSSProperties } from "react";
@@ -40,12 +41,7 @@ export function TradingCardArt({
     );
   }
 
-  const serial =
-    serialDisplay && !serialDisplay.startsWith("?")
-      ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
-        : null;
+  const serial = resolveSerialDisplay(serialDisplay, card.printRun);
 
   const parts = card.playerName.trim().split(/\s+/);
   const lastName = parts.slice(-1)[0] ?? card.playerName;
@@ -113,22 +109,25 @@ export function TradingCardArt({
           </div>
         ) : null}
 
+        <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[46%]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
+
         {visual.showSignature && !isCut ? (
           <SignatureOverlay
             playerName={card.playerName}
             playerSlug={card.playerSlug}
             compact={compact}
             variant="on-card"
+            inkPlaceholder={visual.template === "autograph"}
             className={
               visual.template === "patchAuto"
                 ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"
-                : "absolute bottom-[10%] left-[6%] right-[10%] z-[12]"
+                : visual.template === "autograph"
+                  ? "absolute bottom-[19%] left-[3%] right-[3%] z-[14]"
+                  : "absolute bottom-[12%] left-[6%] right-[10%] z-[12]"
             }
           />
         ) : null}
-
-        <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 h-[46%]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
       </div>
 
       {/* Cut signature plate under the photo */}

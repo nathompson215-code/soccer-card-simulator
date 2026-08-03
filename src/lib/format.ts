@@ -34,3 +34,35 @@ export function formatLabel(format: ProductFormat | string): string {
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 }
+
+/**
+ * Resolve on-card / detail serial text.
+ * One-of-ones (print run or denominator 1) always display exactly `1/1`.
+ */
+export function resolveSerialDisplay(
+  serialDisplay: string | null | undefined,
+  printRun: number | null | undefined,
+): string | null {
+  const raw = serialDisplay?.trim() ?? "";
+  const denomFromSerial = raw.includes("/") ? Number(raw.split("/").pop()) : Number.NaN;
+  const serialTotal =
+    printRun === 1
+      ? 1
+      : Number.isFinite(denomFromSerial) && denomFromSerial === 1
+        ? 1
+        : (printRun ?? (Number.isFinite(denomFromSerial) ? denomFromSerial : null));
+
+  if (serialTotal === 1) {
+    return "1/1";
+  }
+
+  if (raw && !raw.startsWith("?")) {
+    return raw;
+  }
+
+  if (printRun != null && printRun > 1) {
+    return `?/${printRun}`;
+  }
+
+  return raw || null;
+}
