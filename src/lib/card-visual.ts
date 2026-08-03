@@ -122,11 +122,11 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
   const labels: Record<CardTemplate, string> = {
     base: "Base",
     insert: "Insert",
-    parallel: "Parallel",
+    parallel: card.printRun ? "Numbered Parallel" : "Parallel",
     refractor: "Refractor",
     autograph: "Autograph",
-    patch: "Memorabilia",
-    patchAuto: "Patch Auto",
+    patch: "Patch",
+    patchAuto: "Patch Autograph",
     booklet: "Booklet",
     printingPlate: "Printing Plate",
     caseHit: "Case Hit",
@@ -139,10 +139,14 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
     celebration === "glow" ||
     rarityFrame === "uncommon" ||
     rarityFrame === "rare" ||
-    ["refractor", "parallel", "insert", "oneOfOne", "caseHit", "patchAuto"].includes(template);
+    ["refractor", "parallel", "insert", "oneOfOne", "caseHit", "patchAuto", "autograph"].includes(
+      template,
+    );
 
   const showChrome =
-    ["refractor", "oneOfOne", "caseHit", "parallel"].includes(template) ||
+    ["refractor", "oneOfOne", "caseHit", "parallel", "insert", "autograph", "patchAuto"].includes(
+      template,
+    ) ||
     card.foil ||
     rarityFrame === "ultra" ||
     rarityFrame === "mythic" ||
@@ -162,13 +166,14 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
     showFoil,
     showChrome,
     showHolo,
-    showTexture: ["patch", "patchAuto", "booklet", "printingPlate", "caseHit"].includes(template) ||
+    showTexture:
+      ["patch", "patchAuto", "booklet", "printingPlate", "caseHit"].includes(template) ||
       rarityFrame === "ultra",
     showAutoStroke: template === "autograph" || template === "patchAuto",
     showPatchWindow: template === "patch" || template === "patchAuto" || template === "booklet",
     showPlateGrain: template === "printingPlate",
     showEmboss: true,
-    showRimLight: rarityFrame !== "common",
+    showRimLight: rarityFrame !== "common" || template !== "base",
     borderTone:
       template === "oneOfOne" || rarityFrame === "legendary"
         ? "rainbow"
@@ -178,7 +183,7 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
             ? "plate"
             : rarityFrame === "mythic" || template === "autograph" || template === "patchAuto"
               ? "mythic"
-              : rarityFrame === "ultra" || rarityFrame === "rare"
+              : rarityFrame === "ultra" || rarityFrame === "rare" || template === "parallel"
                 ? "gold"
                 : showChrome
                   ? "metal"
