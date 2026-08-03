@@ -119,6 +119,52 @@ export function SignatureOverlay({
         aria-hidden
       >
         <div className="d11-auto-sign-strip">
+          <svg className="d11-auto-sign-strip-mask" aria-hidden viewBox="0 0 320 72" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id={`strip-fade-${inkId}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+                <stop offset="18%" stopColor="#fff" stopOpacity="0.75" />
+                <stop offset="38%" stopColor="#fff" stopOpacity="1" />
+                <stop offset="62%" stopColor="#fff" stopOpacity="1" />
+                <stop offset="82%" stopColor="#fff" stopOpacity="0.75" />
+                <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+              </linearGradient>
+              <filter id={`strip-soft-${inkId}`} x="-4%" y="-20%" width="108%" height="140%">
+                <feGaussianBlur stdDeviation="1.1" />
+              </filter>
+              <mask id={`strip-brush-${inkId}`}>
+                <rect width="320" height="72" fill="#000" />
+                <path
+                  filter={`url(#strip-soft-${inkId})`}
+                  fill={`url(#strip-fade-${inkId})`}
+                  d="M12 34
+                    C 36 18, 70 14, 104 20
+                    S 168 12, 206 18
+                    S 268 14, 300 24
+                    C 314 30, 316 42, 300 48
+                    C 268 58, 230 52, 194 50
+                    S 128 60, 90 54
+                    S 40 58, 18 46
+                    C 8 40, 6 36, 12 34 Z"
+                />
+              </mask>
+            </defs>
+            <rect
+              width="320"
+              height="72"
+              fill="#f8f4ed"
+              mask={`url(#strip-brush-${inkId})`}
+              className="d11-auto-sign-strip-fill"
+            />
+            <rect
+              width="320"
+              height="72"
+              fill="#ffffff"
+              mask={`url(#strip-brush-${inkId})`}
+              opacity="0.28"
+              className="d11-auto-sign-strip-sheen"
+            />
+          </svg>
           <div className="d11-auto-sign-strip-paper" />
           <div className="d11-auto-sign-strip-gloss" />
           <svg
@@ -129,32 +175,33 @@ export function SignatureOverlay({
             aria-label={`${playerName} signature placeholder`}
           >
             <defs>
-              <linearGradient id={`ink-${inkId}`} x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#0a2f9c" />
-                <stop offset="35%" stopColor="#1246c9" />
-                <stop offset="62%" stopColor="#0b3db8" />
-                <stop offset="100%" stopColor="#163a9c" />
+              <linearGradient id={`ink-${inkId}`} x1="0" y1="0" x2="1" y2="0.35">
+                <stop offset="0%" stopColor="#082f8f" />
+                <stop offset="28%" stopColor="#0d3fbf" />
+                <stop offset="55%" stopColor="#1a4fd6" />
+                <stop offset="78%" stopColor="#0b3db8" />
+                <stop offset="100%" stopColor="#0a2f9c" />
               </linearGradient>
             </defs>
             <path
-              d="M24 48 C 68 56, 112 40, 152 46 S 226 56, 256 42"
+              d="M26 46 C 70 54, 114 38, 156 44 S 228 54, 254 40"
               fill="none"
               stroke={`url(#ink-${inkId})`}
-              strokeWidth="1.1"
+              strokeWidth="1.25"
               strokeLinecap="round"
-              opacity="0.38"
+              opacity="0.45"
             />
             <path
-              d="M30 52 C 78 60, 130 44, 174 50 S 234 58, 250 47"
+              d="M34 50 C 80 58, 132 42, 176 48 S 232 56, 248 45"
               fill="none"
               stroke="#0a2f8f"
-              strokeWidth="0.7"
+              strokeWidth="0.75"
               strokeLinecap="round"
-              opacity="0.22"
+              opacity="0.28"
             />
             <text
-              x="140.6"
-              y="36.8"
+              x="140.7"
+              y="35.9"
               textAnchor="middle"
               className="d11-auto-ink-text d11-auto-ink-text-shadow"
             >
@@ -162,7 +209,7 @@ export function SignatureOverlay({
             </text>
             <text
               x="140"
-              y="36"
+              y="35"
               textAnchor="middle"
               fill={`url(#ink-${inkId})`}
               className="d11-auto-ink-text"

@@ -871,7 +871,7 @@ a {
     brightness(0.95) contrast(1.15);
 }
 
-/* Autograph-only: feathered white signing strip + blue ink placeholder */
+/* Autograph-only: brush-stroke white signing strip + blue ink */
 .d11-signature-ink-placeholder {
   min-height: 0;
   width: 100%;
@@ -882,60 +882,51 @@ a {
   display: grid;
   place-items: center;
   width: 100%;
-  min-height: 1.95rem;
-  padding: 0.48rem 0.65rem 0.52rem;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.2rem;
   isolation: isolate;
-  /* Soft feather only at strip edges — solid sticker core */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.55) 14%,
-    #000 32%,
-    #000 76%,
-    rgba(0, 0, 0, 0.55) 90%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.55) 14%,
-    #000 32%,
-    #000 76%,
-    rgba(0, 0, 0, 0.55) 90%,
-    transparent 100%
-  );
+}
+
+.d11-auto-sign-strip-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: blur(0.6px);
+  pointer-events: none;
+}
+
+.d11-auto-sign-strip-fill {
+  fill: #f7f3ec;
 }
 
 .d11-auto-sign-strip-paper {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 1;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.78),
-    inset 0 -1px 0 rgba(210, 200, 180, 0.35);
-  background-color: #f7f3ec;
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.55' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.88 0 0 0 0 0.86 0 0 0 0 0.8 0 0 0 0.14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, transparent 48%),
-    linear-gradient(90deg, rgba(226, 218, 204, 0.4) 0%, transparent 10%, transparent 90%, rgba(226, 218, 204, 0.4) 100%),
-    linear-gradient(180deg, #fbf8f3 0%, #f4efe7 58%, #ebe3d6 100%);
-  background-blend-mode: multiply, soft-light, normal, normal;
+  inset: 14% 6%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.84 0 0 0 0 0.78 0 0 0 0.2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 }
 
 .d11-auto-sign-strip-gloss {
   position: absolute;
-  inset: 12% 6%;
+  inset: 18% 10%;
   z-index: 1;
-  border-radius: 42% / 60%;
+  border-radius: 48% / 60%;
   background: linear-gradient(
     122deg,
-    transparent 22%,
-    rgba(255, 255, 255, 0.48) 44%,
-    rgba(255, 255, 255, 0.14) 54%,
-    transparent 70%
+    transparent 24%,
+    rgba(255, 255, 255, 0.55) 46%,
+    rgba(255, 255, 255, 0.12) 56%,
+    transparent 72%
   );
-  opacity: 0.48;
+  opacity: 0.42;
   mix-blend-mode: soft-light;
   pointer-events: none;
 }
@@ -944,9 +935,9 @@ a {
   position: relative;
   z-index: 2;
   display: block;
-  width: 86%;
+  width: 84%;
   height: auto;
-  max-height: 1.95rem;
+  max-height: 2.15rem;
   overflow: visible;
   transform: rotate(var(--sig-rotate, -3deg));
   transform-origin: center;
@@ -954,11 +945,11 @@ a {
 }
 
 .d11-auto-ink-text {
-  stroke: #072a88;
-  stroke-width: 0.4px;
+  stroke: #061f6e;
+  stroke-width: 0.55px;
   stroke-linejoin: round;
-  font-size: 30px;
-  letter-spacing: 0.2px;
+  font-size: 33px;
+  letter-spacing: 0.15px;
   opacity: 1;
 }
 
@@ -969,20 +960,20 @@ a {
 .d11-auto-ink-text-shadow {
   fill: #1a4ec4;
   stroke: none;
-  opacity: 0.28;
+  opacity: 0.22;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-sign-strip {
-  min-height: 2.05rem;
-  padding: 0.45rem 0.55rem 0.5rem;
+  min-height: 1.9rem;
+  padding: 0.28rem 0.15rem;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-ink-svg {
-  max-height: 2rem;
+  max-height: 1.75rem;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-ink-text {
-  font-size: 28px;
+  font-size: 27px;
 }
 
 .d11-signature-pen-grain {
