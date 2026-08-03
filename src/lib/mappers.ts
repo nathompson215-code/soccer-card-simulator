@@ -14,6 +14,7 @@ import type {
   Tournament,
 } from "@prisma/client";
 import type { CardDTO, ProductDTO } from "@/lib/types";
+import { resolveCardPlayerPhotoSrc } from "@/lib/player-assets";
 
 type CardWithRelations = Card & {
   numbering: NumberingSpec | null;
@@ -55,6 +56,10 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     estimatedValueCents: card.estimatedValueCents,
     frontImageUrl: card.frontImageUrl,
     backImageUrl: card.backImageUrl,
+    playerImageUrl: resolveCardPlayerPhotoSrc({
+      playerSlug: player.slug,
+      frontImageUrl: card.frontImageUrl,
+    }),
     productId: product.id,
     productSlug: product.slug,
     productName: product.name,
