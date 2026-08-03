@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { CardFace } from "@/components/CardFace";
 import { RevealEffects } from "@/components/RevealEffects";
+import { formatMoney } from "@/lib/format";
 import { celebrationHeadline, packSounds, suspenseMs } from "@/lib/pack-sounds";
 import { getThemeSpec, resolveVisualTheme, type RevealStyle } from "@/lib/visual-themes";
 import type { Celebration, PullResultDTO } from "@/lib/types";
@@ -232,6 +233,20 @@ export function CardReveal({
           </motion.div>
         )}
       </div>
+
+      {step === "shown" ? (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="d11-market-value-panel shrink-0"
+        >
+          <div className="d11-market-value-label">Estimated Market Value</div>
+          <div className="d11-market-value-amount">
+            {formatMoney(pull.card.estimatedValueCents)}
+          </div>
+        </motion.div>
+      ) : null}
 
       {!hideContinue && onContinue ? (
         <button
