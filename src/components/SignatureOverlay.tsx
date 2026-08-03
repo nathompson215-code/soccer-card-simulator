@@ -109,7 +109,7 @@ export function SignatureOverlay({
     );
   }
 
-  // Autograph cards: show blue-ink cursive while probing and when missing.
+  // Autograph cards: white signing strip + blue-ink cursive placeholder.
   if (inkPlaceholder && variant === "on-card") {
     const inkId = sanitizePlayerSlug(playerSlug);
     return (
@@ -118,55 +118,59 @@ export function SignatureOverlay({
         style={{ ["--sig-rotate" as string]: `${rotation}deg` }}
         aria-hidden
       >
-        <svg
-          className={`d11-auto-ink-svg ${autographHand.className}`}
-          viewBox="0 0 280 72"
-          preserveAspectRatio="xMidYMid meet"
-          role="img"
-          aria-label={`${playerName} signature placeholder`}
-        >
-          <defs>
-            <linearGradient id={`ink-${inkId}`} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#1a4fd6" />
-              <stop offset="45%" stopColor="#0b3db8" />
-              <stop offset="100%" stopColor="#163a9c" />
-            </linearGradient>
-            <filter id={`pen-${inkId}`} x="-10%" y="-30%" width="120%" height="160%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n" />
-              <feDisplacementMap in="SourceGraphic" in2="n" scale="0.55" />
-            </filter>
-          </defs>
-          <path
-            d="M18 48 C 58 58, 110 40, 150 46 S 230 58, 262 42"
-            fill="none"
-            stroke={`url(#ink-${inkId})`}
-            strokeWidth="1.15"
-            strokeLinecap="round"
-            opacity="0.55"
-            filter={`url(#pen-${inkId})`}
-          />
-          <path
-            d="M24 52 C 70 62, 130 44, 175 50 S 240 60, 255 47"
-            fill="none"
-            stroke="#0a2f8f"
-            strokeWidth="0.7"
-            strokeLinecap="round"
-            opacity="0.35"
-          />
-          <text
-            x="140"
-            y="38"
-            textAnchor="middle"
-            className="d11-auto-ink-text d11-auto-ink-text-shadow"
-            filter={`url(#pen-${inkId})`}
+        <div className="d11-auto-sign-strip">
+          <div className="d11-auto-sign-strip-paper" />
+          <div className="d11-auto-sign-strip-gloss" />
+          <svg
+            className={`d11-auto-ink-svg ${autographHand.className}`}
+            viewBox="0 0 280 72"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            aria-label={`${playerName} signature placeholder`}
           >
-            {displayName}
-          </text>
-          <text x="140" y="38" textAnchor="middle" className="d11-auto-ink-text">
-            {displayName}
-          </text>
-        </svg>
-        <div className="d11-signature-pen-grain" />
+            <defs>
+              <linearGradient id={`ink-${inkId}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#1a4fd6" />
+                <stop offset="40%" stopColor="#0b3db8" />
+                <stop offset="70%" stopColor="#2456d4" />
+                <stop offset="100%" stopColor="#163a9c" />
+              </linearGradient>
+              <filter id={`pen-${inkId}`} x="-12%" y="-35%" width="124%" height="170%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" result="n" />
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="0.7" />
+              </filter>
+            </defs>
+            <path
+              d="M22 50 C 62 58, 108 42, 148 48 S 228 58, 258 44"
+              fill="none"
+              stroke={`url(#ink-${inkId})`}
+              strokeWidth="1.05"
+              strokeLinecap="round"
+              opacity="0.42"
+              filter={`url(#pen-${inkId})`}
+            />
+            <path
+              d="M28 54 C 74 62, 128 46, 172 52 S 236 60, 252 49"
+              fill="none"
+              stroke="#0a2f8f"
+              strokeWidth="0.65"
+              strokeLinecap="round"
+              opacity="0.28"
+            />
+            <text
+              x="140"
+              y="40"
+              textAnchor="middle"
+              className="d11-auto-ink-text d11-auto-ink-text-shadow"
+              filter={`url(#pen-${inkId})`}
+            >
+              {displayName}
+            </text>
+            <text x="140" y="40" textAnchor="middle" className="d11-auto-ink-text">
+              {displayName}
+            </text>
+          </svg>
+        </div>
       </div>
     );
   }
