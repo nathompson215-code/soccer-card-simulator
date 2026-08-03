@@ -1,6 +1,8 @@
 "use client";
 
 import { PlayerPortrait } from "@/components/PlayerPortrait";
+import { SignatureOverlay } from "@/components/SignatureOverlay";
+import { BookletCardArt } from "@/components/BookletCardArt";
 import { rarityLabel } from "@/lib/format";
 import type { CardVisual } from "@/lib/card-visual";
 import { resolveVisualTheme } from "@/lib/visual-themes";
@@ -19,12 +21,26 @@ export function TradingCardArt({
   visual,
   serialDisplay,
   compact = false,
+  preferBookletOpen = false,
 }: {
   card: CardDTO;
   visual: CardVisual;
   serialDisplay?: string | null;
   compact?: boolean;
+  preferBookletOpen?: boolean;
 }) {
+  if (visual.template === "booklet") {
+    return (
+      <BookletCardArt
+        card={card}
+        visual={visual}
+        serialDisplay={serialDisplay}
+        compact={compact}
+        defaultOpen={preferBookletOpen && !compact}
+      />
+    );
+  }
+
   const serial =
     serialDisplay && !serialDisplay.startsWith("?")
       ? serialDisplay
@@ -36,9 +52,15 @@ export function TradingCardArt({
   const lastName = parts.slice(-1)[0] ?? card.playerName;
   const firstName = parts.length > 1 ? parts.slice(0, -1).join(" ") : "";
   const theme = resolveVisualTheme(card.subset, card.parallelSlug ?? card.parallelName);
-  // Prefer rarity/template skins over generic theme-base so numbered parallels stay distinct.
   const themeClass =
     theme === "base" && visual.template !== "base" ? "" : `d11-theme-${theme}`;
+
+  const isCut = visual.template === "cutSignature";
+  const isRelic = visual.template === "patch" || visual.template === "patchAuto";
+  const isAutoFamily =
+    visual.template === "autograph" ||
+    visual.template === "patchAuto" ||
+    visual.template === "cutSignature";
 
   return (
     <div
@@ -59,13 +81,16 @@ export function TradingCardArt({
       {visual.showPlateGrain ? <div className="d11-plate-grain absolute inset-0" /> : null}
       {visual.showRimLight ? <div className="d11-rim-light absolute inset-0" /> : null}
 
-      {/* Layered chrome bezel */}
       <div className="d11-bezel-outer absolute inset-[1.6%]" />
       <div className="d11-bezel absolute inset-[2.6%] rounded-[11px]" />
       {visual.showEmboss ? <div className="d11-emboss-logo absolute left-[5.2%] top-[3.8%] z-30" /> : null}
 
-      {/* Portrait window */}
-      <div className="d11-portrait-frame absolute inset-[4.2%_4.2%_21.5%] overflow-hidden rounded-[9px]">
+      {/* Portrait / cut-signature stage */}
+      <div
+        className={`d11-portrait-frame absolute overflow-hidden rounded-[9px] ${
+          isCut ? "inset-[4.2%_4.2%_28%]" : "inset-[4.2%_4.2%_21.5%]"
+        }`}
+      >
         <div className="absolute inset-0">
           <PlayerPortrait
             playerName={card.playerName}
@@ -76,37 +101,62 @@ export function TradingCardArt({
           />
         </div>
 
+        {isCut ? <div className="d11-cut-matte absolute inset-0" /> : null}
+
         {visual.showPatchWindow ? (
-          <div className="d11-patch-window absolute bottom-[9%] right-[5.5%] z-10">
+          <div
+            className={`d11-patch-window absolute z-10 ${
+              visual.template === "patchAuto" ? "bottom-[28%] right-[5.5%]" : "bottom-[9%] right-[5.5%]"
+            }`}
+          >
             <div className="d11-patch-swatch" style={{ background: visual.accent }} />
-            <div className="d11-patch-label">MEM</div>
+            <div className="d11-patch-label">{isRelic ? "RELIC" : "MEM"}</div>
           </div>
         ) : null}
 
-        {visual.showAutoStroke ? (
-          <div className="d11-auto-stroke absolute bottom-[11%] left-[6%] right-[28%] z-10">
-            <svg viewBox="0 0 180 40" className="h-full w-full overflow-visible">
-              <path
-                d="M8 28 C 28 8, 55 34, 78 16 S 120 36, 150 12"
-                fill="none"
-                stroke="rgba(12,12,12,0.88)"
-                strokeWidth="2.8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M18 31 C 46 14, 72 31, 98 19 S 142 30, 170 15"
-                fill="none"
-                stroke="rgba(30,30,30,0.48)"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
+        {visual.showSignature && !isCut ? (
+          <SignatureOverlay
+            playerName={card.playerName}
+            playerSlug={card.playerSlug}
+            compact={compact}
+            variant="on-card"
+            className={
+              visual.template === "patchAuto"
+                ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"
+                : "absolute bottom-[10%] left-[6%] right-[10%] z-[12]"
+            }
+          />
         ) : null}
 
         <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 h-[46%]" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
       </div>
+
+      {/* Cut signature plate under the photo */}
+      {isCut ? (
+        <div className="d11-cut-sig-plate absolute inset-x-[5%] bottom-[22%] z-[15] h-[14%]">
+          <SignatureOverlay
+            playerName={card.playerName}
+            playerSlug={card.playerSlug}
+            compact={compact}
+            variant="cut"
+          />
+        </div>
+      ) : null}
+
+      {/* Premium hit badges */}
+      {isAutoFamily ? (
+        <div className="d11-hit-badge absolute right-[5.5%] top-[12%] z-[25]">
+          {visual.template === "cutSignature"
+            ? "Cut Sig"
+            : visual.template === "patchAuto"
+              ? "Patch Auto"
+              : "On-Card Auto"}
+        </div>
+      ) : null}
+      {visual.template === "patch" ? (
+        <div className="d11-hit-badge absolute right-[5.5%] top-[12%] z-[25]">Relic</div>
+      ) : null}
 
       {/* Top meta */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-2 px-[5.8%] pt-[3.3%]">
@@ -187,7 +237,6 @@ export function TradingCardArt({
         </div>
       </div>
 
-      {visual.template === "booklet" ? <div className="d11-booklet-spine" /> : null}
       {visual.template === "oneOfOne" ? <div className="d11-oneofone-ribbon">1 of 1</div> : null}
       {visual.template === "caseHit" ? <div className="d11-case-burst" /> : null}
       {visual.template === "refractor" || visual.template === "oneOfOne" ? (
@@ -214,6 +263,8 @@ function templateClass(template: CardVisual["template"]) {
       return "d11-template-patch";
     case "patchAuto":
       return "d11-template-patch-auto";
+    case "cutSignature":
+      return "d11-template-cut-sig";
     case "booklet":
       return "d11-template-booklet";
     case "printingPlate":
