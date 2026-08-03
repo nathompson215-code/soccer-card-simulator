@@ -86,12 +86,28 @@ export function isHit(rarity: string, cardType: string, printRun: number | null)
 }
 
 function serialFor(
-  card: Card & { numbering: { printRun: number } | null; parallel: Parallel },
-  rng: () => number,
+  card: Card & {
+    assignedSerial: number | null;
+    numbering: { printRun: number } | null;
+    parallel: Parallel;
+  },
 ) {
   const printRun = card.numbering?.printRun ?? card.parallel.printRun;
   if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
-  const serialNumber = Math.floor(rng() * printRun) + 1;
+
+  // Permanent catalog serial — never randomize at open/render time.
+  const serialNumber =
+    printRun === 1
+      ? 1
+      : card.assignedSerial != null && card.assignedSerial >= 1 && card.assignedSerial <= printRun
+        ? card.assignedSerial
+        : null;
+
+  if (serialNumber == null) {
+    // Numbered card missing assignedSerial should not invent a placeholder.
+    return { serialNumber: null, serialDisplay: null };
+  }
+
   return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
 }
 
@@ -99,7 +115,7 @@ function toPull(card: CardRow, serialDisplay: string | null): PullResultDTO {
   const dto = toCardDTO(card);
   return {
     card: dto,
-    serialDisplay,
+    serialDisplay: serialDisplay ?? dto.serialDisplay,
     isHit: isHit(dto.rarity, dto.cardType, dto.printRun),
     celebration: celebrationFor(dto.rarity, dto.cardType, dto.printRun),
   };
@@ -258,7 +274,7 @@ function makePull(
 ): PullResultDTO | null {
   if (used.has(card.id)) return null;
   used.add(card.id);
-  const { serialDisplay } = serialFor(card, rng);
+  const { serialDisplay } = serialFor(card);
   return toPull(card, serialDisplay);
 }
 

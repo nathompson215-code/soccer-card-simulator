@@ -97,13 +97,18 @@ function aggregateEntries(
   for (const row of owned) {
     const existing = map.get(row.cardId);
     if (!existing) {
+      const card = toCardDTO(row.card);
       map.set(row.cardId, {
         cardId: row.cardId,
-        card: toCardDTO(row.card),
+        card,
         copyCount: 1,
         firstPulledAt: row.pulledAt,
         lastPulledAt: row.pulledAt,
-        serialDisplays: row.serialDisplay ? [row.serialDisplay] : [],
+        serialDisplays: row.serialDisplay
+          ? [row.serialDisplay]
+          : card.serialDisplay
+            ? [card.serialDisplay]
+            : [],
       });
       continue;
     }
@@ -111,6 +116,9 @@ function aggregateEntries(
     if (row.pulledAt < existing.firstPulledAt) existing.firstPulledAt = row.pulledAt;
     if (row.pulledAt > existing.lastPulledAt) existing.lastPulledAt = row.pulledAt;
     if (row.serialDisplay) existing.serialDisplays.push(row.serialDisplay);
+    else if (existing.card.serialDisplay) {
+      existing.serialDisplays.push(existing.card.serialDisplay);
+    }
   }
 
   return [...map.values()].map((entry) => ({
@@ -451,14 +459,17 @@ export async function getCollection(query: CollectionQuery = {}) {
   const ownedEntries = aggregateEntries(ownedRows, favoriteIds);
   const ownedByCardId = new Map(ownedEntries.map((e) => [e.cardId, e]));
 
-  const items: OwnedCardDTO[] = ownedRows.map((row) => ({
-    instanceId: row.id,
-    cardId: row.cardId,
-    productId: row.productId,
-    pulledAt: row.pulledAt.toISOString(),
-    serialDisplay: row.serialDisplay,
-    card: toCardDTO(row.card),
-  }));
+  const items: OwnedCardDTO[] = ownedRows.map((row) => {
+    const card = toCardDTO(row.card);
+    return {
+      instanceId: row.id,
+      cardId: row.cardId,
+      productId: row.productId,
+      pulledAt: row.pulledAt.toISOString(),
+      serialDisplay: row.serialDisplay ?? card.serialDisplay,
+      card,
+    };
+  });
 
   const showChecklist = Boolean(query.product || query.insertSet);
   const binderSource = showChecklist
@@ -553,7 +564,7 @@ export async function getCollection(query: CollectionQuery = {}) {
       cardId: entry.cardId,
       productId: entry.card.productId,
       pulledAt: entry.lastPulledAt ?? new Date(0).toISOString(),
-      serialDisplay: entry.serialDisplays[0] ?? null,
+      serialDisplay: entry.serialDisplays[0] ?? entry.card.serialDisplay,
       card: entry.card,
     })),
     productCompletion: completion.products,
@@ -600,8 +611,10 @@ export async function getCardCollectionDetail(
     ? pulls.reduce((min, p) => (p.pulledAt < min ? p.pulledAt : min), pulls[0].pulledAt)
     : null;
 
+  const cardDto = toCardDTO(card);
+
   return {
-    card: toCardDTO(card),
+    card: cardDto,
     isFavorite: Boolean(favorite),
     isWishlisted: Boolean(wishlist),
     ownershipCount: pulls.length,
@@ -609,9 +622,9 @@ export async function getCardCollectionDetail(
     pullHistory: pulls.map((p) => ({
       instanceId: p.id,
       pulledAt: p.pulledAt.toISOString(),
-      serialDisplay: p.serialDisplay,
+      serialDisplay: p.serialDisplay ?? cardDto.serialDisplay,
     })),
-    latestSerialDisplay: pulls[0]?.serialDisplay ?? null,
+    latestSerialDisplay: pulls[0]?.serialDisplay ?? cardDto.serialDisplay,
   };
 }
 

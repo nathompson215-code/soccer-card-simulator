@@ -34,7 +34,7 @@ export default async function CardDetailPage({
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(280px,360px)_1fr]">
         <div>
-          <CardFlipViewer card={card} serialDisplay={detail.latestSerialDisplay} />
+          <CardFlipViewer card={card} serialDisplay={detail.latestSerialDisplay ?? card.serialDisplay} />
           {detail.isNew ? (
             <div className="mt-3 text-center">
               <span className="rounded-md bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-pitch-950">
@@ -58,11 +58,7 @@ export default async function CardDetailPage({
               ["Est. market value", formatMoney(card.estimatedValueCents)],
               ["Product", card.productName],
               ["Card #", card.cardNumber],
-              [
-                "Serial number",
-                detail.latestSerialDisplay ??
-                  (card.printRun ? `?/${card.printRun}` : "Not numbered"),
-              ],
+              ["Serial number", detail.latestSerialDisplay ?? card.serialDisplay ?? "Not numbered"],
               ["Rarity", rarityLabel(card.rarity)],
               ["Type", cardTypeLabel(card.cardType)],
               ["Print run", card.printRun ? `/${card.printRun}` : "Unlimited"],
@@ -129,7 +125,7 @@ export default async function CardDetailPage({
                       </span>
                     </div>
                     <div className="text-gold-soft">
-                      {pull.serialDisplay ?? (card.printRun ? `?/${card.printRun}` : "—")}
+                      {pull.serialDisplay ?? card.serialDisplay ?? "—"}
                     </div>
                   </li>
                 ))}
