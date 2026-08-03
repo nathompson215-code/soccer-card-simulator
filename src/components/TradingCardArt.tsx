@@ -1,7 +1,6 @@
 "use client";
 
 import { PlayerPortrait } from "@/components/PlayerPortrait";
-import { rarityLabel } from "@/lib/format";
 import type { CardVisual } from "@/lib/card-visual";
 import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
@@ -157,10 +156,6 @@ export function TradingCardArt({
                 #{card.cardNumber} · {card.parallelName}
               </div>
               <div className="mt-0.5 flex items-center gap-1.5 text-[9px] md:text-[10px]">
-                <span className={`d11-rarity-chip rarity-${visual.rarityFrame}`}>
-                  {rarityLabel(card.rarity)}
-                </span>
-                <span className="text-white/30">·</span>
                 <span className="text-white/70">{visual.label}</span>
               </div>
             </div>
