@@ -9,6 +9,7 @@ import {
   milestoneKey,
   type AchievementKey,
 } from "@/lib/achievements";
+import { buildOpeningPullPersistData } from "@/lib/card-serial";
 import { prisma } from "@/lib/db";
 import { cardInclude, toCardDTO } from "@/lib/mappers";
 import { getDemoUser } from "@/lib/queries";
@@ -162,23 +163,14 @@ export async function saveOpeningSession(params: {
       totalValueCents,
       biggestHitValueCents,
       pulls: {
-        create: flat.map((row) => {
-          const serialNumber = row.pull.serialDisplay
-            ? Number(row.pull.serialDisplay.split("/")[0])
-            : null;
-          return {
-            cardId: row.pull.card.id,
-            userCardId: row.userCardId,
-            packIndex: row.packIndex,
-            slotIndex: row.slotIndex,
-            serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
-            serialDisplay: row.pull.serialDisplay,
-            valueCentsAtOpen: row.pull.card.estimatedValueCents,
-            isHit: row.pull.isHit,
-            celebration: row.pull.celebration,
-            isNew: Boolean(row.pull.isNew),
-          };
-        }),
+        create: flat.map((row) =>
+          buildOpeningPullPersistData(
+            row.pull,
+            row.packIndex,
+            row.slotIndex,
+            row.userCardId,
+          ),
+        ),
       },
     },
     include: openingInclude,

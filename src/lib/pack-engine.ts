@@ -1,4 +1,5 @@
 import type { Card, Parallel } from "@prisma/client";
+import { buildUserCardPersistData, formatPermanentSerial } from "@/lib/card-serial";
 import { prisma } from "@/lib/db";
 import { cardInclude, toCardDTO } from "@/lib/mappers";
 import { loadProductConfig, type HitPool, type LoadedProductConfig } from "@/lib/product-config";
@@ -86,20 +87,29 @@ export function isHit(rarity: string, cardType: string, printRun: number | null)
 }
 
 function serialFor(
-  card: Card & { numbering: { printRun: number } | null; parallel: Parallel },
-  rng: () => number,
+  card: Card & {
+    assignedSerial: number | null;
+    numbering: { printRun: number } | null;
+    parallel: Parallel;
+  },
 ) {
   const printRun = card.numbering?.printRun ?? card.parallel.printRun;
-  if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
-  const serialNumber = Math.floor(rng() * printRun) + 1;
-  return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
+  const serialDisplay = formatPermanentSerial(card.assignedSerial, printRun);
+  if (!serialDisplay) {
+    return { serialNumber: null as number | null, serialDisplay: null as string | null };
+  }
+  const serialNumber = Number(serialDisplay.split("/")[0]);
+  return {
+    serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
+    serialDisplay,
+  };
 }
 
 function toPull(card: CardRow, serialDisplay: string | null): PullResultDTO {
   const dto = toCardDTO(card);
   return {
     card: dto,
-    serialDisplay,
+    serialDisplay: serialDisplay ?? dto.serialDisplay,
     isHit: isHit(dto.rarity, dto.cardType, dto.printRun),
     celebration: celebrationFor(dto.rarity, dto.cardType, dto.printRun),
   };
@@ -258,7 +268,7 @@ function makePull(
 ): PullResultDTO | null {
   if (used.has(card.id)) return null;
   used.add(card.id);
-  const { serialDisplay } = serialFor(card, rng);
+  const { serialDisplay } = serialFor(card);
   return toPull(card, serialDisplay);
 }
 
@@ -527,20 +537,11 @@ export async function savePullsToCollection(
   pulls: PullResultDTO[],
 ) {
   const created = await prisma.$transaction(
-    pulls.map((pull) => {
-      const serialNumber = pull.serialDisplay
-        ? Number(pull.serialDisplay.split("/")[0])
-        : null;
-      return prisma.userCard.create({
-        data: {
-          userId,
-          cardId: pull.card.id,
-          productId,
-          serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
-          serialDisplay: pull.serialDisplay,
-        },
-      });
-    }),
+    pulls.map((pull) =>
+      prisma.userCard.create({
+        data: buildUserCardPersistData(userId, productId, pull),
+      }),
+    ),
   );
   return created;
 }

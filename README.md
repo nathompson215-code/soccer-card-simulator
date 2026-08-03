@@ -52,8 +52,19 @@ Seed creates `collector@drafteleven.local`. Pack openings save `UserCard` rows f
 Hobby box config (20 packs × 4 cards, published guarantees) is driven by JSON under
 `data/products/topps-chrome-ucl-2024-25/`. See **[docs/CHROME_UCL_HOBBY.md](docs/CHROME_UCL_HOBBY.md)**.
 
+**Card renderer is read-only** — see **[docs/PROTECTED_CARD_FEATURES.md](docs/PROTECTED_CARD_FEATURES.md)**
+before changing photos, autographs, booklets, pricing, rarity labels, or serials.
+
 ```bash
 npm run db:seed
 ```
 
 Open the product page and choose **Open Box** for the full hobby theater + box summary.
+
+## Tests
+
+```bash
+npm test
+```
+
+Automated coverage for the pack-open core loop (regular, autograph, booklet, numbered, and 1/1 cards) lives under `src/lib/*.test.ts`.
