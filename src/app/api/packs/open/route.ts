@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
-import { annotateNewPulls } from "@/lib/collection";
-import {
-  getProductCollectionProgress,
-  openBoxFromDb,
-  openPackFromDb,
-  recordOpeningAndAchievements,
-  savePullsToCollection,
-} from "@/lib/pack-engine";
+import { persistOpenedPacks } from "@/lib/core-loop";
+import { openBoxFromDb, openPackFromDb } from "@/lib/pack-engine";
 import { getDemoUser, getProductBySlug } from "@/lib/queries";
 
 export async function POST(request: Request) {
@@ -26,7 +20,6 @@ export async function POST(request: Request) {
     }
 
     const user = await getDemoUser();
-    const before = await getProductCollectionProgress(user.id, product.id);
     const mode = body.mode ?? "pack";
 
     let packs;
@@ -40,35 +33,21 @@ export async function POST(request: Request) {
       packs = [await openPackFromDb(product.id)];
     }
 
-    packs = await annotateNewPulls(user.id, packs);
-
-    const userCardIds: string[] = [];
-    for (const pack of packs) {
-      const created = await savePullsToCollection(user.id, product.id, pack.cards);
-      userCardIds.push(...created.map((row) => row.id));
-    }
-
-    const { newlyUnlocked } = await recordOpeningAndAchievements({
+    const persisted = await persistOpenedPacks({
       userId: user.id,
       productId: product.id,
       mode,
       packs,
-      userCardIds,
     });
-
-    const after = await getProductCollectionProgress(user.id, product.id);
 
     return NextResponse.json({
       product,
       mode,
-      packs,
-      totalCards: packs.reduce((sum, p) => sum + p.cards.length, 0),
+      packs: persisted.packs,
+      totalCards: persisted.packs.reduce((sum, p) => sum + p.cards.length, 0),
       boxSummary,
-      collectionProgress: {
-        ...after,
-        newUniquesThisOpen: Math.max(0, after.uniqueOwned - before.uniqueOwned),
-      },
-      newlyUnlocked,
+      collectionProgress: persisted.collectionProgress,
+      newlyUnlocked: persisted.newlyUnlocked,
     });
   } catch (error) {
     console.error(error);

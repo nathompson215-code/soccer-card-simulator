@@ -1,4 +1,5 @@
 import type { Card, Parallel } from "@prisma/client";
+import { buildUserCardPersistData, formatPermanentSerial } from "@/lib/card-serial";
 import { prisma } from "@/lib/db";
 import { cardInclude, toCardDTO } from "@/lib/mappers";
 import { loadProductConfig, type HitPool, type LoadedProductConfig } from "@/lib/product-config";
@@ -93,22 +94,15 @@ function serialFor(
   },
 ) {
   const printRun = card.numbering?.printRun ?? card.parallel.printRun;
-  if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
-
-  // Permanent catalog serial — never randomize at open/render time.
-  const serialNumber =
-    printRun === 1
-      ? 1
-      : card.assignedSerial != null && card.assignedSerial >= 1 && card.assignedSerial <= printRun
-        ? card.assignedSerial
-        : null;
-
-  if (serialNumber == null) {
-    // Numbered card missing assignedSerial should not invent a placeholder.
-    return { serialNumber: null, serialDisplay: null };
+  const serialDisplay = formatPermanentSerial(card.assignedSerial, printRun);
+  if (!serialDisplay) {
+    return { serialNumber: null as number | null, serialDisplay: null as string | null };
   }
-
-  return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
+  const serialNumber = Number(serialDisplay.split("/")[0]);
+  return {
+    serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
+    serialDisplay,
+  };
 }
 
 function toPull(card: CardRow, serialDisplay: string | null): PullResultDTO {
@@ -543,20 +537,11 @@ export async function savePullsToCollection(
   pulls: PullResultDTO[],
 ) {
   const created = await prisma.$transaction(
-    pulls.map((pull) => {
-      const serialNumber = pull.serialDisplay
-        ? Number(pull.serialDisplay.split("/")[0])
-        : null;
-      return prisma.userCard.create({
-        data: {
-          userId,
-          cardId: pull.card.id,
-          productId,
-          serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
-          serialDisplay: pull.serialDisplay,
-        },
-      });
-    }),
+    pulls.map((pull) =>
+      prisma.userCard.create({
+        data: buildUserCardPersistData(userId, productId, pull),
+      }),
+    ),
   );
   return created;
 }
