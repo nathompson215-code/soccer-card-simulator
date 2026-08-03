@@ -103,18 +103,21 @@ export function CardFace({
           ? { rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }
           : undefined
       }
-      className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
+      className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${
+        visual.template === "booklet" ? "d11-booklet-host" : ""
+      } ${className}`}
     >
       <div
-        className={`d11-card-shell relative h-full w-full overflow-hidden rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
-          revealActive ? "card-reveal-pop" : ""
-        }`}
+        className={`d11-card-shell relative h-full w-full rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
+          visual.template === "booklet" ? "overflow-visible" : "overflow-hidden"
+        } ${revealActive ? "card-reveal-pop" : ""}`}
       >
         <TradingCardArt
           card={card}
           visual={visual}
           serialDisplay={serialDisplay}
           compact={size === "sm"}
+          preferBookletOpen={size === "lg" || size === "xl" || revealActive}
         />
 
         {visual.showFoil ? (
