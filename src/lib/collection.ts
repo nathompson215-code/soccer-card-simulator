@@ -56,6 +56,11 @@ export async function getCollection() {
     .sort((a, b) => b.card.estimatedValueCents - a.card.estimatedValueCents)
     .slice(0, 8);
 
+  const estimatedValueCents = items.reduce(
+    (sum, item) => sum + item.card.estimatedValueCents,
+    0,
+  );
+
   const productCompletion = await prisma.$queryRaw<
     Array<{ product_id: string; name: string; owned: bigint; total: bigint }>
   >`
@@ -80,6 +85,7 @@ export async function getCollection() {
     totalOwned: items.length,
     uniqueOwned: uniqueIds.size,
     totalCatalog,
+    estimatedValueCents,
     completionPct: totalCatalog
       ? Math.round((uniqueIds.size / totalCatalog) * 10000) / 100
       : 0,
