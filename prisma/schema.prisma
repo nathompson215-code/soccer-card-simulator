@@ -335,6 +335,8 @@ model ChecklistEntry {
 }
 
 /// Unique collectible SKU = checklist entry × parallel. Designed for 1M+ rows.
+/// `estimatedValueCents` is the UI source of truth for market value; computed by
+/// `src/lib/market-value.ts` at seed/reprice (swap that module for live comps later).
 model Card {
   id                  String   @id @default(cuid())
   checklistEntryId    String

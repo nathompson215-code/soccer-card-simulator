@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { CardFace } from "@/components/CardFace";
 import { RevealEffects } from "@/components/RevealEffects";
+import { formatMoney } from "@/lib/format";
 import { celebrationHeadline, packSounds, suspenseMs } from "@/lib/pack-sounds";
 import { getThemeSpec, resolveVisualTheme, type RevealStyle } from "@/lib/visual-themes";
 import type { Celebration, PullResultDTO } from "@/lib/types";
@@ -186,6 +187,18 @@ export function CardReveal({
             </motion.div>
           ) : null}
         </AnimatePresence>
+        {step === "shown" ? (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.08 }}
+            className={`font-semibold tracking-wide text-gold-soft ${
+              hideContinue ? "mt-1 text-sm md:text-base" : "mt-2 text-base md:text-lg"
+            }`}
+          >
+            Est. {formatMoney(pull.card.estimatedValueCents)}
+          </motion.div>
+        ) : null}
       </div>
 
       <div className="d11-reveal-stage relative flex min-h-0 w-full flex-1 items-center justify-center py-2 md:py-3">

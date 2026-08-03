@@ -10,8 +10,13 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
+<<<<<<< HEAD
     "photos:fetch": "tsx scripts/fetch-player-photos.ts",
     "postinstall": "prisma generate"
+=======
+    "postinstall": "prisma generate",
+    "reprice": "tsx scripts/reprice-cards.ts"
+>>>>>>> 8169e80 (Add data-driven market values across pack and collection)
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
