@@ -7,6 +7,8 @@ import { BoxSummaryScreen } from "@/components/BoxSummaryScreen";
 import { CardReveal } from "@/components/CardReveal";
 import { SuspenseVeil } from "@/components/RevealEffects";
 import { SealedPack } from "@/components/SealedPack";
+import { formatMoney } from "@/lib/format";
+import { sumMarketValueCents } from "@/lib/market-value";
 import { packSounds, revealIntensity, suspenseMs } from "@/lib/pack-sounds";
 import type {
   BoxSummaryDTO,
@@ -71,6 +73,20 @@ export function PackOpeningTheater({
     [queue, product.cardsPerPack],
   );
   const revealedCount = allPulls.length + (phase === "revealing" ? revealIndex + (cardReady ? 1 : 0) : 0);
+  const revealedInCurrentPack = phase === "revealing" ? revealIndex + (cardReady ? 1 : 0) : 0;
+  const packValueCents = useMemo(
+    () =>
+      sumMarketValueCents(
+        currentPulls.slice(0, Math.max(0, revealedInCurrentPack)).map((p) => p.card),
+      ),
+    [currentPulls, revealedInCurrentPack],
+  );
+  const sessionValueCents = useMemo(
+    () =>
+      sumMarketValueCents(allPulls.map((p) => p.card)) +
+      (phase === "revealing" ? packValueCents : 0),
+    [allPulls, packValueCents, phase],
+  );
 
   const clearTimers = () => {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -363,18 +379,40 @@ export function PackOpeningTheater({
                 exit={{ opacity: 0 }}
                 className="flex min-h-0 flex-1 flex-col"
               >
-                <div className="flex shrink-0 items-center justify-center gap-2 px-4 pt-2 text-[10px] uppercase tracking-[0.18em] text-ink-muted md:pt-3 md:text-[11px]">
-                  <span>
-                    {mode === "box" ? `Pack ${packIndex + 1}/${queue.length}` : "Single Pack"}
-                  </span>
-                  <span className="text-white/20">·</span>
-                  <span>
-                    Card {revealIndex + 1}/{currentPulls.length}
-                  </span>
-                  <span className="text-white/20">·</span>
-                  <span>
-                    {Math.min(revealedCount, totalCards)}/{totalCards} opened
-                  </span>
+                <div className="flex shrink-0 flex-col items-center justify-center gap-1 px-4 pt-2 text-[10px] uppercase tracking-[0.18em] text-ink-muted md:pt-3 md:text-[11px]">
+                  <div className="flex flex-wrap items-center justify-center gap-2">
+                    <span>
+                      {mode === "box" ? `Pack ${packIndex + 1}/${queue.length}` : "Single Pack"}
+                    </span>
+                    <span className="text-white/20">·</span>
+                    <span>
+                      Card {revealIndex + 1}/{currentPulls.length}
+                    </span>
+                    <span className="text-white/20">·</span>
+                    <span>
+                      {Math.min(revealedCount, totalCards)}/{totalCards} opened
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center justify-center gap-2 normal-case tracking-normal text-gold-soft">
+                    <span className="font-semibold">
+                      Pack {formatMoney(packValueCents)}
+                    </span>
+                    {mode === "box" ? (
+                      <>
+                        <span className="text-white/20">·</span>
+                        <span className="font-semibold">
+                          Box {formatMoney(sessionValueCents)}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-white/20">·</span>
+                        <span className="font-semibold">
+                          Session {formatMoney(sessionValueCents)}
+                        </span>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex min-h-0 flex-1 flex-col items-stretch justify-center overflow-hidden px-3 py-2 md:px-6 md:py-3">

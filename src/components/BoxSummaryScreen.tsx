@@ -52,8 +52,8 @@ export function BoxSummaryScreen({
           {mode === "box" ? "Hobby Box Complete" : "Pack Complete"}
         </h3>
         <p className="mt-2 text-sm text-ink-muted">
-          {pulls.length} cards ripped · {hitCount} major hits · est.{" "}
-          {formatMoney(estimated)}
+          {pulls.length} cards ripped · {hitCount} major hits · est. market value{" "}
+          <span className="font-semibold text-gold-soft">{formatMoney(estimated)}</span>
         </p>
       </div>
 
