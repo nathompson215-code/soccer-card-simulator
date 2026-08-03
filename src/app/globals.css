@@ -882,26 +882,26 @@ a {
   display: grid;
   place-items: center;
   width: 100%;
-  min-height: 2.85rem;
-  padding: 0.55rem 0.75rem 0.65rem;
+  min-height: 1.95rem;
+  padding: 0.48rem 0.65rem 0.52rem;
   isolation: isolate;
-  /* Soft feather into the photo — no hard rectangle */
+  /* Soft feather only at strip edges — solid sticker core */
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 0, 0, 0.55) 18%,
-    #000 38%,
-    #000 72%,
-    rgba(0, 0, 0, 0.55) 88%,
+    rgba(0, 0, 0, 0.55) 14%,
+    #000 32%,
+    #000 76%,
+    rgba(0, 0, 0, 0.55) 90%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0, 0, 0, 0.55) 18%,
-    #000 38%,
-    #000 72%,
-    rgba(0, 0, 0, 0.55) 88%,
+    rgba(0, 0, 0, 0.55) 14%,
+    #000 32%,
+    #000 76%,
+    rgba(0, 0, 0, 0.55) 90%,
     transparent 100%
   );
 }
@@ -910,33 +910,32 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, transparent 42%),
-    linear-gradient(90deg, rgba(236, 232, 224, 0.35) 0%, transparent 18%, transparent 82%, rgba(236, 232, 224, 0.35) 100%),
-    linear-gradient(180deg, #f7f4ee 0%, #f1ebe2 48%, #ebe4d8 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-  /* Paper fiber / sticker grain */
+  opacity: 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(210, 200, 180, 0.35);
+  background-color: #f7f3ec;
   background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.35' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.90 0 0 0 0 0.85 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, transparent 42%),
-    linear-gradient(90deg, rgba(236, 232, 224, 0.35) 0%, transparent 18%, transparent 82%, rgba(236, 232, 224, 0.35) 100%),
-    linear-gradient(180deg, #f7f4ee 0%, #f1ebe2 48%, #ebe4d8 100%);
-  background-blend-mode: multiply, normal, normal, normal;
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.55' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.88 0 0 0 0 0.86 0 0 0 0 0.8 0 0 0 0.14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, transparent 48%),
+    linear-gradient(90deg, rgba(226, 218, 204, 0.4) 0%, transparent 10%, transparent 90%, rgba(226, 218, 204, 0.4) 100%),
+    linear-gradient(180deg, #fbf8f3 0%, #f4efe7 58%, #ebe3d6 100%);
+  background-blend-mode: multiply, soft-light, normal, normal;
 }
 
 .d11-auto-sign-strip-gloss {
   position: absolute;
-  inset: 8% 4%;
+  inset: 12% 6%;
   z-index: 1;
-  border-radius: 40% / 55%;
+  border-radius: 42% / 60%;
   background: linear-gradient(
-    118deg,
-    transparent 18%,
-    rgba(255, 255, 255, 0.38) 42%,
-    rgba(255, 255, 255, 0.12) 52%,
-    transparent 68%
+    122deg,
+    transparent 22%,
+    rgba(255, 255, 255, 0.48) 44%,
+    rgba(255, 255, 255, 0.14) 54%,
+    transparent 70%
   );
-  opacity: 0.55;
+  opacity: 0.48;
   mix-blend-mode: soft-light;
   pointer-events: none;
 }
@@ -945,9 +944,9 @@ a {
   position: relative;
   z-index: 2;
   display: block;
-  width: 92%;
+  width: 86%;
   height: auto;
-  max-height: 2.85rem;
+  max-height: 1.95rem;
   overflow: visible;
   transform: rotate(var(--sig-rotate, -3deg));
   transform-origin: center;
@@ -955,33 +954,35 @@ a {
 }
 
 .d11-auto-ink-text {
-  fill: #0c3eb8;
-  stroke: #082f8a;
-  stroke-width: 0.5px;
+  stroke: #072a88;
+  stroke-width: 0.4px;
   stroke-linejoin: round;
-  font-size: 36px;
-  letter-spacing: 0.35px;
-  opacity: 0.94;
+  font-size: 30px;
+  letter-spacing: 0.2px;
+  opacity: 1;
+}
+
+.d11-auto-ink-text:not(.d11-auto-ink-text-shadow) {
+  fill: #0a36b0;
 }
 
 .d11-auto-ink-text-shadow {
-  fill: #1a56d6;
+  fill: #1a4ec4;
   stroke: none;
-  opacity: 0.22;
-  transform: translate(0.55px, 0.7px);
+  opacity: 0.28;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-sign-strip {
-  min-height: 2.2rem;
-  padding: 0.4rem 0.55rem 0.45rem;
+  min-height: 2.05rem;
+  padding: 0.45rem 0.55rem 0.5rem;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-ink-svg {
-  max-height: 2.15rem;
+  max-height: 2rem;
 }
 
 .d11-signature-ink-placeholder.is-compact .d11-auto-ink-text {
-  font-size: 30px;
+  font-size: 28px;
 }
 
 .d11-signature-pen-grain {
