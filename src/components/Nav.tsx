@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/cards", label: "Cards" },
   { href: "/players", label: "Players" },
   { href: "/collection", label: "Collection" },
+  { href: "/history", label: "History" },
 ];
 
 export function Nav() {

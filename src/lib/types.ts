@@ -217,3 +217,68 @@ export interface CardCollectionDetailDTO {
   }>;
   latestSerialDisplay: string | null;
 }
+
+export type OpeningModeDTO = "pack" | "box";
+
+export interface OpeningPullDTO {
+  id: string;
+  packIndex: number;
+  slotIndex: number;
+  serialDisplay: string | null;
+  valueCentsAtOpen: number;
+  isHit: boolean;
+  celebration: Celebration;
+  isNew: boolean;
+  card: CardDTO;
+}
+
+export interface OpeningDTO {
+  id: string;
+  mode: OpeningModeDTO;
+  openedAt: string;
+  packCount: number;
+  cardCount: number;
+  totalValueCents: number;
+  biggestHitValueCents: number;
+  product: {
+    id: string;
+    slug: string;
+    name: string;
+    accentHex: string | null;
+    year: number;
+  };
+  biggestHit: OpeningPullDTO | null;
+  pulls: OpeningPullDTO[];
+}
+
+export interface AchievementDTO {
+  key: string;
+  title: string;
+  description: string;
+  mark: string;
+  unlocked: boolean;
+  unlockedAt: string | null;
+  metaJson: string | null;
+}
+
+export interface LifetimeStatsDTO {
+  packsOpened: number;
+  boxesOpened: number;
+  totalCardsPulled: number;
+  uniqueCardsOwned: number;
+  autographsPulled: number;
+  numberedCardsPulled: number;
+  bookletsPulled: number;
+  oneOfOnesPulled: number;
+  estimatedCollectionValueCents: number;
+  bestPull: OpeningPullDTO | null;
+  bestValueOpening: OpeningDTO | null;
+  biggestHitOpening: OpeningDTO | null;
+}
+
+export interface ProgressionDTO {
+  stats: LifetimeStatsDTO;
+  achievements: AchievementDTO[];
+  openings: OpeningDTO[];
+  newlyUnlocked?: AchievementDTO[];
+}
