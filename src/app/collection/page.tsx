@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CardFace } from "@/components/CardFace";
 import { getCollection } from "@/lib/collection";
-import { formatNumber } from "@/lib/format";
+import { formatMoney, formatNumber } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +18,9 @@ export default async function CollectionPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {[
+          { label: "Collection value", value: formatMoney(collection.estimatedValueCents) },
           { label: "Cards owned", value: formatNumber(collection.totalOwned) },
           { label: "Unique cards", value: formatNumber(collection.uniqueOwned) },
           { label: "Catalog size", value: formatNumber(collection.totalCatalog) },
@@ -62,13 +63,16 @@ export default async function CollectionPage() {
           <h2 className="display text-3xl text-ink">Rarest pulls</h2>
           <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
             {collection.rarestPulls.map((item) => (
-              <Link key={item.instanceId} href={`/cards/${item.card.slug}`}>
+              <Link key={item.instanceId} href={`/cards/${item.card.slug}`} className="shrink-0">
                 <CardFace
                   card={item.card}
                   serialDisplay={item.serialDisplay}
                   size="sm"
                   celebration={item.card.rarity === "LEGENDARY" ? "jackpot" : "hit"}
                 />
+                <div className="mt-1 text-center text-xs font-semibold text-gold-soft">
+                  {formatMoney(item.card.estimatedValueCents)}
+                </div>
               </Link>
             ))}
           </div>
@@ -95,6 +99,9 @@ export default async function CollectionPage() {
                   serialDisplay={item.serialDisplay}
                   size="sm"
                 />
+                <div className="mt-1 text-center text-[11px] font-medium text-gold-soft/90">
+                  {formatMoney(item.card.estimatedValueCents)}
+                </div>
               </Link>
             ))}
           </div>
