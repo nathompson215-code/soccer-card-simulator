@@ -35,6 +35,8 @@ export interface CardDTO {
   estimatedValueCents: number;
   frontImageUrl: string | null;
   backImageUrl: string | null;
+  /** Resolved player photograph URL (card art or `/players/{slug}.*`). */
+  playerImageUrl: string | null;
   productId: string;
   productSlug: string;
   productName: string;
