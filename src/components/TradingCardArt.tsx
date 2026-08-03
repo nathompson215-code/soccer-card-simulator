@@ -119,6 +119,7 @@ export function TradingCardArt({
             playerSlug={card.playerSlug}
             compact={compact}
             variant="on-card"
+            inkPlaceholder={visual.template === "autograph"}
             className={
               visual.template === "patchAuto"
                 ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"

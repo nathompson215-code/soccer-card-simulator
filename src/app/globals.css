@@ -871,6 +871,44 @@ a {
     brightness(0.95) contrast(1.15);
 }
 
+/* Temporary autograph-only blue-ink cursive placeholder */
+.d11-signature-ink-placeholder {
+  min-height: 16%;
+}
+
+.d11-auto-ink-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 3.6rem;
+  overflow: visible;
+  transform: rotate(var(--sig-rotate, -3deg));
+  transform-origin: center;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.18));
+  font-family: inherit;
+}
+
+.d11-auto-ink-text {
+  fill: #0b3db8;
+  stroke: #163a9c;
+  stroke-width: 0.45px;
+  stroke-linejoin: round;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+  opacity: 0.92;
+}
+
+.d11-auto-ink-text-shadow {
+  fill: #1a4fd6;
+  stroke: none;
+  opacity: 0.28;
+  transform: translate(0.6px, 0.8px);
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-ink-text {
+  font-size: 30px;
+}
+
 .d11-signature-pen-grain {
   pointer-events: none;
   position: absolute;
