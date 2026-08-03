@@ -10,6 +10,8 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
+    "photos:fetch": "tsx scripts/fetch-player-photos.ts",
+    "reprice": "tsx scripts/reprice-cards.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
