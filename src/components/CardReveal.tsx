@@ -219,6 +219,16 @@ export function CardReveal({
               interactiveFoil={celebration !== "none"}
               revealActive={step === "shown"}
             />
+            {step === "shown" && pull.isNew ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.7, y: -8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.12 }}
+                className="pointer-events-none absolute -right-2 -top-2 z-40 rounded-md bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-pitch-950 shadow-lg"
+              >
+                New
+              </motion.div>
+            ) : null}
           </motion.div>
         )}
       </div>

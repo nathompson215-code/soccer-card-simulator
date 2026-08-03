@@ -1,101 +1,79 @@
 import Link from "next/link";
-import { CardFace } from "@/components/CardFace";
-import { getCollection } from "@/lib/collection";
+import { CollectionFilters } from "@/components/CollectionFilters";
+import { CollectionSlot } from "@/components/CollectionSlot";
+import { CollectionStatsPanel } from "@/components/CollectionStatsPanel";
+import { getCollection, type CollectionQuery } from "@/lib/collection";
 import { formatNumber } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
-export default async function CollectionPage() {
-  const collection = await getCollection();
+export default async function CollectionPage({
+  searchParams,
+}: {
+  searchParams: Promise<CollectionQuery>;
+}) {
+  const query = await searchParams;
+  const collection = await getCollection(query);
+  const ownedInView = collection.entries.filter((e) => e.isOwned).length;
+  const missingInView = collection.entries.filter((e) => !e.isOwned).length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 md:px-6">
+    <div className="binder-page mx-auto max-w-7xl px-4 py-10 md:px-6">
       <div className="mb-8">
-        <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">Binder</div>
-        <h1 className="display mt-2 text-5xl text-ink">My Collection</h1>
-        <p className="mt-3 text-ink-muted">
-          {collection.user.displayName} · pulls are persisted in PostgreSQL as UserCard rows.
+        <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">Digital binder</div>
+        <h1 className="display mt-2 text-5xl text-ink md:text-6xl">My Collection</h1>
+        <p className="mt-3 max-w-2xl text-ink-muted">
+          {collection.user.displayName}&apos;s premium binder — every pull is saved, duplicates are
+          tracked, and missing checklist cards appear as silhouettes.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          { label: "Cards owned", value: formatNumber(collection.totalOwned) },
-          { label: "Unique cards", value: formatNumber(collection.uniqueOwned) },
-          { label: "Catalog size", value: formatNumber(collection.totalCatalog) },
-          { label: "Completion", value: `${collection.completionPct}%` },
-        ].map((stat) => (
-          <div key={stat.label} className="pitch-panel rounded-2xl px-5 py-4">
-            <div className="display text-4xl text-gold-soft">{stat.value}</div>
-            <div className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-muted">
-              {stat.label}
-            </div>
+      <CollectionStatsPanel
+        stats={collection.stats}
+        overall={collection.overallCompletion}
+        products={collection.productCompletion}
+        insertSets={collection.insertSetCompletion}
+      />
+
+      <section className="mt-12">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="display text-3xl text-ink">Binder pages</h2>
+            <p className="mt-1 text-sm text-ink-muted">
+              {collection.showingChecklist
+                ? `Checklist view · ${formatNumber(ownedInView)} owned · ${formatNumber(missingInView)} missing`
+                : `Owned uniques · ${formatNumber(collection.entries.length)} shown`}
+            </p>
           </div>
-        ))}
-      </div>
-
-      <section className="mt-10">
-        <h2 className="display text-3xl text-ink">Completion by product</h2>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          {collection.productCompletion.map((p) => (
-            <div key={p.productId} className="pitch-panel rounded-xl px-4 py-3">
-              <div className="flex items-center justify-between gap-3">
-                <div className="font-medium text-ink">{p.name}</div>
-                <div className="text-sm text-pitch-400">{p.pct}%</div>
-              </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-black/30">
-                <div
-                  className="h-full rounded-full bg-pitch-500"
-                  style={{ width: `${Math.min(100, p.pct)}%` }}
-                />
-              </div>
-              <div className="mt-1 text-xs text-ink-muted">
-                {p.owned} / {p.total}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {collection.rarestPulls.length > 0 ? (
-        <section className="mt-10">
-          <h2 className="display text-3xl text-ink">Rarest pulls</h2>
-          <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
-            {collection.rarestPulls.map((item) => (
-              <Link key={item.instanceId} href={`/cards/${item.card.slug}`}>
-                <CardFace
-                  card={item.card}
-                  serialDisplay={item.serialDisplay}
-                  size="sm"
-                  celebration={item.card.rarity === "LEGENDARY" ? "jackpot" : "hit"}
-                />
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <section className="mt-10">
-        <div className="mb-4 flex items-end justify-between">
-          <h2 className="display text-3xl text-ink">Recent pulls</h2>
           <Link href="/products" className="text-sm text-pitch-400">
-            Open more packs →
+            Rip packs →
           </Link>
         </div>
-        {collection.items.length === 0 ? (
-          <p className="text-ink-muted">
-            No cards yet. Open a product and rip a pack — results save to the database.
-          </p>
+
+        <CollectionFilters
+          options={collection.filterOptions}
+          query={collection.query}
+          showingChecklist={collection.showingChecklist}
+        />
+
+        {collection.entries.length === 0 ? (
+          <div className="pitch-panel mt-6 rounded-2xl px-6 py-12 text-center">
+            <p className="text-ink-muted">
+              {collection.totalOwned === 0
+                ? "No cards yet. Open a product and rip a pack — results save automatically."
+                : "No cards match these filters."}
+            </p>
+            <Link
+              href="/products"
+              className="mt-4 inline-flex rounded-full bg-pitch-500 px-5 py-3 text-sm font-semibold text-pitch-950"
+            >
+              Browse products
+            </Link>
+          </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {collection.items.slice(0, 48).map((item) => (
-              <Link key={item.instanceId} href={`/cards/${item.card.slug}`} className="mx-auto">
-                <CardFace
-                  card={item.card}
-                  serialDisplay={item.serialDisplay}
-                  size="sm"
-                />
-              </Link>
+          <div className="binder-grid mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {collection.entries.map((entry, index) => (
+              <CollectionSlot key={entry.cardId} entry={entry} index={index} />
             ))}
           </div>
         )}

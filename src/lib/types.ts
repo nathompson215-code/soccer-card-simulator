@@ -104,6 +104,8 @@ export interface PullResultDTO {
   serialDisplay: string | null;
   isHit: boolean;
   celebration: Celebration;
+  /** True when this pull is the collector's first copy of the card. */
+  isNew?: boolean;
 }
 
 export interface PackResultDTO {
@@ -142,4 +144,74 @@ export interface OwnedCardDTO {
   pulledAt: string;
   serialDisplay: string | null;
   card: CardDTO;
+}
+
+export interface CollectionEntryDTO {
+  cardId: string;
+  card: CardDTO;
+  copyCount: number;
+  firstPulledAt: string | null;
+  lastPulledAt: string | null;
+  serialDisplays: string[];
+  isNew: boolean;
+  isFavorite: boolean;
+  isOwned: boolean;
+}
+
+export interface CompletionBucketDTO {
+  id: string;
+  name: string;
+  owned: number;
+  total: number;
+  pct: number;
+  kind: "overall" | "product" | "insert_set";
+  productId?: string;
+  productSlug?: string;
+  setSlug?: string;
+}
+
+export interface CollectionStatsDTO {
+  totalOwned: number;
+  uniqueOwned: number;
+  duplicateCards: number;
+  totalEstimatedValueCents: number;
+  productsCompleted: number;
+  productsTotal: number;
+  completionPct: number;
+  topValuable: CollectionEntryDTO[];
+  recentPulls: OwnedCardDTO[];
+}
+
+export type CollectionSort =
+  | "newest"
+  | "oldest"
+  | "value_high"
+  | "value_low"
+  | "rarity"
+  | "player"
+  | "club"
+  | "card_number";
+
+export interface CollectionFilterOptions {
+  players: string[];
+  clubs: string[];
+  nations: string[];
+  products: Array<{ slug: string; name: string; year: number }>;
+  years: number[];
+  rarities: Rarity[];
+  insertSets: Array<{ slug: string; name: string; productSlug: string }>;
+}
+
+export interface CardCollectionDetailDTO {
+  card: CardDTO;
+  isFavorite: boolean;
+  isWishlisted: boolean;
+  ownershipCount: number;
+  isNew: boolean;
+  pullHistory: Array<{
+    instanceId: string;
+    pulledAt: string;
+    serialDisplay: string | null;
+  }>;
+  latestSerialDisplay: string | null;
 }
