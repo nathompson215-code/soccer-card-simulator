@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
+import { annotateNewPulls } from "@/lib/collection";
 import {
   getProductCollectionProgress,
   openBoxFromDb,
   openPackFromDb,
+  recordOpeningAndAchievements,
   savePullsToCollection,
 } from "@/lib/pack-engine";
 import { getDemoUser, getProductBySlug } from "@/lib/queries";
@@ -38,9 +40,21 @@ export async function POST(request: Request) {
       packs = [await openPackFromDb(product.id)];
     }
 
+    packs = await annotateNewPulls(user.id, packs);
+
+    const userCardIds: string[] = [];
     for (const pack of packs) {
-      await savePullsToCollection(user.id, product.id, pack.cards);
+      const created = await savePullsToCollection(user.id, product.id, pack.cards);
+      userCardIds.push(...created.map((row) => row.id));
     }
+
+    const { newlyUnlocked } = await recordOpeningAndAchievements({
+      userId: user.id,
+      productId: product.id,
+      mode,
+      packs,
+      userCardIds,
+    });
 
     const after = await getProductCollectionProgress(user.id, product.id);
 
@@ -54,6 +68,7 @@ export async function POST(request: Request) {
         ...after,
         newUniquesThisOpen: Math.max(0, after.uniqueOwned - before.uniqueOwned),
       },
+      newlyUnlocked,
     });
   } catch (error) {
     console.error(error);

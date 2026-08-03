@@ -214,6 +214,7 @@ model Product {
   packs     Pack[]
   boxes     Box[]
   userCards UserCard[]
+  openings  Opening[]
 
   @@index([manufacturerId, year])
   @@index([tournamentId])
@@ -352,6 +353,7 @@ model Card {
   userCards      UserCard[]
   wishlistItems  WishlistItem[]
   favorites      Favorite[]
+  openingPulls   OpeningPull[]
 
   @@unique([checklistEntryId, parallelId])
   @@index([estimatedValueCents])
@@ -454,11 +456,82 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  cards     UserCard[]
-  wishlist  WishlistItem[]
-  favorites Favorite[]
-  binders   Binder[]
-  showcase  ShowcaseItem[]
+  cards        UserCard[]
+  wishlist     WishlistItem[]
+  favorites    Favorite[]
+  binders      Binder[]
+  showcase     ShowcaseItem[]
+  openings     Opening[]
+  achievements UserAchievement[]
+}
+
+// ---------------------------------------------------------------------------
+// Opening history & progression
+// ---------------------------------------------------------------------------
+
+enum OpeningMode {
+  PACK
+  BOX
+}
+
+/// Permanent record of a pack or box rip (snapshot values at open time).
+model Opening {
+  id              String      @id @default(cuid())
+  userId          String
+  productId       String
+  mode            OpeningMode
+  openedAt        DateTime    @default(now())
+  packCount       Int
+  cardCount       Int
+  totalValueCents Int
+  biggestHitValueCents Int    @default(0)
+
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  pulls   OpeningPull[]
+  achievements UserAchievement[]
+
+  @@index([userId, openedAt])
+  @@index([productId])
+  @@index([userId, totalValueCents])
+}
+
+model OpeningPull {
+  id              String  @id @default(cuid())
+  openingId       String
+  cardId          String
+  userCardId      String?
+  packIndex       Int     @default(0)
+  slotIndex       Int     @default(0)
+  serialNumber    Int?
+  serialDisplay   String?
+  valueCentsAtOpen Int
+  isHit           Boolean @default(false)
+  celebration     String  @default("none")
+  isNew           Boolean @default(false)
+
+  opening  Opening   @relation(fields: [openingId], references: [id], onDelete: Cascade)
+  card     Card      @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  userCard UserCard? @relation(fields: [userCardId], references: [id], onDelete: SetNull)
+
+  @@index([openingId, packIndex, slotIndex])
+  @@index([cardId])
+  @@index([valueCentsAtOpen])
+}
+
+model UserAchievement {
+  id             String   @id @default(cuid())
+  userId         String
+  achievementKey String
+  unlockedAt     DateTime @default(now())
+  openingId      String?
+  metaJson       String?
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opening Opening? @relation(fields: [openingId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, achievementKey])
+  @@index([userId, unlockedAt])
 }
 
 model UserCard {
@@ -474,6 +547,7 @@ model UserCard {
   card    Card    @relation(fields: [cardId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   showcaseItems ShowcaseItem[]
+  openingPulls  OpeningPull[]
 
   @@index([userId, pulledAt])
   @@index([userId, cardId])

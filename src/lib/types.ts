@@ -35,6 +35,8 @@ export interface CardDTO {
   estimatedValueCents: number;
   frontImageUrl: string | null;
   backImageUrl: string | null;
+  /** Resolved player photograph URL (card art or `/players/{slug}.*`). */
+  playerImageUrl: string | null;
   productId: string;
   productSlug: string;
   productName: string;
@@ -104,6 +106,8 @@ export interface PullResultDTO {
   serialDisplay: string | null;
   isHit: boolean;
   celebration: Celebration;
+  /** True when this pull is the collector's first copy of the card. */
+  isNew?: boolean;
 }
 
 export interface PackResultDTO {
@@ -142,4 +146,139 @@ export interface OwnedCardDTO {
   pulledAt: string;
   serialDisplay: string | null;
   card: CardDTO;
+}
+
+export interface CollectionEntryDTO {
+  cardId: string;
+  card: CardDTO;
+  copyCount: number;
+  firstPulledAt: string | null;
+  lastPulledAt: string | null;
+  serialDisplays: string[];
+  isNew: boolean;
+  isFavorite: boolean;
+  isOwned: boolean;
+}
+
+export interface CompletionBucketDTO {
+  id: string;
+  name: string;
+  owned: number;
+  total: number;
+  pct: number;
+  kind: "overall" | "product" | "insert_set";
+  productId?: string;
+  productSlug?: string;
+  setSlug?: string;
+}
+
+export interface CollectionStatsDTO {
+  totalOwned: number;
+  uniqueOwned: number;
+  duplicateCards: number;
+  totalEstimatedValueCents: number;
+  productsCompleted: number;
+  productsTotal: number;
+  completionPct: number;
+  topValuable: CollectionEntryDTO[];
+  recentPulls: OwnedCardDTO[];
+}
+
+export type CollectionSort =
+  | "newest"
+  | "oldest"
+  | "value_high"
+  | "value_low"
+  | "rarity"
+  | "player"
+  | "club"
+  | "card_number";
+
+export interface CollectionFilterOptions {
+  players: string[];
+  clubs: string[];
+  nations: string[];
+  products: Array<{ slug: string; name: string; year: number }>;
+  years: number[];
+  rarities: Rarity[];
+  insertSets: Array<{ slug: string; name: string; productSlug: string }>;
+}
+
+export interface CardCollectionDetailDTO {
+  card: CardDTO;
+  isFavorite: boolean;
+  isWishlisted: boolean;
+  ownershipCount: number;
+  isNew: boolean;
+  pullHistory: Array<{
+    instanceId: string;
+    pulledAt: string;
+    serialDisplay: string | null;
+  }>;
+  latestSerialDisplay: string | null;
+}
+
+export type OpeningModeDTO = "pack" | "box";
+
+export interface OpeningPullDTO {
+  id: string;
+  packIndex: number;
+  slotIndex: number;
+  serialDisplay: string | null;
+  valueCentsAtOpen: number;
+  isHit: boolean;
+  celebration: Celebration;
+  isNew: boolean;
+  card: CardDTO;
+}
+
+export interface OpeningDTO {
+  id: string;
+  mode: OpeningModeDTO;
+  openedAt: string;
+  packCount: number;
+  cardCount: number;
+  totalValueCents: number;
+  biggestHitValueCents: number;
+  product: {
+    id: string;
+    slug: string;
+    name: string;
+    accentHex: string | null;
+    year: number;
+  };
+  biggestHit: OpeningPullDTO | null;
+  pulls: OpeningPullDTO[];
+}
+
+export interface AchievementDTO {
+  key: string;
+  title: string;
+  description: string;
+  mark: string;
+  unlocked: boolean;
+  unlockedAt: string | null;
+  metaJson: string | null;
+}
+
+export interface LifetimeStatsDTO {
+  packsOpened: number;
+  boxesOpened: number;
+  totalCardsPulled: number;
+  uniqueCardsOwned: number;
+  autographsPulled: number;
+  numberedCardsPulled: number;
+  bookletsPulled: number;
+  oneOfOnesPulled: number;
+  estimatedCollectionValueCents: number;
+  bestPull: OpeningPullDTO | null;
+  bestValueOpening: OpeningDTO | null;
+  biggestHitOpening: OpeningDTO | null;
+}
+
+export interface ProgressionDTO {
+  stats: LifetimeStatsDTO;
+  achievements: AchievementDTO[];
+  openings: OpeningDTO[];
+  newlyUnlocked?: AchievementDTO[];
 }

@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/cards", label: "Cards" },
   { href: "/players", label: "Players" },
   { href: "/collection", label: "Collection" },
+  { href: "/history", label: "History" },
 ];
 
 export function Nav() {
@@ -16,12 +17,16 @@ export function Nav() {
   const [ownedCount, setOwnedCount] = useState(0);
 
   useEffect(() => {
-    fetch("/api/collection")
+    const controller = new AbortController();
+    // Lightweight count-only fetch — full collection payload is unnecessary for the nav badge
+    // and can stall hydration-adjacent work on slow links.
+    fetch("/api/collection?summary=1", { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.totalOwned != null) setOwnedCount(data.totalOwned);
       })
       .catch(() => undefined);
+    return () => controller.abort();
   }, [pathname]);
 
   return (

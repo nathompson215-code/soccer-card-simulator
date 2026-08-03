@@ -237,6 +237,12 @@ export function BoxSummaryScreen({
         >
           View Collection
         </Link>
+        <Link
+          href="/history"
+          className="min-h-12 rounded-full border border-gold/35 bg-gold/10 px-6 py-3 text-sm font-semibold text-gold-soft"
+        >
+          Opening History
+        </Link>
       </div>
     </div>
   );

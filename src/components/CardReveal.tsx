@@ -148,11 +148,13 @@ export function CardReveal({
   };
 
   return (
-    <div className="relative flex h-full min-h-0 w-full flex-col items-center">
-      <div className="mb-2 shrink-0 text-center md:mb-3">
-        <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
-          {packLabel} · {cardLabel}
-        </div>
+    <div className="relative flex h-full min-h-0 w-full flex-col items-center justify-center">
+      <div className={`shrink-0 text-center ${hideContinue ? "mb-2 md:mb-3" : "mb-3 md:mb-4"}`}>
+        {!hideContinue ? (
+          <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
+            {packLabel} · {cardLabel}
+          </div>
+        ) : null}
         <AnimatePresence mode="wait">
           {step === "suspense" && celebration !== "none" ? (
             <motion.div
@@ -161,7 +163,9 @@ export function CardReveal({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
-              className="display mt-1 text-xl text-ink-muted md:text-2xl"
+              className={`display text-ink-muted ${
+                hideContinue ? "text-lg md:text-2xl" : "mt-2 text-2xl md:text-3xl"
+              }`}
             >
               Something special...
             </motion.div>
@@ -172,7 +176,9 @@ export function CardReveal({
               initial={{ opacity: 0, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className={`display mt-1 text-2xl md:text-3xl ${
+              className={`display ${
+                hideContinue ? "text-xl md:text-3xl" : "mt-2 text-3xl md:text-4xl"
+              } ${
                 celebration === "jackpot" || celebration === "hit" ? "text-gold" : "text-pitch-400"
               }`}
             >
@@ -182,7 +188,7 @@ export function CardReveal({
         </AnimatePresence>
       </div>
 
-      <div className="relative flex min-h-0 w-full flex-1 items-center justify-center">
+      <div className="d11-reveal-stage relative flex min-h-0 w-full flex-1 items-center justify-center py-2 md:py-3">
         {step === "suspense" ? (
           <button
             type="button"
@@ -208,11 +214,21 @@ export function CardReveal({
             <CardFace
               card={pull.card}
               serialDisplay={pull.serialDisplay}
-              size="theater"
+              size="xl"
               celebration={celebration}
               interactiveFoil={celebration !== "none"}
               revealActive={step === "shown"}
             />
+            {step === "shown" && pull.isNew ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.7, y: -8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.12 }}
+                className="pointer-events-none absolute -right-2 -top-2 z-40 rounded-md bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-pitch-950 shadow-lg"
+              >
+                New
+              </motion.div>
+            ) : null}
           </motion.div>
         )}
       </div>
@@ -225,7 +241,7 @@ export function CardReveal({
             packSounds.playUiTap();
             onContinue();
           }}
-          className={`mt-8 min-h-12 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 ${
+          className={`mt-4 min-h-11 shrink-0 rounded-full bg-white px-8 py-3 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 md:mt-5 ${
             step === "shown" ? "opacity-100" : "opacity-35"
           }`}
         >
@@ -239,7 +255,7 @@ export function CardReveal({
 function SuspenseCardBack({ celebration }: { celebration: Celebration }) {
   return (
     <motion.div
-      className="relative aspect-[5/7] h-auto w-[min(72vw,280px,calc((100dvh-22rem)*5/7))] md:w-[min(56vw,300px,calc((100dvh-18rem)*5/7))]"
+      className="d11-card-size-theater relative"
       animate={
         celebration === "none"
           ? { scale: 1, rotate: 0 }

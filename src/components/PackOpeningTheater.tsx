@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { AchievementToast } from "@/components/AchievementToast";
 import { BoxSummaryScreen } from "@/components/BoxSummaryScreen";
 import { CardReveal } from "@/components/CardReveal";
 import { SuspenseVeil } from "@/components/RevealEffects";
 import { SealedPack } from "@/components/SealedPack";
 import { packSounds, revealIntensity, suspenseMs } from "@/lib/pack-sounds";
 import type {
+  AchievementDTO,
   BoxSummaryDTO,
   Celebration,
   CollectionProgressDTO,
@@ -53,6 +55,7 @@ export function PackOpeningTheater({
   const [collectionProgress, setCollectionProgress] = useState<CollectionProgressDTO | null>(
     null,
   );
+  const [newlyUnlocked, setNewlyUnlocked] = useState<AchievementDTO[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
   const [ripState, setRipState] = useState<RipState>("charging");
@@ -183,6 +186,7 @@ export function PackOpeningTheater({
         setCollectionProgress(
           (data.collectionProgress as CollectionProgressDTO | null) ?? null,
         );
+        setNewlyUnlocked((data.newlyUnlocked as AchievementDTO[] | undefined) ?? []);
         beginPack(packs, 0, [], false);
       } catch (err) {
         if (cancelled) return;
@@ -263,6 +267,7 @@ export function PackOpeningTheater({
       aria-label={`${mode === "box" ? "Box" : "Pack"} opening theater`}
     >
       <div className="stadium-lights pointer-events-none absolute inset-0 opacity-80" />
+      <AchievementToast achievements={newlyUnlocked} />
 
       <header className="relative z-10 flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 md:px-6">
         <div className="min-w-0">
@@ -363,7 +368,7 @@ export function PackOpeningTheater({
                 exit={{ opacity: 0 }}
                 className="flex min-h-0 flex-1 flex-col"
               >
-                <div className="flex shrink-0 items-center justify-center gap-2 px-4 pt-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted md:pt-3">
+                <div className="flex shrink-0 items-center justify-center gap-2 px-4 pt-2 text-[10px] uppercase tracking-[0.18em] text-ink-muted md:pt-3 md:text-[11px]">
                   <span>
                     {mode === "box" ? `Pack ${packIndex + 1}/${queue.length}` : "Single Pack"}
                   </span>
@@ -377,7 +382,7 @@ export function PackOpeningTheater({
                   </span>
                 </div>
 
-                <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-3 md:px-6 md:py-4">
+                <div className="flex min-h-0 flex-1 flex-col items-stretch justify-center overflow-hidden px-3 py-2 md:px-6 md:py-3">
                   <CardReveal
                     key={`${packIndex}-${revealIndex}-${currentCard.card.id}-${skipAnimation ? "skip" : "play"}`}
                     pull={currentCard}
@@ -390,12 +395,12 @@ export function PackOpeningTheater({
                 </div>
 
                 <div className="safe-bottom shrink-0 border-t border-white/10 bg-[#07110d]/90 px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
-                  <div className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2">
+                  <div className="mx-auto grid w-full max-w-3xl grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center">
                     <button
                       type="button"
                       disabled={!cardReady || revealAll}
                       onClick={nextCard}
-                      className="min-h-11 min-w-[140px] flex-1 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:flex-none sm:min-w-[160px]"
+                      className="min-h-11 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-pitch-950 transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-[160px] sm:flex-none"
                     >
                       {revealIndex < currentPulls.length - 1
                         ? "Next Card"
@@ -407,7 +412,7 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={revealAll || phase !== "revealing"}
                       onClick={startRevealAll}
-                      className="min-h-11 min-w-[140px] flex-1 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-4 py-2.5 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 rounded-full border border-pitch-400/40 bg-pitch-500/15 px-4 py-2.5 text-sm font-semibold text-pitch-400 transition hover:bg-pitch-500/25 disabled:opacity-40 sm:flex-none"
                     >
                       Reveal All
                     </button>
@@ -415,14 +420,14 @@ export function PackOpeningTheater({
                       type="button"
                       disabled={cardReady || skipAnimation}
                       onClick={skipCurrentAnimation}
-                      className="min-h-11 min-w-[140px] flex-1 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
+                      className="min-h-11 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-white/5 disabled:opacity-40 sm:flex-none"
                     >
                       Skip Animation
                     </button>
                     <button
                       type="button"
                       onClick={finishSession}
-                      className="min-h-11 min-w-[140px] flex-1 rounded-full border border-gold/40 bg-gold/10 px-4 py-2.5 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none"
+                      className="min-h-11 rounded-full border border-gold/40 bg-gold/10 px-4 py-2.5 text-sm font-semibold text-gold-soft transition hover:bg-gold/20 sm:flex-none col-span-2 sm:col-span-1"
                     >
                       Finish / Add to Collection
                     </button>

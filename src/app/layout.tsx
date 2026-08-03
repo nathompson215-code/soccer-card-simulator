@@ -27,7 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${bebas.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${dmSans.variable} ${bebas.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col font-sans">
         <Nav />
         <main className="flex-1">{children}</main>

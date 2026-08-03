@@ -9,7 +9,7 @@ import type { CardDTO, Celebration } from "@/lib/types";
 interface CardFaceProps {
   card: CardDTO;
   serialDisplay?: string | null;
-  size?: "sm" | "md" | "lg" | "xl" | "theater";
+  size?: "sm" | "md" | "lg" | "xl";
   celebration?: Celebration;
   onClick?: () => void;
   className?: string;
@@ -21,11 +21,9 @@ interface CardFaceProps {
 const SIZE_CLASS: Record<NonNullable<CardFaceProps["size"]>, string> = {
   sm: "w-[148px] h-[207px]",
   md: "w-[210px] h-[294px]",
-  lg: "w-[min(78vw,300px)] h-[min(109vw,420px)]",
-  xl: "w-[min(86vw,360px)] h-[min(120vw,504px)]",
-  // Pack-opening viewport fit: keep 5:7 trading-card ratio, always on-screen with chrome.
-  theater:
-    "aspect-[5/7] h-auto w-[min(72vw,280px,calc((100dvh-22rem)*5/7))] md:w-[min(56vw,300px,calc((100dvh-18rem)*5/7))]",
+  lg: "w-[min(72vw,280px)] aspect-[5/7] h-auto max-h-[min(48dvh,380px)]",
+  /** Pack-opening theater: fit full card + chrome in ~55–60% of stage height */
+  xl: "d11-card-size-theater",
 };
 
 export function CardFace({
@@ -105,18 +103,21 @@ export function CardFace({
           ? { rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }
           : undefined
       }
-      className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${className}`}
+      className={`relative ${SIZE_CLASS[size]} shrink-0 text-left ${onClick ? "cursor-pointer" : ""} ${
+        visual.template === "booklet" ? "d11-booklet-host" : ""
+      } ${className}`}
     >
       <div
-        className={`d11-card-shell relative h-full w-full overflow-hidden rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
-          revealActive ? "card-reveal-pop" : ""
-        }`}
+        className={`d11-card-shell relative h-full w-full rounded-[16px] border shadow-2xl transition rarity-shell-${visual.rarityFrame} ${borderClass} ${
+          visual.template === "booklet" ? "overflow-visible" : "overflow-hidden"
+        } ${revealActive ? "card-reveal-pop" : ""}`}
       >
         <TradingCardArt
           card={card}
           visual={visual}
           serialDisplay={serialDisplay}
           compact={size === "sm"}
+          preferBookletOpen={size === "lg" || size === "xl" || revealActive}
         />
 
         {visual.showFoil ? (
