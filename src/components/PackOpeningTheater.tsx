@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { AchievementToast } from "@/components/AchievementToast";
 import { BoxSummaryScreen } from "@/components/BoxSummaryScreen";
 import { CardReveal } from "@/components/CardReveal";
 import { SuspenseVeil } from "@/components/RevealEffects";
 import { SealedPack } from "@/components/SealedPack";
 import { packSounds, revealIntensity, suspenseMs } from "@/lib/pack-sounds";
 import type {
+  AchievementDTO,
   BoxSummaryDTO,
   Celebration,
   CollectionProgressDTO,
@@ -53,6 +55,7 @@ export function PackOpeningTheater({
   const [collectionProgress, setCollectionProgress] = useState<CollectionProgressDTO | null>(
     null,
   );
+  const [newlyUnlocked, setNewlyUnlocked] = useState<AchievementDTO[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
   const [ripState, setRipState] = useState<RipState>("charging");
@@ -183,6 +186,7 @@ export function PackOpeningTheater({
         setCollectionProgress(
           (data.collectionProgress as CollectionProgressDTO | null) ?? null,
         );
+        setNewlyUnlocked((data.newlyUnlocked as AchievementDTO[] | undefined) ?? []);
         beginPack(packs, 0, [], false);
       } catch (err) {
         if (cancelled) return;
@@ -263,6 +267,7 @@ export function PackOpeningTheater({
       aria-label={`${mode === "box" ? "Box" : "Pack"} opening theater`}
     >
       <div className="stadium-lights pointer-events-none absolute inset-0 opacity-80" />
+      <AchievementToast achievements={newlyUnlocked} />
 
       <header className="relative z-10 flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 md:px-6">
         <div className="min-w-0">

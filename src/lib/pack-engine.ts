@@ -545,6 +545,24 @@ export async function savePullsToCollection(
   return created;
 }
 
+/** Persist every pack/box rip + evaluate achievements. Called after collection save. */
+export async function recordOpeningAndAchievements(params: {
+  userId: string;
+  productId: string;
+  mode: "pack" | "box";
+  packs: PackResultDTO[];
+  userCardIds: string[];
+}) {
+  const { saveOpeningSession, evaluateAchievements } = await import("@/lib/progression");
+  const opening = await saveOpeningSession(params);
+  const newlyUnlocked = await evaluateAchievements({
+    userId: params.userId,
+    openingId: opening.id,
+    pulls: params.packs.flatMap((p) => p.cards),
+  });
+  return { openingId: opening.id, newlyUnlocked };
+}
+
 export async function getProductCollectionProgress(userId: string, productId: string) {
   const [ownedDistinct, totalCatalog] = await Promise.all([
     prisma.userCard.findMany({
