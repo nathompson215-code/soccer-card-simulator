@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { annotateNewPulls } from "@/lib/collection";
 import {
   getProductCollectionProgress,
   openBoxFromDb,
@@ -37,6 +38,8 @@ export async function POST(request: Request) {
     } else {
       packs = [await openPackFromDb(product.id)];
     }
+
+    packs = await annotateNewPulls(user.id, packs);
 
     for (const pack of packs) {
       await savePullsToCollection(user.id, product.id, pack.cards);

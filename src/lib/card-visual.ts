@@ -8,6 +8,7 @@ export type CardTemplate =
   | "autograph"
   | "patch"
   | "patchAuto"
+  | "cutSignature"
   | "booklet"
   | "printingPlate"
   | "caseHit"
@@ -29,7 +30,8 @@ export type CardVisual = {
   showChrome: boolean;
   showHolo: boolean;
   showTexture: boolean;
-  showAutoStroke: boolean;
+  /** Real signature asset overlay (never fake handwriting). */
+  showSignature: boolean;
   showPatchWindow: boolean;
   showPlateGrain: boolean;
   showEmboss: boolean;
@@ -39,7 +41,7 @@ export type CardVisual = {
 };
 
 function nameHints(card: CardDTO) {
-  return `${card.parallelName} ${card.subsetName} ${card.subset}`.toLowerCase();
+  return `${card.parallelName} ${card.parallelSlug} ${card.subsetName} ${card.subset}`.toLowerCase();
 }
 
 export function rarityToFrame(rarity: Rarity | string): RarityFrame {
@@ -80,11 +82,20 @@ export function resolveCardTemplate(card: CardDTO): CardTemplate {
     return "oneOfOne";
   }
 
+  const isCutSig =
+    hints.includes("cut signature") ||
+    hints.includes("cut auto") ||
+    hints.includes("cut sign") ||
+    /\bcut[- ]?(sig|auto|signature)\b/.test(hints) ||
+    card.parallelSlug.includes("cut-sig") ||
+    card.parallelSlug.includes("cut-auto");
+
   const isAuto =
     type.includes("AUTOGRAPH") ||
     set === "AUTOGRAPH" ||
     hints.includes("autograph") ||
-    hints.includes("inked");
+    hints.includes("inked") ||
+    isCutSig;
   const isPatch =
     type.includes("PATCH") ||
     type === "RELIC" ||
@@ -96,6 +107,7 @@ export function resolveCardTemplate(card: CardDTO): CardTemplate {
     hints.includes("relic");
 
   if (isAuto && isPatch) return "patchAuto";
+  if (isCutSig) return "cutSignature";
   if (isAuto) return "autograph";
   if (isPatch) return "patch";
 
@@ -122,11 +134,12 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
   const labels: Record<CardTemplate, string> = {
     base: "Base",
     insert: "Insert",
-    parallel: "Parallel",
+    parallel: card.printRun ? "Numbered Parallel" : "Parallel",
     refractor: "Refractor",
     autograph: "Autograph",
-    patch: "Memorabilia",
-    patchAuto: "Patch Auto",
+    patch: "Relic",
+    patchAuto: "Patch Autograph",
+    cutSignature: "Cut Signature",
     booklet: "Booklet",
     printingPlate: "Printing Plate",
     caseHit: "Case Hit",
@@ -139,17 +152,37 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
     celebration === "glow" ||
     rarityFrame === "uncommon" ||
     rarityFrame === "rare" ||
-    ["refractor", "parallel", "insert", "oneOfOne", "caseHit", "patchAuto"].includes(template);
+    [
+      "refractor",
+      "parallel",
+      "insert",
+      "oneOfOne",
+      "caseHit",
+      "patchAuto",
+      "autograph",
+      "cutSignature",
+      "booklet",
+    ].includes(template);
 
   const showChrome =
-    ["refractor", "oneOfOne", "caseHit", "parallel"].includes(template) ||
+    [
+      "refractor",
+      "oneOfOne",
+      "caseHit",
+      "parallel",
+      "insert",
+      "autograph",
+      "patchAuto",
+      "cutSignature",
+      "booklet",
+    ].includes(template) ||
     card.foil ||
     rarityFrame === "ultra" ||
     rarityFrame === "mythic" ||
     rarityFrame === "legendary";
 
   const showHolo =
-    ["refractor", "oneOfOne", "caseHit", "insert"].includes(template) ||
+    ["refractor", "oneOfOne", "caseHit", "insert", "booklet"].includes(template) ||
     rarityFrame === "mythic" ||
     rarityFrame === "legendary" ||
     celebration === "jackpot" ||
@@ -162,13 +195,19 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
     showFoil,
     showChrome,
     showHolo,
-    showTexture: ["patch", "patchAuto", "booklet", "printingPlate", "caseHit"].includes(template) ||
-      rarityFrame === "ultra",
-    showAutoStroke: template === "autograph" || template === "patchAuto",
+    showTexture:
+      ["patch", "patchAuto", "booklet", "printingPlate", "caseHit", "cutSignature"].includes(
+        template,
+      ) || rarityFrame === "ultra",
+    showSignature:
+      template === "autograph" ||
+      template === "patchAuto" ||
+      template === "cutSignature" ||
+      template === "booklet",
     showPatchWindow: template === "patch" || template === "patchAuto" || template === "booklet",
     showPlateGrain: template === "printingPlate",
     showEmboss: true,
-    showRimLight: rarityFrame !== "common",
+    showRimLight: rarityFrame !== "common" || template !== "base",
     borderTone:
       template === "oneOfOne" || rarityFrame === "legendary"
         ? "rainbow"
@@ -176,9 +215,13 @@ export function resolveCardVisual(card: CardDTO, celebration: Celebration = "non
           ? "case"
           : template === "printingPlate"
             ? "plate"
-            : rarityFrame === "mythic" || template === "autograph" || template === "patchAuto"
+            : rarityFrame === "mythic" ||
+                template === "autograph" ||
+                template === "patchAuto" ||
+                template === "cutSignature" ||
+                template === "booklet"
               ? "mythic"
-              : rarityFrame === "ultra" || rarityFrame === "rare"
+              : rarityFrame === "ultra" || rarityFrame === "rare" || template === "parallel"
                 ? "gold"
                 : showChrome
                   ? "metal"

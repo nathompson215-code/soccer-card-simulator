@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CardFace } from "@/components/CardFace";
+import { CardFlipViewer } from "@/components/CardFlipViewer";
 import { CollectionActions } from "@/components/CollectionActions";
-import { cardTypeLabel, formatMoney, rarityLabel } from "@/lib/format";
-import { getCardBySlug, getRelatedCards } from "@/lib/queries";
+import { getCardCollectionDetail } from "@/lib/collection";
+import { cardTypeLabel, formatMoney, formatNumber, rarityLabel } from "@/lib/format";
+import { getRelatedCards } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -13,18 +15,35 @@ export default async function CardDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const card = await getCardBySlug(slug);
-  if (!card) notFound();
+  const detail = await getCardCollectionDetail(slug);
+  if (!detail) notFound();
+  const { card } = detail;
   const related = await getRelatedCards(card);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 md:px-6">
-      <Link href="/cards" className="text-sm text-pitch-400">
-        ← All cards
-      </Link>
+      <div className="flex flex-wrap items-center gap-3 text-sm">
+        <Link href="/cards" className="text-pitch-400">
+          ← All cards
+        </Link>
+        <span className="text-ink-muted">/</span>
+        <Link href="/collection" className="text-pitch-400">
+          Collection
+        </Link>
+      </div>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(280px,360px)_1fr]">
-        <CardFace card={card} size="xl" interactiveFoil />
+        <div>
+          <CardFlipViewer card={card} serialDisplay={detail.latestSerialDisplay} />
+          {detail.isNew ? (
+            <div className="mt-3 text-center">
+              <span className="rounded-md bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-pitch-950">
+                New
+              </span>
+            </div>
+          ) : null}
+        </div>
+
         <div>
           <div className="text-xs uppercase tracking-[0.22em] text-ink-muted">
             {card.manufacturerName} · {card.year}
@@ -36,13 +55,21 @@ export default async function CardDetailPage({
 
           <dl className="mt-8 grid gap-4 sm:grid-cols-2">
             {[
+              ["Est. market value", formatMoney(card.estimatedValueCents)],
+              ["Product", card.productName],
               ["Card #", card.cardNumber],
+              [
+                "Serial number",
+                detail.latestSerialDisplay ??
+                  (card.printRun ? `?/${card.printRun}` : "Not numbered"),
+              ],
               ["Rarity", rarityLabel(card.rarity)],
               ["Type", cardTypeLabel(card.cardType)],
               ["Print run", card.printRun ? `/${card.printRun}` : "Unlimited"],
-              ["Est. value", formatMoney(card.estimatedValueCents)],
+              ["Ownership count", formatNumber(detail.ownershipCount)],
               ["Club", card.clubName ?? "—"],
               ["National team", card.nationalTeamName ?? "—"],
+              ["Position", card.playerPosition],
               ["Tournament", card.tournamentName ?? "—"],
             ].map(([label, value]) => (
               <div key={label} className="pitch-panel rounded-xl px-4 py-3">
@@ -65,8 +92,50 @@ export default async function CardDetailPage({
             >
               View player
             </Link>
-            <CollectionActions cardId={card.id} />
+            <Link
+              href={`/collection?product=${card.productSlug}`}
+              className="rounded-full border border-white/15 px-5 py-3 text-sm text-ink"
+            >
+              Product binder
+            </Link>
+            <CollectionActions
+              cardId={card.id}
+              initialFavorited={detail.isFavorite}
+              initialWishlisted={detail.isWishlisted}
+            />
           </div>
+
+          <section className="mt-10">
+            <h2 className="display text-3xl text-ink">Pull history</h2>
+            {detail.pullHistory.length === 0 ? (
+              <p className="mt-3 text-ink-muted">
+                You do not own this card yet. Open packs from{" "}
+                <Link href={`/products/${card.productSlug}`} className="text-pitch-400">
+                  {card.productName}
+                </Link>{" "}
+                to pull it.
+              </p>
+            ) : (
+              <ul className="mt-4 space-y-2">
+                {detail.pullHistory.map((pull, index) => (
+                  <li
+                    key={pull.instanceId}
+                    className="pitch-panel flex flex-wrap items-center justify-between gap-3 rounded-xl px-4 py-3 text-sm"
+                  >
+                    <div>
+                      <span className="font-medium text-ink">Copy #{detail.pullHistory.length - index}</span>
+                      <span className="ml-2 text-ink-muted">
+                        {new Date(pull.pulledAt).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="text-gold-soft">
+                      {pull.serialDisplay ?? (card.printRun ? `?/${card.printRun}` : "—")}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
         </div>
       </div>
 
