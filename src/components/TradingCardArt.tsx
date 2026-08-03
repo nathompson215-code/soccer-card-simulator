@@ -1,17 +1,18 @@
 "use client";
 
 import { PlayerPortrait } from "@/components/PlayerPortrait";
-import { rarityLabel } from "@/lib/format";
+import { SignatureOverlay } from "@/components/SignatureOverlay";
+import { BookletCardArt } from "@/components/BookletCardArt";
 import type { CardVisual } from "@/lib/card-visual";
 import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
 import type { CSSProperties } from "react";
 
 const POS_COLORS: Record<string, string> = {
-  GK: "#F9A825",
-  DEF: "#1E88E5",
-  MID: "#43A047",
-  FWD: "#E53935",
+  GK: "#F4C430",
+  DEF: "#3B82F6",
+  MID: "#22C55E",
+  FWD: "#EF4444",
 };
 
 export function TradingCardArt({
@@ -19,12 +20,26 @@ export function TradingCardArt({
   visual,
   serialDisplay,
   compact = false,
+  preferBookletOpen = false,
 }: {
   card: CardDTO;
   visual: CardVisual;
   serialDisplay?: string | null;
   compact?: boolean;
+  preferBookletOpen?: boolean;
 }) {
+  if (visual.template === "booklet") {
+    return (
+      <BookletCardArt
+        card={card}
+        visual={visual}
+        serialDisplay={serialDisplay}
+        compact={compact}
+        defaultOpen={preferBookletOpen && !compact}
+      />
+    );
+  }
+
   const serial =
     serialDisplay && !serialDisplay.startsWith("?")
       ? serialDisplay
@@ -36,14 +51,23 @@ export function TradingCardArt({
   const lastName = parts.slice(-1)[0] ?? card.playerName;
   const firstName = parts.length > 1 ? parts.slice(0, -1).join(" ") : "";
   const theme = resolveVisualTheme(card.subset, card.parallelSlug ?? card.parallelName);
+  const themeClass =
+    theme === "base" && visual.template !== "base" ? "" : `d11-theme-${theme}`;
+
+  const isCut = visual.template === "cutSignature";
+  const isRelic = visual.template === "patch" || visual.template === "patchAuto";
+  const isAutoFamily =
+    visual.template === "autograph" ||
+    visual.template === "patchAuto" ||
+    visual.template === "cutSignature";
 
   return (
     <div
-      className={`d11-card-art relative h-full w-full overflow-hidden ${templateClass(visual.template)} rarity-${visual.rarityFrame} d11-theme-${theme}`}
+      className={`d11-card-art relative h-full w-full overflow-hidden ${templateClass(visual.template)} rarity-${visual.rarityFrame} ${themeClass}`}
       style={
         {
           "--card-accent": visual.accent,
-          "--pos-color": POS_COLORS[card.playerPosition] ?? "#43A047",
+          "--pos-color": POS_COLORS[card.playerPosition] ?? "#22C55E",
         } as CSSProperties
       }
       data-template={visual.template}
@@ -56,68 +80,100 @@ export function TradingCardArt({
       {visual.showPlateGrain ? <div className="d11-plate-grain absolute inset-0" /> : null}
       {visual.showRimLight ? <div className="d11-rim-light absolute inset-0" /> : null}
 
-      {/* Outer chrome / embossed bezel */}
-      <div className="d11-bezel absolute inset-[2.8%] rounded-[12px]" />
-      {visual.showEmboss ? <div className="d11-emboss-logo absolute left-[5.5%] top-[4.2%] z-30" /> : null}
+      <div className="d11-bezel-outer absolute inset-[1.6%]" />
+      <div className="d11-bezel absolute inset-[2.6%] rounded-[11px]" />
+      {visual.showEmboss ? <div className="d11-emboss-logo absolute left-[5.2%] top-[3.8%] z-30" /> : null}
 
-      {/* Portrait window — larger for premium feel */}
-      <div className="d11-portrait-frame absolute inset-[4.5%_4.5%_22%] overflow-hidden rounded-[10px]">
+      {/* Portrait / cut-signature stage */}
+      <div
+        className={`d11-portrait-frame absolute overflow-hidden rounded-[9px] ${
+          isCut ? "inset-[4.2%_4.2%_28%]" : "inset-[4.2%_4.2%_21.5%]"
+        }`}
+      >
         <div className="absolute inset-0">
           <PlayerPortrait
             playerName={card.playerName}
             playerSlug={card.playerSlug}
             position={card.playerPosition}
             accent={visual.accent}
-            imageUrl={card.frontImageUrl}
+            imageUrl={card.playerImageUrl ?? card.frontImageUrl}
           />
         </div>
 
+        {isCut ? <div className="d11-cut-matte absolute inset-0" /> : null}
+
         {visual.showPatchWindow ? (
-          <div className="d11-patch-window absolute bottom-[10%] right-[6%] z-10">
+          <div
+            className={`d11-patch-window absolute z-10 ${
+              visual.template === "patchAuto" ? "bottom-[28%] right-[5.5%]" : "bottom-[9%] right-[5.5%]"
+            }`}
+          >
             <div className="d11-patch-swatch" style={{ background: visual.accent }} />
-            <div className="d11-patch-label">MEM</div>
+            <div className="d11-patch-label">{isRelic ? "RELIC" : "MEM"}</div>
           </div>
         ) : null}
 
-        {visual.showAutoStroke ? (
-          <div className="d11-auto-stroke absolute bottom-[12%] left-[7%] right-[30%] z-10">
-            <svg viewBox="0 0 180 40" className="h-full w-full overflow-visible">
-              <path
-                d="M8 28 C 28 8, 55 34, 78 16 S 120 36, 150 12"
-                fill="none"
-                stroke="rgba(20,20,20,0.82)"
-                strokeWidth="2.6"
-                strokeLinecap="round"
-              />
-              <path
-                d="M20 30 C 48 12, 70 30, 95 18 S 140 28, 168 14"
-                fill="none"
-                stroke="rgba(30,30,30,0.5)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-        ) : null}
+        <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[46%]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black via-black/70 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[18%] bg-gradient-to-b from-black/35 to-transparent" />
+        {visual.showSignature && !isCut ? (
+          <SignatureOverlay
+            playerName={card.playerName}
+            playerSlug={card.playerSlug}
+            compact={compact}
+            variant="on-card"
+            inkPlaceholder={visual.template === "autograph"}
+            className={
+              visual.template === "patchAuto"
+                ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"
+                : visual.template === "autograph"
+                  ? "absolute bottom-[19%] left-[3%] right-[3%] z-[14]"
+                  : "absolute bottom-[12%] left-[6%] right-[10%] z-[12]"
+            }
+          />
+        ) : null}
       </div>
 
+      {/* Cut signature plate under the photo */}
+      {isCut ? (
+        <div className="d11-cut-sig-plate absolute inset-x-[5%] bottom-[22%] z-[15] h-[14%]">
+          <SignatureOverlay
+            playerName={card.playerName}
+            playerSlug={card.playerSlug}
+            compact={compact}
+            variant="cut"
+          />
+        </div>
+      ) : null}
+
+      {/* Premium hit badges */}
+      {isAutoFamily ? (
+        <div className="d11-hit-badge absolute right-[5.5%] top-[12%] z-[25]">
+          {visual.template === "cutSignature"
+            ? "Cut Sig"
+            : visual.template === "patchAuto"
+              ? "Patch Auto"
+              : "On-Card Auto"}
+        </div>
+      ) : null}
+      {visual.template === "patch" ? (
+        <div className="d11-hit-badge absolute right-[5.5%] top-[12%] z-[25]">Relic</div>
+      ) : null}
+
       {/* Top meta */}
-      <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-2 px-[6.5%] pt-[3.6%]">
+      <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-2 px-[5.8%] pt-[3.3%]">
         <div className="min-w-0 pl-7">
-          <div className="text-[8px] font-semibold uppercase tracking-[0.28em] text-white/80 md:text-[9px]">
+          <div className="d11-brand-mark text-[7.5px] font-bold uppercase tracking-[0.32em] text-white/88 md:text-[8.5px]">
             Draft Eleven
           </div>
-          <div className="mt-0.5 max-w-[11rem] truncate text-[9px] uppercase tracking-[0.16em] text-white/50 md:text-[10px]">
+          <div className="mt-0.5 max-w-[10.5rem] truncate text-[8px] uppercase tracking-[0.18em] text-white/48 md:text-[9px]">
             {card.subsetName}
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
           <div
-            className="rounded-md px-1.5 py-0.5 text-[8px] font-bold tracking-wide text-pitch-950 shadow md:text-[9px]"
-            style={{ background: POS_COLORS[card.playerPosition] ?? "#43A047" }}
+            className="d11-pos-badge rounded px-1.5 py-0.5 text-[8px] font-extrabold tracking-wide text-pitch-950 shadow-sm md:text-[9px]"
+            style={{ background: POS_COLORS[card.playerPosition] ?? "#22C55E" }}
           >
             {card.playerPosition}
           </div>
@@ -126,50 +182,52 @@ export function TradingCardArt({
       </div>
 
       {/* Bottom nameplate */}
-      <div className="absolute inset-x-0 bottom-0 z-20 px-[6%] pb-[4%] pt-1">
+      <div className="absolute inset-x-0 bottom-0 z-20 px-[5%] pb-[3.5%]">
         <div className="d11-nameplate rounded-[10px] px-2.5 py-2">
           <div
-            className={`display leading-[0.92] text-white drop-shadow ${
+            className={`d11-player-lastname display leading-[0.9] text-white ${
               compact
-                ? "text-[clamp(1.15rem,3.2vw,1.55rem)]"
-                : "text-[clamp(1.25rem,3.6vw,1.85rem)]"
+                ? "text-[clamp(1.05rem,3vw,1.45rem)]"
+                : "text-[clamp(1.15rem,3.4vw,1.75rem)]"
             }`}
           >
-            {compact ? lastName : lastName.toUpperCase()}
+            {lastName.toUpperCase()}
           </div>
           {!compact && firstName ? (
-            <div className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white/65">
+            <div className="d11-player-firstname mt-0.5 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/70 md:text-[10px]">
               {firstName}
             </div>
           ) : null}
 
-          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[9px] text-white/70 md:text-[10px]">
-            {card.clubName ? <span className="truncate">{card.clubName}</span> : null}
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[8.5px] text-white/72 md:text-[9.5px]">
+            {card.clubName ? <span className="truncate font-medium">{card.clubName}</span> : null}
             {card.clubName && card.nationalTeamName ? (
               <span className="text-white/25">·</span>
             ) : null}
-            {card.nationalTeamName ? <span>{card.nationalTeamName}</span> : null}
+            {card.nationalTeamName ? (
+              <span className="truncate text-white/60">{card.nationalTeamName}</span>
+            ) : null}
           </div>
 
-          <div className="mt-2 flex items-end justify-between gap-2 border-t border-white/15 pt-1.5">
+          <div className="mt-1.5 flex items-end justify-between gap-2 border-t border-white/12 pt-1.5">
             <div className="min-w-0">
-              <div className="truncate text-[8px] uppercase tracking-[0.16em] text-white/55 md:text-[9px]">
-                #{card.cardNumber} · {card.parallelName}
+              <div className="truncate text-[7.5px] uppercase tracking-[0.14em] text-white/50 md:text-[8.5px]">
+                <span className="text-white/72">#{card.cardNumber}</span>
+                <span className="text-white/25"> · </span>
+                <span>{card.parallelName}</span>
               </div>
-              <div className="mt-0.5 flex items-center gap-1.5 text-[9px] md:text-[10px]">
-                <span className={`d11-rarity-chip rarity-${visual.rarityFrame}`}>
-                  {rarityLabel(card.rarity)}
+              <div className="mt-0.5 flex items-center gap-1.5 text-[8.5px] md:text-[9.5px]">
+                <span className="font-medium uppercase tracking-[0.08em] text-white/78">
+                  {visual.label}
                 </span>
-                <span className="text-white/30">·</span>
-                <span className="text-white/70">{visual.label}</span>
               </div>
             </div>
             {serial ? (
-              <div className="d11-serial shrink-0 px-1.5 py-0.5 text-[11px] font-semibold tracking-wider md:text-[12px]">
+              <div className="d11-serial shrink-0 px-1.5 py-0.5 text-[10px] font-bold tracking-wider md:text-[11px]">
                 {serial}
               </div>
             ) : (
-              <div className="shrink-0 text-[9px] uppercase tracking-[0.16em] text-white/45">
+              <div className="shrink-0 text-[8px] uppercase tracking-[0.16em] text-white/40">
                 {card.year}
               </div>
             )}
@@ -177,10 +235,14 @@ export function TradingCardArt({
         </div>
       </div>
 
-      {visual.template === "booklet" ? <div className="d11-booklet-spine" /> : null}
       {visual.template === "oneOfOne" ? <div className="d11-oneofone-ribbon">1 of 1</div> : null}
       {visual.template === "caseHit" ? <div className="d11-case-burst" /> : null}
+      {visual.template === "refractor" || visual.template === "oneOfOne" ? (
+        <div className="d11-prism-sheen absolute inset-0 z-[19]" />
+      ) : null}
+
       <div className={`d11-rarity-frame rarity-${visual.rarityFrame}`} />
+      <div className={`d11-finish-frame finish-${visual.template}`} />
     </div>
   );
 }
@@ -199,6 +261,8 @@ function templateClass(template: CardVisual["template"]) {
       return "d11-template-patch";
     case "patchAuto":
       return "d11-template-patch-auto";
+    case "cutSignature":
+      return "d11-template-cut-sig";
     case "booklet":
       return "d11-template-booklet";
     case "printingPlate":
