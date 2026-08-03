@@ -113,6 +113,9 @@ export function TradingCardArt({
           </div>
         ) : null}
 
+        <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[46%]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
+
         {visual.showSignature && !isCut ? (
           <SignatureOverlay
             playerName={card.playerName}
@@ -123,13 +126,10 @@ export function TradingCardArt({
             className={
               visual.template === "patchAuto"
                 ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"
-                : "absolute bottom-[10%] left-[6%] right-[10%] z-[12]"
+                : "absolute bottom-[12%] left-[6%] right-[10%] z-[12]"
             }
           />
         ) : null}
-
-        <div className="d11-portrait-shade pointer-events-none absolute inset-x-0 bottom-0 h-[46%]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-black/38 to-transparent" />
       </div>
 
       {/* Cut signature plate under the photo */}
