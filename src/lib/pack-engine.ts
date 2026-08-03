@@ -91,6 +91,10 @@ function serialFor(
 ) {
   const printRun = card.numbering?.printRun ?? card.parallel.printRun;
   if (!printRun) return { serialNumber: null as number | null, serialDisplay: null as string | null };
+  // One-of-ones are always card #1 of 1 — never randomize or placeholder.
+  if (printRun === 1) {
+    return { serialNumber: 1, serialDisplay: "1/1" };
+  }
   const serialNumber = Math.floor(rng() * printRun) + 1;
   return { serialNumber, serialDisplay: `${serialNumber}/${printRun}` };
 }

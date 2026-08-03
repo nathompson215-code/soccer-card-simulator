@@ -4,7 +4,7 @@ import { CardFace } from "@/components/CardFace";
 import { CardFlipViewer } from "@/components/CardFlipViewer";
 import { CollectionActions } from "@/components/CollectionActions";
 import { getCardCollectionDetail } from "@/lib/collection";
-import { cardTypeLabel, formatMoney, formatNumber, rarityLabel } from "@/lib/format";
+import { cardTypeLabel, formatMoney, formatNumber, rarityLabel, resolveSerialDisplay } from "@/lib/format";
 import { getRelatedCards } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +18,8 @@ export default async function CardDetailPage({
   const detail = await getCardCollectionDetail(slug);
   if (!detail) notFound();
   const { card } = detail;
+  const serialLabel =
+    resolveSerialDisplay(detail.latestSerialDisplay, card.printRun) ?? "Not numbered";
   const related = await getRelatedCards(card);
 
   return (
@@ -34,7 +36,7 @@ export default async function CardDetailPage({
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(280px,360px)_1fr]">
         <div>
-          <CardFlipViewer card={card} serialDisplay={detail.latestSerialDisplay} />
+          <CardFlipViewer card={card} serialDisplay={serialLabel === "Not numbered" ? null : serialLabel} />
           {detail.isNew ? (
             <div className="mt-3 text-center">
               <span className="rounded-md bg-gold px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-pitch-950">
@@ -58,11 +60,7 @@ export default async function CardDetailPage({
               ["Est. market value", formatMoney(card.estimatedValueCents)],
               ["Product", card.productName],
               ["Card #", card.cardNumber],
-              [
-                "Serial number",
-                detail.latestSerialDisplay ??
-                  (card.printRun ? `?/${card.printRun}` : "Not numbered"),
-              ],
+              ["Serial number", serialLabel],
               ["Rarity", rarityLabel(card.rarity)],
               ["Type", cardTypeLabel(card.cardType)],
               ["Print run", card.printRun ? `/${card.printRun}` : "Unlimited"],
@@ -129,7 +127,7 @@ export default async function CardDetailPage({
                       </span>
                     </div>
                     <div className="text-gold-soft">
-                      {pull.serialDisplay ?? (card.printRun ? `?/${card.printRun}` : "—")}
+                      {resolveSerialDisplay(pull.serialDisplay, card.printRun) ?? "—"}
                     </div>
                   </li>
                 ))}

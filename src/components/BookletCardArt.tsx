@@ -4,6 +4,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { SignatureOverlay } from "@/components/SignatureOverlay";
 import type { CardVisual } from "@/lib/card-visual";
+import { resolveSerialDisplay } from "@/lib/format";
 import type { CardDTO } from "@/lib/types";
 
 const POS_COLORS: Record<string, string> = {
@@ -36,12 +37,7 @@ export function BookletCardArt({
     if (defaultOpen && !compact) setOpen(true);
   }, [defaultOpen, compact]);
 
-  const serial =
-    serialDisplay && !serialDisplay.startsWith("?")
-      ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
-        : null;
+  const serial = resolveSerialDisplay(serialDisplay, card.printRun);
 
   const parts = card.playerName.trim().split(/\s+/);
   const lastName = parts.slice(-1)[0] ?? card.playerName;

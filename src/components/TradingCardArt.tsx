@@ -4,6 +4,7 @@ import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { SignatureOverlay } from "@/components/SignatureOverlay";
 import { BookletCardArt } from "@/components/BookletCardArt";
 import type { CardVisual } from "@/lib/card-visual";
+import { resolveSerialDisplay } from "@/lib/format";
 import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
 import type { CSSProperties } from "react";
@@ -40,12 +41,7 @@ export function TradingCardArt({
     );
   }
 
-  const serial =
-    serialDisplay && !serialDisplay.startsWith("?")
-      ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
-        : null;
+  const serial = resolveSerialDisplay(serialDisplay, card.printRun);
 
   const parts = card.playerName.trim().split(/\s+/);
   const lastName = parts.slice(-1)[0] ?? card.playerName;
