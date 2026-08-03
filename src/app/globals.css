@@ -1337,6 +1337,21 @@ a {
   height: 100%;
 }
 
+.d11-booklet-sig-plate .d11-signature-ink-placeholder {
+  height: 100%;
+  width: 100%;
+}
+
+.d11-booklet-sig-plate .d11-auto-sign-strip {
+  min-height: 100%;
+  padding: 0.15rem 0.1rem;
+}
+
+.d11-booklet-sig-plate .d11-auto-ink-svg {
+  width: 90%;
+  max-height: 1.85rem;
+}
+
 .d11-booklet-interior-meta {
   grid-column: 1 / -1;
   grid-row: 3;

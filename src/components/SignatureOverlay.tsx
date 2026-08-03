@@ -18,9 +18,10 @@ const autographHand = Imperial_Script({
 
 /**
  * On-card autograph overlay.
- * Prefers a real transparent signature scan. For autograph cards only,
- * falls back to a blue-ink cursive nameplate placeholder until licensed
- * assets are available. Booklet / cut variants keep the awaiting state.
+ * Prefers a real transparent signature scan. For autograph cards (and autograph
+ * booklet panels), falls back to a blue-ink cursive nameplate on a feathered
+ * white signing strip until licensed assets are available. Cut variants keep
+ * the awaiting state.
  */
 export function SignatureOverlay({
   playerName,
@@ -109,12 +110,12 @@ export function SignatureOverlay({
     );
   }
 
-  // Autograph cards: white signing strip + blue-ink cursive placeholder.
-  if (inkPlaceholder && variant === "on-card") {
+  // Autograph cards / autograph booklet panels: white signing strip + blue-ink cursive.
+  if (inkPlaceholder && (variant === "on-card" || variant === "panel")) {
     const inkId = sanitizePlayerSlug(playerSlug);
     return (
       <div
-        className={`d11-signature-overlay d11-signature-on-card d11-signature-ink-placeholder pointer-events-none ${compact ? "is-compact" : ""} ${className}`}
+        className={`d11-signature-overlay d11-signature-${variant} d11-signature-ink-placeholder pointer-events-none ${compact ? "is-compact" : ""} ${className}`}
         style={{ ["--sig-rotate" as string]: `${rotation}deg` }}
         aria-hidden
       >
