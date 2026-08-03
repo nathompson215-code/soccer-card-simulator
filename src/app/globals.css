@@ -360,6 +360,7 @@ a {
 .d11-portrait-photo {
   position: relative;
   isolation: isolate;
+  background: #070b10;
 }
 
 .d11-portrait-photo img {
@@ -370,16 +371,26 @@ a {
   object-position: top center;
 }
 
-.d11-portrait-illustrated {
-  position: relative;
+.d11-portrait-missing {
   overflow: hidden;
-  background: #05090d;
+  background: #070b10;
 }
 
-.d11-portrait-illustrated svg {
-  display: block;
-  height: 100%;
-  width: 100%;
+.d11-portrait-missing-plate {
+  background:
+    radial-gradient(ellipse at 50% 28%, color-mix(in oklab, var(--card-accent, #1b7a4e) 28%, transparent), transparent 55%),
+    radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.55), transparent 50%),
+    linear-gradient(165deg, #121820 0%, #0a0e14 48%, #06080c 100%);
+}
+
+.d11-portrait-missing-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  mix-blend-mode: soft-light;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
 
 .d11-card-art {

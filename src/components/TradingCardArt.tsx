@@ -72,7 +72,7 @@ export function TradingCardArt({
             playerSlug={card.playerSlug}
             position={card.playerPosition}
             accent={visual.accent}
-            imageUrl={card.frontImageUrl}
+            imageUrl={card.playerImageUrl ?? card.frontImageUrl}
           />
         </div>
 
