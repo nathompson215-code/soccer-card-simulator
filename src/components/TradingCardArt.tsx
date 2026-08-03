@@ -3,7 +3,6 @@
 import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { SignatureOverlay } from "@/components/SignatureOverlay";
 import { BookletCardArt } from "@/components/BookletCardArt";
-import { rarityLabel } from "@/lib/format";
 import type { CardVisual } from "@/lib/card-visual";
 import { resolveVisualTheme } from "@/lib/visual-themes";
 import type { CardDTO } from "@/lib/types";
@@ -215,10 +214,6 @@ export function TradingCardArt({
                 <span>{card.parallelName}</span>
               </div>
               <div className="mt-0.5 flex items-center gap-1.5 text-[8.5px] md:text-[9.5px]">
-                <span className={`d11-rarity-chip rarity-${visual.rarityFrame}`}>
-                  {rarityLabel(card.rarity)}
-                </span>
-                <span className="text-white/25">·</span>
                 <span className="font-medium uppercase tracking-[0.08em] text-white/78">
                   {visual.label}
                 </span>

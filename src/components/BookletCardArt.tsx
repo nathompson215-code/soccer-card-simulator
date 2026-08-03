@@ -3,7 +3,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { PlayerPortrait } from "@/components/PlayerPortrait";
 import { SignatureOverlay } from "@/components/SignatureOverlay";
-import { rarityLabel } from "@/lib/format";
 import type { CardVisual } from "@/lib/card-visual";
 import type { CardDTO } from "@/lib/types";
 
@@ -153,10 +152,7 @@ export function BookletCardArt({
               <div className="truncate text-[7px] uppercase tracking-[0.14em] text-white/55">
                 #{card.cardNumber} · {card.parallelName}
               </div>
-              <div className="mt-0.5 flex items-center justify-between gap-1">
-                <span className={`d11-rarity-chip rarity-${visual.rarityFrame}`}>
-                  {rarityLabel(card.rarity)}
-                </span>
+              <div className="mt-0.5 flex items-center justify-end gap-1">
                 {serial ? (
                   <span className="d11-serial px-1 py-0.5 text-[9px] font-bold tracking-wider">
                     {serial}
