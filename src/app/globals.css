@@ -732,12 +732,13 @@ a {
 .d11-chrome-sheen {
   background: linear-gradient(
     115deg,
-    transparent 18%,
-    rgba(255, 255, 255, 0.2) 38%,
-    rgba(180, 220, 255, 0.34) 48%,
-    transparent 64%
+    transparent 14%,
+    rgba(255, 255, 255, 0.12) 32%,
+    rgba(255, 255, 255, 0.38) 46%,
+    rgba(180, 220, 255, 0.42) 52%,
+    transparent 68%
   );
-  background-size: 220% 100%;
+  background-size: 240% 100%;
   animation: foil-sweep 3.2s ease-in-out infinite;
   mix-blend-mode: screen;
 }
@@ -746,10 +747,10 @@ a {
   background:
     linear-gradient(
       125deg,
-      rgba(255, 80, 120, 0.22),
+      rgba(255, 80, 120, 0.24),
       rgba(255, 220, 80, 0.2),
       rgba(80, 255, 180, 0.2),
-      rgba(80, 160, 255, 0.24),
+      rgba(80, 160, 255, 0.26),
       rgba(200, 100, 255, 0.22)
     );
   background-size: 280% 280%;
@@ -758,10 +759,11 @@ a {
 
 .d11-soft-light {
   background:
-    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.16), transparent 28%),
-    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.2), transparent 40%);
+    radial-gradient(circle at 28% 14%, rgba(255, 255, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 72% 82%, rgba(0, 0, 0, 0.22), transparent 42%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 40%);
   mix-blend-mode: soft-light;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .d11-rookie-badge {
