@@ -14,6 +14,7 @@ import type {
   Tournament,
 } from "@prisma/client";
 import type { CardDTO, ProductDTO } from "@/lib/types";
+import { formatPermanentSerial } from "@/lib/card-serial";
 import { resolveCardPlayerPhotoSrc } from "@/lib/player-assets";
 
 type CardWithRelations = Card & {
@@ -37,6 +38,7 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
   const { checklistEntry, parallel } = card;
   const { cardSet, player } = checklistEntry;
   const { product } = cardSet;
+  const printRun = card.numbering?.printRun ?? parallel.printRun;
 
   return {
     id: card.id,
@@ -52,7 +54,8 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     foil: parallel.isFoil,
     rarity: parallel.rarity,
     cardType: parallel.cardType,
-    printRun: card.numbering?.printRun ?? parallel.printRun,
+    printRun,
+    serialDisplay: formatPermanentSerial(card.assignedSerial, printRun),
     estimatedValueCents: card.estimatedValueCents,
     frontImageUrl: card.frontImageUrl,
     backImageUrl: card.backImageUrl,

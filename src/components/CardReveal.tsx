@@ -213,7 +213,7 @@ export function CardReveal({
             {step === "shown" ? <RevealEffects celebration={celebration} active /> : null}
             <CardFace
               card={pull.card}
-              serialDisplay={pull.serialDisplay}
+              serialDisplay={pull.serialDisplay ?? pull.card.serialDisplay}
               size="xl"
               celebration={celebration}
               interactiveFoil={celebration !== "none"}

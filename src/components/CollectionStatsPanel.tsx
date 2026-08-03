@@ -126,7 +126,7 @@ export function CollectionStatsPanel({
                 <Link key={entry.cardId} href={`/cards/${entry.card.slug}`} className="shrink-0">
                   <CardFace
                     card={entry.card}
-                    serialDisplay={entry.serialDisplays[0] ?? null}
+                    serialDisplay={entry.serialDisplays[0] ?? entry.card.serialDisplay}
                     size="sm"
                     celebration={
                       entry.card.rarity === "LEGENDARY"
@@ -158,7 +158,7 @@ export function CollectionStatsPanel({
             <div className="flex gap-4 overflow-x-auto pb-2">
               {stats.recentPulls.map((item) => (
                 <Link key={item.instanceId} href={`/cards/${item.card.slug}`} className="shrink-0">
-                  <CardFace card={item.card} serialDisplay={item.serialDisplay} size="sm" />
+                  <CardFace card={item.card} serialDisplay={item.serialDisplay ?? item.card.serialDisplay} size="sm" />
                 </Link>
               ))}
             </div>

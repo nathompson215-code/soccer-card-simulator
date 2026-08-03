@@ -143,14 +143,16 @@ export function BoxSummaryScreen({
               <div key={`${pull.card.id}-hit-${idx}`} className="shrink-0">
                 <CardFace
                   card={pull.card}
-                  serialDisplay={pull.serialDisplay}
+                  serialDisplay={pull.serialDisplay ?? pull.card.serialDisplay}
                   size="sm"
                   celebration={pull.celebration}
                   interactiveFoil
                 />
                 <div className="mt-2 max-w-[132px] text-center text-[10px] text-ink-muted">
                   {rarityLabel(pull.card.rarity)}
-                  {pull.serialDisplay ? ` · ${pull.serialDisplay}` : ""}
+                  {(pull.serialDisplay ?? pull.card.serialDisplay)
+                    ? ` · ${pull.serialDisplay ?? pull.card.serialDisplay}`
+                    : ""}
                 </div>
               </div>
             ))}
@@ -198,7 +200,7 @@ export function BoxSummaryScreen({
                         </span>
                       </td>
                       <td className="px-3 py-2 text-ink-muted">
-                        {pull.serialDisplay ?? "—"}
+                        {pull.serialDisplay ?? pull.card.serialDisplay ?? "—"}
                       </td>
                       <td className="px-3 py-2 text-ink">
                         {formatMoney(pull.card.estimatedValueCents)}
@@ -215,7 +217,7 @@ export function BoxSummaryScreen({
             <CardFace
               key={`${pull.card.id}-grid-${idx}`}
               card={pull.card}
-              serialDisplay={pull.serialDisplay}
+              serialDisplay={pull.serialDisplay ?? pull.card.serialDisplay}
               size="sm"
               celebration={pull.celebration}
             />
