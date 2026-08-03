@@ -107,7 +107,7 @@ function OpeningCard({ opening }: { opening: OpeningDTO }) {
               <div key={pull.id} className="shrink-0">
                 <CardFace
                   card={pull.card}
-                  serialDisplay={pull.serialDisplay}
+                  serialDisplay={pull.serialDisplay ?? pull.card.serialDisplay}
                   size="sm"
                   celebration={pull.celebration}
                 />
@@ -178,7 +178,7 @@ export default async function HistoryPage() {
             <div className="mt-4 flex flex-wrap items-end gap-5">
               <CardFace
                 card={stats.bestPull.card}
-                serialDisplay={stats.bestPull.serialDisplay}
+                serialDisplay={stats.bestPull.serialDisplay ?? stats.bestPull.card.serialDisplay}
                 size="md"
                 celebration={stats.bestPull.celebration}
               />
@@ -186,7 +186,9 @@ export default async function HistoryPage() {
                 <div className="display text-3xl text-ink">{stats.bestPull.card.playerName}</div>
                 <p className="mt-1 text-sm text-ink-muted">
                   {stats.bestPull.card.subsetName} · {stats.bestPull.card.parallelName}
-                  {stats.bestPull.serialDisplay ? ` · ${stats.bestPull.serialDisplay}` : ""}
+                  {(stats.bestPull.serialDisplay ?? stats.bestPull.card.serialDisplay)
+                    ? ` · ${stats.bestPull.serialDisplay ?? stats.bestPull.card.serialDisplay}`
+                    : ""}
                 </p>
                 <div className="mt-3 display text-4xl text-gold-soft">
                   {formatMoney(stats.bestPull.valueCentsAtOpen)}

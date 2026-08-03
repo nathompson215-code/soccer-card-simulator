@@ -342,6 +342,8 @@ model Card {
   parallelId          String
   slug                String   @unique
   estimatedValueCents Int      @default(0)
+  /// Permanent serial within print run (1..printRun). Set once at card creation; never regenerated.
+  assignedSerial      Int?
   frontImageUrl       String?
   backImageUrl        String?
   createdAt           DateTime @default(now())
@@ -359,6 +361,7 @@ model Card {
   @@index([estimatedValueCents])
   @@index([parallelId])
   @@index([checklistEntryId])
+  @@index([assignedSerial])
 }
 
 model NumberingSpec {

@@ -32,6 +32,8 @@ export interface CardDTO {
   rarity: Rarity;
   cardType: CardType;
   printRun: number | null;
+  /** Permanent catalog serial display (e.g. 17/25). Set at card creation; never regenerated. */
+  serialDisplay: string | null;
   estimatedValueCents: number;
   frontImageUrl: string | null;
   backImageUrl: string | null;

@@ -27,7 +27,7 @@ export function CollectionSlot({
         <Link href={`/cards/${entry.card.slug}`} className="relative block">
           <CardFace
             card={entry.card}
-            serialDisplay={entry.serialDisplays[0] ?? null}
+            serialDisplay={entry.serialDisplays[0] ?? entry.card.serialDisplay}
             size="sm"
           />
           {entry.isNew ? (

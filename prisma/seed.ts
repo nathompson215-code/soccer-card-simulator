@@ -11,6 +11,7 @@ import {
   PlayerEra,
 } from "@prisma/client";
 import { listProductConfigSlugs, loadProductConfig, slugifyName } from "../src/lib/product-config";
+import { assignSerialFromId } from "../src/lib/card-serial";
 
 const prisma = new PrismaClient();
 
@@ -364,11 +365,15 @@ async function main() {
 
         for (const parallel of parallels) {
           const cardSlug = `${product.slug}__${setDef.slug}__${number}__${parallel.slug}`;
+          const assignedSerial = parallel.printRun
+            ? assignSerialFromId(cardSlug, parallel.printRun)
+            : null;
           const card = await prisma.card.create({
             data: {
               checklistEntryId: entry.id,
               parallelId: parallel.id,
               slug: cardSlug,
+              assignedSerial,
               estimatedValueCents: estimateValueCents(
                 parallel.rarity,
                 parallel.printRun,
