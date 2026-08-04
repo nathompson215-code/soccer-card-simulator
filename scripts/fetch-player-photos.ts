@@ -9,22 +9,34 @@
  */
 import { mkdir, writeFile, access } from "node:fs/promises";
 import path from "node:path";
-import { readFileSync, existsSync } from "node:fs";
-import { slugifyName } from "../src/lib/product-config";
+import {
+  listProductConfigSlugs,
+  loadProductConfig,
+  slugifyName,
+} from "../src/lib/product-config";
 
 const UA = "DraftElevenBot/1.0 (soccer-card-simulator; local-dev photo fetch)";
 const OUT_DIR = path.join(process.cwd(), "public", "players");
 
 type PlayerRow = { name: string };
 
+/**
+ * Every seeded player across ALL product configs (Topps Chrome, Panini Prizm,
+ * and any future product), deduped by the same `slugifyName` used by the seed
+ * and the runtime photo resolver. This keeps the entire checklist — not just
+ * one product — mapped to `/players/{slug}.jpg` through the identical pipeline.
+ */
 function loadSeededPlayers(): PlayerRow[] {
-  const file = path.join(
-    process.cwd(),
-    "data/products/topps-chrome-ucl-2024-25/players.json",
-  );
-  if (!existsSync(file)) return [];
-  const data = JSON.parse(readFileSync(file, "utf8")) as { players: PlayerRow[] };
-  return data.players ?? [];
+  const bySlug = new Map<string, PlayerRow>();
+  for (const slug of listProductConfigSlugs()) {
+    const cfg = loadProductConfig(slug);
+    if (!cfg) continue;
+    for (const player of cfg.players.players) {
+      const playerSlug = slugifyName(player.name);
+      if (!bySlug.has(playerSlug)) bySlug.set(playerSlug, { name: player.name });
+    }
+  }
+  return [...bySlug.values()];
 }
 
 /** Manual Wikipedia title overrides when the common name is ambiguous. */
@@ -55,6 +67,21 @@ const WIKI_TITLE: Record<string, string> = {
   "julian-alvarez": "Julián Alvarez",
   "pablo-barrios": "Pablo Barrios (footballer)",
   "josko-gvardiol": "Joško Gvardiol",
+  // Panini Prizm Premier League additions (accents / disambiguation titles)
+  "jeremy-doku": "Jérémy Doku",
+  "alisson-becker": "Alisson Becker",
+  "reece-james": "Reece James",
+  "enzo-fernandez": "Enzo Fernández",
+  "bruno-guimaraes": "Bruno Guimarães",
+  "andre-onana": "André Onana",
+  "luis-diaz": "Luis Díaz (footballer, born 1997)",
+  "moises-caicedo": "Moisés Caicedo",
+  "emiliano-martinez": "Emiliano Martínez",
+  "joao-pedro": "João Pedro (footballer, born 2001)",
+  "joao-palhinha": "João Palhinha",
+  "pedro-neto": "Pedro Neto",
+  "lucas-paqueta": "Lucas Paquetá",
+  "rasmus-h-jlund": "Rasmus Højlund",
 };
 
 async function fileExists(filePath: string) {
