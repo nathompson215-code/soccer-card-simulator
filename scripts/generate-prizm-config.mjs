@@ -36,6 +36,10 @@ const product = {
     name: "Premier League",
     type: "DOMESTIC_LEAGUE",
   },
+  league: {
+    slug: "premier-league",
+    name: "Premier League",
+  },
   box: {
     packsPerBox: 12,
     cardsPerPack: 12,
