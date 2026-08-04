@@ -113,5 +113,11 @@
     "patchChance": 0,
     "bookletChance": 0.004,
     "caseHitChance": 0.012
-  }
+  },
+  "boxHighlights": [
+    ["20 packs", "Official hobby count"],
+    ["4 cards / pack", "80 cards per box"],
+    ["1 Chrome Auto", "Guaranteed per box"],
+    ["3 #'d · 3 Pulsar · 9 inserts", "Published box break"]
+  ]
 }

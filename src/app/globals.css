@@ -914,6 +914,111 @@ a {
 .d11-signature-panel,
 .d11-signature-cut { width: 100%; height: 100%; }
 
+/* Autograph-only: brush-stroke white signing strip + blue ink */
+.d11-signature-ink-placeholder {
+  min-height: 0;
+  width: 100%;
+}
+
+.d11-auto-sign-strip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.2rem;
+  isolation: isolate;
+}
+
+.d11-auto-sign-strip-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: blur(0.6px);
+  pointer-events: none;
+}
+
+.d11-auto-sign-strip-fill {
+  fill: #f7f3ec;
+}
+
+.d11-auto-sign-strip-paper {
+  position: absolute;
+  inset: 14% 6%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.84 0 0 0 0 0.78 0 0 0 0.2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+.d11-auto-sign-strip-gloss {
+  position: absolute;
+  inset: 18% 10%;
+  z-index: 1;
+  border-radius: 48% / 60%;
+  background: linear-gradient(
+    122deg,
+    transparent 24%,
+    rgba(255, 255, 255, 0.55) 46%,
+    rgba(255, 255, 255, 0.12) 56%,
+    transparent 72%
+  );
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.d11-auto-ink-svg {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 84%;
+  height: auto;
+  max-height: 2.15rem;
+  overflow: visible;
+  transform: rotate(var(--sig-rotate, -3deg));
+  transform-origin: center;
+  font-family: inherit;
+}
+
+.d11-auto-ink-text {
+  stroke: #061f6e;
+  stroke-width: 0.55px;
+  stroke-linejoin: round;
+  font-size: 33px;
+  letter-spacing: 0.15px;
+  opacity: 1;
+}
+
+.d11-auto-ink-text:not(.d11-auto-ink-text-shadow) {
+  fill: #0a36b0;
+}
+
+.d11-auto-ink-text-shadow {
+  fill: #1a4ec4;
+  stroke: none;
+  opacity: 0.22;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-sign-strip {
+  min-height: 1.9rem;
+  padding: 0.28rem 0.15rem;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-ink-svg {
+  max-height: 1.75rem;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-ink-text {
+  font-size: 27px;
+}
+
 .d11-cut-matte {
   background:
     linear-gradient(180deg, rgba(250, 246, 236, 0.08), transparent 35%),
@@ -1178,6 +1283,21 @@ a {
   border: none;
   background: transparent;
   height: 100%;
+}
+
+.d11-booklet-sig-plate .d11-signature-ink-placeholder {
+  height: 100%;
+  width: 100%;
+}
+
+.d11-booklet-sig-plate .d11-auto-sign-strip {
+  min-height: 100%;
+  padding: 0.15rem 0.1rem;
+}
+
+.d11-booklet-sig-plate .d11-auto-ink-svg {
+  width: 90%;
+  max-height: 1.85rem;
 }
 
 .d11-booklet-interior-meta {
@@ -1580,6 +1700,166 @@ a {
 }
 .d11-theme-booklet .d11-card-bg {
   background: linear-gradient(155deg, #1a1f3a, #3949ab 55%, #5c6bc0);
+}
+
+/* ── Panini Prizm Premier League themes ── */
+.d11-theme-prizm-silver .d11-card-bg {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 40%),
+    linear-gradient(160deg, #9e9e9e, #e8eaf0 50%, #78909c);
+}
+.d11-theme-prizm-silver .d11-chrome-sheen,
+.d11-theme-prizm-silver .d11-bezel {
+  opacity: 0.85;
+}
+.d11-theme-prizm-hyper .d11-card-bg {
+  background: linear-gradient(145deg, #ad1457, #ff6ec7 45%, #f50057 90%);
+}
+.d11-theme-prizm-ice .d11-card-bg {
+  background: linear-gradient(150deg, #01579b, #b3e5fc 55%, #0277bd);
+}
+.d11-theme-prizm-lazer .d11-card-bg {
+  background: linear-gradient(150deg, #1b5e20, #76ff03 50%, #33691e);
+}
+.d11-theme-prizm-mojo .d11-card-bg {
+  background: linear-gradient(150deg, #4a148c, #ce93d8 55%, #6a1b9a);
+}
+.d11-theme-prizm-snakeskin .d11-card-bg {
+  background:
+    repeating-linear-gradient(115deg, rgba(0, 0, 0, 0.12) 0 6px, transparent 6px 12px),
+    linear-gradient(160deg, #3e2723, #8d6e63 60%, #1b120e);
+}
+.d11-theme-prizm-genesis .d11-card-bg {
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.45), transparent 40%),
+    linear-gradient(160deg, #eceff1, #90a4ae 70%, #455a64);
+}
+.d11-theme-prizm-purple .d11-card-bg,
+.d11-theme-prizm-purple-pulsar .d11-card-bg,
+.d11-theme-prizm-purple-mosaic .d11-card-bg,
+.d11-theme-prizm-purple-stripes .d11-card-bg,
+.d11-theme-prizm-purple-mojo .d11-card-bg {
+  background: linear-gradient(150deg, #4a148c, #7b2d8e 50%, #2a0840);
+}
+.d11-theme-prizm-green-pulsar .d11-card-bg,
+.d11-theme-prizm-green-ice .d11-card-bg,
+.d11-theme-prizm-green .d11-card-bg {
+  background: linear-gradient(150deg, #1b5e20, #66bb6a 55%, #0d3311);
+}
+.d11-theme-prizm-blue-mosaic .d11-card-bg,
+.d11-theme-prizm-blue .d11-card-bg,
+.d11-theme-prizm-blue-ice .d11-card-bg,
+.d11-theme-prizm-shimmer-blue .d11-card-bg {
+  background: linear-gradient(150deg, #0d47a1, #42a5f5 55%, #082b62);
+}
+.d11-theme-prizm-orange-mosaic .d11-card-bg,
+.d11-theme-prizm-orange-hyper .d11-card-bg,
+.d11-theme-prizm-orange .d11-card-bg {
+  background: linear-gradient(150deg, #e65100, #ff9100 55%, #bf360c);
+}
+.d11-theme-prizm-pink-mosaic .d11-card-bg,
+.d11-theme-prizm-pink-stars .d11-card-bg,
+.d11-theme-prizm-pink-mojo .d11-card-bg {
+  background: linear-gradient(150deg, #880e4f, #ec407a 55%, #ad1457);
+}
+.d11-theme-prizm-red-mosaic .d11-card-bg,
+.d11-theme-prizm-red .d11-card-bg,
+.d11-theme-prizm-red-lazer .d11-card-bg,
+.d11-theme-prizm-red-stars .d11-card-bg {
+  background: linear-gradient(150deg, #b71c1c, #e53935 55%, #7f0000);
+}
+.d11-theme-prizm-bw-checker .d11-card-bg {
+  background:
+    repeating-conic-gradient(#111 0% 25%, #f5f5f5 0% 50%) 0 0 / 18px 18px,
+    linear-gradient(160deg, #212121, #fafafa);
+}
+.d11-theme-prizm-white-sparkle .d11-card-bg {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), transparent 35%),
+    linear-gradient(160deg, #eceff1, #ffffff 60%, #b0bec5);
+}
+.d11-theme-prizm-gold .d11-card-bg,
+.d11-theme-prizm-gold-pulsar .d11-card-bg {
+  background: linear-gradient(150deg, #5c4300, #d4af37 55%, #3e2e00);
+}
+.d11-theme-prizm-lucky .d11-card-bg {
+  background: linear-gradient(150deg, #bf360c, #ff7043 55%, #e64a19);
+}
+.d11-theme-prizm-black .d11-card-bg,
+.d11-theme-prizm-black-finite .d11-card-bg,
+.d11-theme-prizm-shimmer-black .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.12), transparent 40%),
+    linear-gradient(160deg, #000, #1a1a1a 60%, #000);
+}
+.d11-theme-prizm-brilliance .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(240, 215, 140, 0.45), transparent 40%),
+    linear-gradient(160deg, #2a2208, #f0d78c 70%, #1a1400);
+}
+.d11-theme-prizm-emergent .d11-card-bg {
+  background: linear-gradient(155deg, #004d40, #26a69a 55%, #00251a);
+}
+.d11-theme-prizm-fireworks .d11-card-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 111, 0, 0.5), transparent 35%),
+    radial-gradient(circle at 80% 30%, rgba(255, 234, 0, 0.35), transparent 30%),
+    linear-gradient(160deg, #1a0a00, #ff6f00 70%, #3e1600);
+}
+.d11-theme-prizm-talismen .d11-card-bg {
+  background: linear-gradient(155deg, #1a237e, #5c6bc0 55%, #0d1340);
+}
+.d11-theme-prizm-flashback .d11-card-bg {
+  background: linear-gradient(155deg, #004d40, #00838f 50%, #00251a);
+}
+.d11-theme-prizm-center-stage .d11-card-bg {
+  background: linear-gradient(155deg, #311b92, #7e57c2 55%, #1a0a40);
+}
+.d11-theme-prizm-fractal .d11-card-bg {
+  background:
+    repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.08) 0 8px, transparent 8px 16px),
+    linear-gradient(160deg, #006064, #00acc1 60%, #00363a);
+}
+.d11-theme-prizm-kaleidoscopic .d11-card-bg {
+  background: conic-gradient(from 40deg, #ec407a, #7e57c2, #26c6da, #ffca28, #ec407a);
+}
+.d11-theme-prizm-sublime .d11-card-bg {
+  background: linear-gradient(155deg, #01579b, #81d4fa 55%, #002f6c);
+}
+.d11-theme-prizm-color-blast .d11-card-bg {
+  background:
+    radial-gradient(circle at 30% 30%, #ff4081, transparent 40%),
+    radial-gradient(circle at 70% 40%, #2979ff, transparent 40%),
+    radial-gradient(circle at 50% 80%, #00e676, transparent 40%),
+    linear-gradient(160deg, #1a0030, #311b92);
+}
+.d11-theme-prizm-groovy .d11-card-bg {
+  background:
+    repeating-linear-gradient(90deg, #ffd600 0 10px, #ff6f00 10px 20px, #00bcd4 20px 30px),
+    linear-gradient(160deg, #1a1a00, #ffd600);
+}
+.d11-theme-prizm-manga .d11-card-bg {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.25), transparent 35%),
+    linear-gradient(160deg, #3e1400, #ff7043 65%, #1a0800);
+}
+.d11-theme-prizm-signatures .d11-card-bg,
+.d11-theme-prizm-penmanship .d11-card-bg,
+.d11-theme-prizm-club-legends .d11-card-bg,
+.d11-theme-prizm-dual-signatures .d11-card-bg {
+  background: linear-gradient(155deg, #1a1408, #3e3420 40%, #d4af37 110%);
+}
+.d11-theme-prizm-penmanship .d11-card-bg {
+  background: linear-gradient(155deg, #012a38, #0277bd 45%, #29b6f6 110%);
+}
+.d11-theme-prizm-club-legends .d11-card-bg {
+  background: linear-gradient(155deg, #2a1a12, #5d4037 45%, #8d6e63 110%);
+}
+.d11-theme-prizm-dual-signatures .d11-card-bg {
+  background: linear-gradient(155deg, #2a1030, #7b1fa2 50%, #ab47bc);
+}
+.d11-theme-prizm-patch .d11-card-bg {
+  background: linear-gradient(155deg, #3e2723, #6d4c41 50%, #1b120e);
 }
 
 @keyframes d11-pulse-glow {

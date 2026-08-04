@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { PackOpener } from "@/components/PackOpener";
 import { CardFace } from "@/components/CardFace";
 import { formatLabel, formatNumber } from "@/lib/format";
+import { loadProductConfig } from "@/lib/product-config";
 import { getProductBySlug, listCards } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +18,8 @@ export default async function ProductDetailPage({
   if (!product) notFound();
 
   const { cards } = await listCards({ productSlug: slug, limit: 24 });
+  const config = loadProductConfig(slug);
+  const highlights = config?.product.boxHighlights ?? null;
 
   return (
     <div className="mx-auto max-w-7xl space-y-10 px-4 py-10 md:px-6">
@@ -58,14 +61,9 @@ export default async function ProductDetailPage({
           </ul>
         ) : null}
 
-        {product.slug === "topps-chrome-ucl-2024-25" ? (
+        {highlights && highlights.length > 0 ? (
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              ["20 packs", "Official hobby count"],
-              ["4 cards / pack", "80 cards per box"],
-              ["1 Chrome Auto", "Guaranteed per box"],
-              ["3 #'d · 3 Pulsar · 9 inserts", "Published box break"],
-            ].map(([title, sub]) => (
+            {highlights.map(([title, sub]) => (
               <div key={title} className="pitch-panel rounded-xl px-4 py-3">
                 <div className="display text-2xl text-ink">{title}</div>
                 <div className="mt-1 text-xs uppercase tracking-[0.14em] text-ink-muted">{sub}</div>

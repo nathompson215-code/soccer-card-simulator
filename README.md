@@ -47,10 +47,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Seed creates `collector@drafteleven.local`. Pack openings save `UserCard` rows for that user.
 
-## Perfected product: Topps Chrome UCL 2024–25
+## Perfected products
+
+### Topps Chrome UCL 2024–25
 
 Hobby box config (20 packs × 4 cards, published guarantees) is driven by JSON under
 `data/products/topps-chrome-ucl-2024-25/`. See **[docs/CHROME_UCL_HOBBY.md](docs/CHROME_UCL_HOBBY.md)**.
+
+### 2023–24 Panini Prizm Premier League
+
+Hobby box config (12 packs × 12 cards, published guarantees) is driven by JSON under
+`data/products/panini-prizm-premier-league-2023-24/`. See **[docs/PRIZM_PREMIER_LEAGUE_HOBBY.md](docs/PRIZM_PREMIER_LEAGUE_HOBBY.md)**.
 
 **Card renderer is read-only** — see **[docs/PROTECTED_CARD_FEATURES.md](docs/PROTECTED_CARD_FEATURES.md)**
 before changing photos, autographs, booklets, pricing, rarity labels, or serials.
@@ -59,7 +66,7 @@ before changing photos, autographs, booklets, pricing, rarity labels, or serials
 npm run db:seed
 ```
 
-Open the product page and choose **Open Box** for the full hobby theater + box summary.
+Open a product page and choose **Open Box** for the full hobby theater + box summary.
 
 ## Tests
 
@@ -67,4 +74,5 @@ Open the product page and choose **Open Box** for the full hobby theater + box s
 npm test
 ```
 
-Automated coverage for the pack-open core loop (regular, autograph, booklet, numbered, and 1/1 cards) lives under `src/lib/*.test.ts`.
+Automated coverage for the pack-open core loop (regular, autograph, booklet, numbered, and 1/1 cards)
+and multi-product configs (Topps Chrome + Panini Prizm) lives under `src/lib/*.test.ts`.

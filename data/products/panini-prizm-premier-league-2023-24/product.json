@@ -1,0 +1,150 @@
+{
+  "slug": "panini-prizm-premier-league-2023-24",
+  "name": "2023–24 Panini Prizm Premier League Hobby Box",
+  "description": "Config-driven simulation of the 2023–24 Panini Prizm Premier League Hobby Box: 12 packs × 12 cards, 1 autograph, 4 Silver Prizms, 5 numbered Prizms, 8 additional Prizm parallels, and 6 inserts. Hobby rainbow includes Genesis, Snakeskin, Hyper, Ice, Mosaic, and Black Finite 1/1s — Choice/Breakaway exclusives excluded.",
+  "year": 2024,
+  "season": "2023-24",
+  "releaseYear": 2024,
+  "format": "HOBBY_BOX",
+  "accentHex": "#0B1D3A",
+  "featured": true,
+  "manufacturer": {
+    "slug": "panini",
+    "name": "Panini",
+    "foundedYear": 1961,
+    "country": "Italy",
+    "colorHex": "#C8102E"
+  },
+  "brand": {
+    "slug": "prizm-premier-league",
+    "name": "Prizm"
+  },
+  "tournament": {
+    "slug": "premier-league",
+    "name": "Premier League",
+    "type": "DOMESTIC_LEAGUE"
+  },
+  "league": {
+    "slug": "premier-league",
+    "name": "Premier League"
+  },
+  "box": {
+    "packsPerBox": 12,
+    "cardsPerPack": 12,
+    "boxesPerCase": 12,
+    "source": "Published Panini Prizm Premier League hobby configuration: 12 packs / 12 cards; box break ≈ 1 Autograph, 4 Silver Prizms, 5 #'d Prizms, 8 additional Prizms, 6 inserts."
+  },
+  "guarantees": [
+    {
+      "id": "autograph",
+      "label": "Autograph",
+      "count": 1,
+      "pool": "autograph"
+    },
+    {
+      "id": "silver",
+      "label": "Silver Prizm",
+      "count": 4,
+      "pool": "refractor"
+    },
+    {
+      "id": "numbered",
+      "label": "Numbered Prizm",
+      "count": 5,
+      "pool": "numbered"
+    },
+    {
+      "id": "prizm",
+      "label": "Additional Prizm",
+      "count": 8,
+      "pool": "pulsar"
+    },
+    {
+      "id": "insert",
+      "label": "Insert",
+      "count": 6,
+      "pool": "insert"
+    }
+  ],
+  "fillOdds": {
+    "refractorChancePerSlot": 0.12,
+    "bonusHitChancePerSlot": 0.006,
+    "bonusHitWeights": {
+      "autograph": 0.1,
+      "patch": 0.15,
+      "case_hit": 0.35,
+      "numbered": 0.4
+    },
+    "notes": "After box guarantees, remaining slots are mostly base commons. Silver maps to refractor pool; additional unnumbered Prizms map to pulsar pool. Color Blast / Groovy / Manga stay scarce case hits."
+  },
+  "oddsLabels": [
+    {
+      "label": "Autograph",
+      "scope": "PER_BOX",
+      "expectedCount": 1
+    },
+    {
+      "label": "Silver Prizm",
+      "scope": "PER_BOX",
+      "expectedCount": 4
+    },
+    {
+      "label": "Numbered Prizm",
+      "scope": "PER_BOX",
+      "expectedCount": 5
+    },
+    {
+      "label": "Additional Prizm",
+      "scope": "PER_BOX",
+      "expectedCount": 8
+    },
+    {
+      "label": "Insert",
+      "scope": "PER_BOX",
+      "expectedCount": 6
+    },
+    {
+      "label": "Silver Prizm",
+      "scope": "PER_PACK",
+      "expectedCount": 0.333
+    },
+    {
+      "label": "Insert",
+      "scope": "PER_PACK",
+      "expectedCount": 0.5
+    },
+    {
+      "label": "Case Hit / SP Insert (approx)",
+      "scope": "PER_CASE",
+      "expectedCount": 2
+    }
+  ],
+  "singlePackApprox": {
+    "autographChance": 0.083,
+    "insertChance": 0.45,
+    "pulsarChance": 0.55,
+    "numberedChance": 0.35,
+    "refractorChance": 0.3,
+    "patchChance": 0.01,
+    "bookletChance": 0,
+    "caseHitChance": 0.02
+  },
+  "boxHighlights": [
+    [
+      "12 packs",
+      "Official hobby count"
+    ],
+    [
+      "12 cards / pack",
+      "144 cards per box"
+    ],
+    [
+      "1 Autograph",
+      "Guaranteed per box"
+    ],
+    [
+      "4 Silver · 5 #'d · 8 Prizm · 6 inserts",
+      "Published box break"
+    ]
+  ]
+}

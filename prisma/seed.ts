@@ -15,6 +15,44 @@ import { assignSerialFromId } from "../src/lib/card-serial";
 
 const prisma = new PrismaClient();
 
+const COUNTRY_NAMES: Record<string, string> = {
+  AR: "Argentina",
+  PT: "Portugal",
+  FR: "France",
+  BR: "Brazil",
+  ES: "Spain",
+  ENG: "England",
+  NO: "Norway",
+  DE: "Germany",
+  US: "United States",
+  IT: "Italy",
+  NL: "Netherlands",
+  BE: "Belgium",
+  PL: "Poland",
+  TR: "Turkey",
+  EG: "Egypt",
+  CI: "Côte d'Ivoire",
+  GE: "Georgia",
+  UY: "Uruguay",
+  NG: "Nigeria",
+  SE: "Sweden",
+  MA: "Morocco",
+  RS: "Serbia",
+  HU: "Hungary",
+  HR: "Croatia",
+  GN: "Guinea",
+  KR: "South Korea",
+  SA: "Saudi Arabia",
+  DK: "Denmark",
+  IE: "Ireland",
+  UA: "Ukraine",
+  CM: "Cameroon",
+  EC: "Ecuador",
+  SN: "Senegal",
+  JP: "Japan",
+  CO: "Colombia",
+};
+
 function estimateValueCents(rarity: Rarity, printRun: number | null, year: number, tier?: string) {
   const base: Record<Rarity, number> = {
     COMMON: 35,
@@ -83,13 +121,22 @@ async function main() {
     },
   });
 
-  const slugs = listProductConfigSlugs();
+  const slugs = listProductConfigSlugs().sort();
   if (slugs.length === 0) {
     throw new Error("No product configs found under data/products/");
   }
 
+  const countryByCode: Record<string, { id: string; code: string; name: string }> = {};
+  const leagueBySlug: Record<string, { id: string; slug: string }> = {};
+  const clubBySlug: Record<string, { id: string; slug: string }> = {};
+  const ntByCode: Record<string, { id: string }> = {};
+  const playerBySlug: Record<string, { id: string; slug: string }> = {};
+  const manufacturerBySlug: Record<string, { id: string; slug: string }> = {};
+  const brandBySlug: Record<string, { id: string; slug: string }> = {};
+  const tournamentBySlug: Record<string, { id: string; slug: string }> = {};
+
   let totalCards = 0;
-  let totalPlayers = 0;
+  let totalPlayersCreated = 0;
   let totalProducts = 0;
 
   for (const slug of slugs) {
@@ -97,150 +144,133 @@ async function main() {
     if (!cfg) continue;
     const { product: p, players: roster, sets: setsCfg } = cfg;
 
-    const countryCodes = new Set<string>();
-    for (const club of roster.clubs) countryCodes.add(club.country);
-    for (const player of roster.players) countryCodes.add(player.country);
-
-    const countryNameFallback: Record<string, string> = {
-      AR: "Argentina",
-      PT: "Portugal",
-      FR: "France",
-      BR: "Brazil",
-      ES: "Spain",
-      ENG: "England",
-      NO: "Norway",
-      DE: "Germany",
-      US: "United States",
-      IT: "Italy",
-      NL: "Netherlands",
-      BE: "Belgium",
-      PL: "Poland",
-      TR: "Turkey",
-      EG: "Egypt",
-      CI: "Côte d'Ivoire",
-      GE: "Georgia",
-      UY: "Uruguay",
-      NG: "Nigeria",
-      SE: "Sweden",
-      MA: "Morocco",
-      RS: "Serbia",
-      HU: "Hungary",
-      HR: "Croatia",
-      GN: "Guinea",
-      KR: "South Korea",
-      SA: "Saudi Arabia",
-    };
-
-    const countries = [];
-    for (const code of countryCodes) {
-      countries.push(
-        await prisma.country.create({
-          data: {
-            code,
-            name: countryNameFallback[code] ?? code,
-          },
-        }),
-      );
-    }
-    const countryByCode = Object.fromEntries(countries.map((c) => [c.code, c]));
-
-    const premier = await prisma.league.create({
-      data: {
-        slug: "premier-league",
-        name: "Premier League",
-        countryId: countryByCode.ENG?.id,
-      },
-    });
-    const laLiga = await prisma.league.create({
-      data: {
-        slug: "la-liga",
-        name: "La Liga",
-        countryId: countryByCode.ES?.id,
-      },
-    });
-    const leagueBySlug: Record<string, string> = {
-      "premier-league": premier.id,
-      "la-liga": laLiga.id,
-    };
-
-    const clubs = [];
     for (const club of roster.clubs) {
-      clubs.push(
-        await prisma.club.create({
+      if (!countryByCode[club.country]) {
+        countryByCode[club.country] = await prisma.country.create({
           data: {
-            slug: club.slug,
-            name: club.name,
-            countryId: countryByCode[club.country]?.id,
-            leagueId: club.league ? leagueBySlug[club.league] : undefined,
+            code: club.country,
+            name: COUNTRY_NAMES[club.country] ?? club.country,
           },
-        }),
-      );
+        });
+      }
     }
-    const clubBySlug = Object.fromEntries(clubs.map((c) => [c.slug, c]));
+    for (const player of roster.players) {
+      if (!countryByCode[player.country]) {
+        countryByCode[player.country] = await prisma.country.create({
+          data: {
+            code: player.country,
+            name: COUNTRY_NAMES[player.country] ?? player.country,
+          },
+        });
+      }
+    }
 
-    const ntByCode: Record<string, { id: string }> = {};
-    for (const c of countries) {
-      const nt = await prisma.nationalTeam.create({
+    const ensureLeague = async (leagueSlug: string, name: string, countryCode?: string) => {
+      if (leagueBySlug[leagueSlug]) return leagueBySlug[leagueSlug];
+      const created = await prisma.league.create({
+        data: {
+          slug: leagueSlug,
+          name,
+          countryId: countryCode ? countryByCode[countryCode]?.id : undefined,
+        },
+      });
+      leagueBySlug[leagueSlug] = created;
+      return created;
+    };
+
+    // Common leagues referenced by club.league
+    if (roster.clubs.some((c) => c.league === "premier-league") || p.league?.slug === "premier-league") {
+      await ensureLeague("premier-league", "Premier League", "ENG");
+    }
+    if (roster.clubs.some((c) => c.league === "la-liga")) {
+      await ensureLeague("la-liga", "La Liga", "ES");
+    }
+    if (p.league && !leagueBySlug[p.league.slug]) {
+      await ensureLeague(p.league.slug, p.league.name, "ENG");
+    }
+
+    for (const club of roster.clubs) {
+      if (clubBySlug[club.slug]) continue;
+      clubBySlug[club.slug] = await prisma.club.create({
+        data: {
+          slug: club.slug,
+          name: club.name,
+          countryId: countryByCode[club.country]?.id,
+          leagueId: club.league ? leagueBySlug[club.league]?.id : undefined,
+        },
+      });
+    }
+
+    for (const c of Object.values(countryByCode)) {
+      if (ntByCode[c.code]) continue;
+      ntByCode[c.code] = await prisma.nationalTeam.create({
         data: {
           slug: slugifyName(c.name),
           name: c.name,
           countryId: c.id,
         },
       });
-      ntByCode[c.code] = nt;
     }
 
-    const players = [];
     for (const def of roster.players) {
-      const parts = def.name.split(" ");
       const playerSlug = slugifyName(def.name);
-      players.push(
-        await prisma.player.create({
-          data: {
-            slug: playerSlug,
-            fullName: def.name,
-            firstName: parts[0],
-            lastName: parts.slice(1).join(" "),
-            nationalityId: countryByCode[def.country]?.id,
-            nationalTeamId: ntByCode[def.country]?.id,
-            clubId: clubBySlug[def.club]?.id,
-            position: def.position as Position,
-            era: def.era as PlayerEra,
-            birthYear: def.birthYear,
-          },
-        }),
-      );
+      if (playerBySlug[playerSlug]) continue;
+      const parts = def.name.split(" ");
+      playerBySlug[playerSlug] = await prisma.player.create({
+        data: {
+          slug: playerSlug,
+          fullName: def.name,
+          firstName: parts[0],
+          lastName: parts.slice(1).join(" "),
+          nationalityId: countryByCode[def.country]?.id,
+          nationalTeamId: ntByCode[def.country]?.id,
+          clubId: clubBySlug[def.club]?.id,
+          position: def.position as Position,
+          era: def.era as PlayerEra,
+          birthYear: def.birthYear,
+        },
+      });
+      totalPlayersCreated += 1;
     }
-    const playerBySlug = Object.fromEntries(players.map((pl) => [pl.slug, pl]));
+
     const tierByPlayerId = Object.fromEntries(
       roster.players.map((def) => [playerBySlug[slugifyName(def.name)]?.id, def.tier]),
     );
 
-    const manufacturer = await prisma.manufacturer.create({
-      data: {
-        slug: p.manufacturer.slug,
-        name: p.manufacturer.name,
-        foundedYear: p.manufacturer.foundedYear,
-        country: p.manufacturer.country,
-        colorHex: p.manufacturer.colorHex,
-      },
-    });
+    if (!manufacturerBySlug[p.manufacturer.slug]) {
+      manufacturerBySlug[p.manufacturer.slug] = await prisma.manufacturer.create({
+        data: {
+          slug: p.manufacturer.slug,
+          name: p.manufacturer.name,
+          foundedYear: p.manufacturer.foundedYear,
+          country: p.manufacturer.country,
+          colorHex: p.manufacturer.colorHex,
+        },
+      });
+    }
+    const manufacturer = manufacturerBySlug[p.manufacturer.slug];
 
-    const brand = await prisma.brand.create({
-      data: {
-        slug: p.brand.slug,
-        name: p.brand.name,
-        manufacturerId: manufacturer.id,
-      },
-    });
+    if (!brandBySlug[p.brand.slug]) {
+      brandBySlug[p.brand.slug] = await prisma.brand.create({
+        data: {
+          slug: p.brand.slug,
+          name: p.brand.name,
+          manufacturerId: manufacturer.id,
+        },
+      });
+    }
+    const brand = brandBySlug[p.brand.slug];
 
-    const tournament = await prisma.tournament.create({
-      data: {
-        slug: p.tournament.slug,
-        name: p.tournament.name,
-        type: p.tournament.type as TournamentType,
-      },
-    });
+    if (!tournamentBySlug[p.tournament.slug]) {
+      tournamentBySlug[p.tournament.slug] = await prisma.tournament.create({
+        data: {
+          slug: p.tournament.slug,
+          name: p.tournament.name,
+          type: p.tournament.type as TournamentType,
+        },
+      });
+    }
+    const tournament = tournamentBySlug[p.tournament.slug];
 
     const product = await prisma.product.create({
       data: {
@@ -252,6 +282,7 @@ async function main() {
         season: p.season,
         releaseYear: p.releaseYear,
         tournamentId: tournament.id,
+        leagueId: p.league ? leagueBySlug[p.league.slug]?.id : undefined,
         format: p.format as ProductFormat,
         description: p.description,
         accentHex: p.accentHex,
@@ -391,11 +422,6 @@ async function main() {
         }
         number += 1;
       }
-
-      // Odds rules linked when labels match set pools
-      if (setDef.setType === "INSERT" && setDef.slug === "wonderkids") {
-        // primary insert odds attached once below
-      }
     }
 
     for (const rule of p.oddsLabels) {
@@ -409,14 +435,13 @@ async function main() {
       });
     }
 
-    totalPlayers += players.length;
     totalProducts += 1;
   }
 
   console.log("Seed complete:", {
     users: 1,
     products: totalProducts,
-    players: totalPlayers,
+    players: totalPlayersCreated,
     cards: totalCards,
     configs: slugs,
   });

@@ -1,0 +1,2022 @@
+{
+  "baseParallels": [
+    {
+      "slug": "base",
+      "name": "Base",
+      "printRun": null,
+      "colorHex": "#E8E4D9",
+      "isFoil": false,
+      "rarity": "COMMON",
+      "cardType": "BASE",
+      "weight": 1,
+      "pool": "base",
+      "visualTheme": "base"
+    },
+    {
+      "slug": "silver",
+      "name": "Silver Prizm",
+      "printRun": null,
+      "colorHex": "#C0C7D1",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "REFRACTOR",
+      "weight": 0.35,
+      "pool": "refractor",
+      "visualTheme": "prizm-silver"
+    },
+    {
+      "slug": "hyper",
+      "name": "Hyper Prizm",
+      "printRun": null,
+      "colorHex": "#FF6EC7",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.08,
+      "pool": "pulsar",
+      "visualTheme": "prizm-hyper"
+    },
+    {
+      "slug": "ice",
+      "name": "Ice Prizm",
+      "printRun": null,
+      "colorHex": "#B3E5FC",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.07,
+      "pool": "pulsar",
+      "visualTheme": "prizm-ice"
+    },
+    {
+      "slug": "lazer",
+      "name": "Lazer Prizm",
+      "printRun": null,
+      "colorHex": "#76FF03",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.06,
+      "pool": "pulsar",
+      "visualTheme": "prizm-lazer"
+    },
+    {
+      "slug": "mojo",
+      "name": "Mojo Prizm",
+      "printRun": null,
+      "colorHex": "#CE93D8",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.055,
+      "pool": "pulsar",
+      "visualTheme": "prizm-mojo"
+    },
+    {
+      "slug": "snakeskin",
+      "name": "Snakeskin Prizm",
+      "printRun": null,
+      "colorHex": "#8D6E63",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-snakeskin"
+    },
+    {
+      "slug": "genesis",
+      "name": "Genesis Prizm",
+      "printRun": null,
+      "colorHex": "#E0E0E0",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.035,
+      "pool": "pulsar",
+      "visualTheme": "prizm-genesis"
+    },
+    {
+      "slug": "purple",
+      "name": "Purple Prizm",
+      "printRun": null,
+      "colorHex": "#7B2D8E",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.05,
+      "pool": "pulsar",
+      "visualTheme": "prizm-purple"
+    },
+    {
+      "slug": "purple-pulsar",
+      "name": "Purple Pulsar Prizm",
+      "printRun": null,
+      "colorHex": "#AB47BC",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-purple-pulsar"
+    },
+    {
+      "slug": "green-pulsar",
+      "name": "Green Pulsar Prizm",
+      "printRun": null,
+      "colorHex": "#66BB6A",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-green-pulsar"
+    },
+    {
+      "slug": "green-ice",
+      "name": "Green Ice Prizm",
+      "printRun": null,
+      "colorHex": "#A5D6A7",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.045,
+      "pool": "pulsar",
+      "visualTheme": "prizm-green-ice"
+    },
+    {
+      "slug": "blue-mosaic",
+      "name": "Blue Mosaic Prizm",
+      "printRun": null,
+      "colorHex": "#1565C0",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.045,
+      "pool": "pulsar",
+      "visualTheme": "prizm-blue-mosaic"
+    },
+    {
+      "slug": "orange-mosaic",
+      "name": "Orange Mosaic Prizm",
+      "printRun": null,
+      "colorHex": "#FB8C00",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-orange-mosaic"
+    },
+    {
+      "slug": "pink-mosaic",
+      "name": "Pink Mosaic Prizm",
+      "printRun": null,
+      "colorHex": "#EC407A",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-pink-mosaic"
+    },
+    {
+      "slug": "red-mosaic",
+      "name": "Red Mosaic Prizm",
+      "printRun": null,
+      "colorHex": "#E53935",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.04,
+      "pool": "pulsar",
+      "visualTheme": "prizm-red-mosaic"
+    },
+    {
+      "slug": "pink-stars",
+      "name": "Pink Stars Prizm",
+      "printRun": null,
+      "colorHex": "#F48FB1",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.03,
+      "pool": "pulsar",
+      "visualTheme": "prizm-pink-stars"
+    },
+    {
+      "slug": "orange-hyper",
+      "name": "Orange Hyper Prizm",
+      "printRun": null,
+      "colorHex": "#FF9100",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.03,
+      "pool": "pulsar",
+      "visualTheme": "prizm-orange-hyper"
+    },
+    {
+      "slug": "bw-checker",
+      "name": "Black and White Checker Prizm",
+      "printRun": null,
+      "colorHex": "#FAFAFA",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.025,
+      "pool": "pulsar",
+      "visualTheme": "prizm-bw-checker"
+    },
+    {
+      "slug": "white-sparkle",
+      "name": "White Sparkle Prizm",
+      "printRun": null,
+      "colorHex": "#F5F5F5",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.025,
+      "pool": "pulsar",
+      "visualTheme": "prizm-white-sparkle"
+    },
+    {
+      "slug": "blue",
+      "name": "Blue Prizm",
+      "printRun": 299,
+      "colorHex": "#1565C0",
+      "isFoil": true,
+      "rarity": "UNCOMMON",
+      "cardType": "PARALLEL",
+      "weight": 0.018,
+      "pool": "numbered",
+      "visualTheme": "prizm-blue"
+    },
+    {
+      "slug": "red",
+      "name": "Red Prizm",
+      "printRun": 199,
+      "colorHex": "#C62828",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.014,
+      "pool": "numbered",
+      "visualTheme": "prizm-red"
+    },
+    {
+      "slug": "purple-mosaic",
+      "name": "Purple Mosaic Prizm",
+      "printRun": 140,
+      "colorHex": "#8E24AA",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.011,
+      "pool": "numbered",
+      "visualTheme": "prizm-purple-mosaic"
+    },
+    {
+      "slug": "purple-white-stripes",
+      "name": "Purple and White Stripes Prizm",
+      "printRun": 92,
+      "colorHex": "#9C27B0",
+      "isFoil": true,
+      "rarity": "RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.009,
+      "pool": "numbered",
+      "visualTheme": "prizm-purple-stripes"
+    },
+    {
+      "slug": "blue-ice",
+      "name": "Blue Ice Prizm",
+      "printRun": 75,
+      "colorHex": "#4FC3F7",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.007,
+      "pool": "numbered",
+      "visualTheme": "prizm-blue-ice"
+    },
+    {
+      "slug": "red-lazer",
+      "name": "Red Lazer Prizm",
+      "printRun": 49,
+      "colorHex": "#FF1744",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.005,
+      "pool": "numbered",
+      "visualTheme": "prizm-red-lazer"
+    },
+    {
+      "slug": "purple-mojo",
+      "name": "Purple Mojo Prizm",
+      "printRun": 25,
+      "colorHex": "#BA68C8",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.0035,
+      "pool": "numbered",
+      "visualTheme": "prizm-purple-mojo"
+    },
+    {
+      "slug": "red-stars",
+      "name": "Red Stars Prizm",
+      "printRun": 25,
+      "colorHex": "#EF5350",
+      "isFoil": true,
+      "rarity": "ULTRA_RARE",
+      "cardType": "PARALLEL",
+      "weight": 0.0035,
+      "pool": "numbered",
+      "visualTheme": "prizm-red-stars"
+    },
+    {
+      "slug": "pink-mojo",
+      "name": "Pink Mojo Prizm",
+      "printRun": 11,
+      "colorHex": "#F06292",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.002,
+      "pool": "numbered",
+      "visualTheme": "prizm-pink-mojo"
+    },
+    {
+      "slug": "gold",
+      "name": "Gold Prizm",
+      "printRun": 10,
+      "colorHex": "#D4AF37",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0018,
+      "pool": "numbered",
+      "visualTheme": "prizm-gold"
+    },
+    {
+      "slug": "gold-pulsar",
+      "name": "Gold Pulsar Prizm",
+      "printRun": 10,
+      "colorHex": "#FFD54F",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0018,
+      "pool": "numbered",
+      "visualTheme": "prizm-gold-pulsar"
+    },
+    {
+      "slug": "lucky-envelopes",
+      "name": "Lucky Envelopes Prizm",
+      "printRun": 8,
+      "colorHex": "#FF7043",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0012,
+      "pool": "numbered",
+      "visualTheme": "prizm-lucky"
+    },
+    {
+      "slug": "shimmer-blue",
+      "name": "Shimmer Blue Prizm",
+      "printRun": 8,
+      "colorHex": "#42A5F5",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0012,
+      "pool": "numbered",
+      "visualTheme": "prizm-shimmer-blue"
+    },
+    {
+      "slug": "green",
+      "name": "Green Prizm",
+      "printRun": 5,
+      "colorHex": "#2E7D32",
+      "isFoil": true,
+      "rarity": "MYTHIC",
+      "cardType": "PARALLEL",
+      "weight": 0.0008,
+      "pool": "numbered",
+      "visualTheme": "prizm-green"
+    },
+    {
+      "slug": "black",
+      "name": "Black Prizm",
+      "printRun": 1,
+      "colorHex": "#1A1A1A",
+      "isFoil": true,
+      "rarity": "LEGENDARY",
+      "cardType": "ONE_OF_ONE",
+      "weight": 0.00015,
+      "pool": "numbered",
+      "visualTheme": "prizm-black"
+    },
+    {
+      "slug": "black-finite",
+      "name": "Black Finite Prizm",
+      "printRun": 1,
+      "colorHex": "#0D0D0D",
+      "isFoil": true,
+      "rarity": "LEGENDARY",
+      "cardType": "ONE_OF_ONE",
+      "weight": 0.0001,
+      "pool": "numbered",
+      "visualTheme": "prizm-black-finite"
+    },
+    {
+      "slug": "shimmer-black",
+      "name": "Shimmer Black Prizm",
+      "printRun": 1,
+      "colorHex": "#212121",
+      "isFoil": true,
+      "rarity": "LEGENDARY",
+      "cardType": "ONE_OF_ONE",
+      "weight": 0.0001,
+      "pool": "numbered",
+      "visualTheme": "prizm-shimmer-black"
+    }
+  ],
+  "sets": [
+    {
+      "slug": "base",
+      "name": "Base Set",
+      "setType": "BASE",
+      "sortOrder": 1,
+      "playerFilter": {
+        "all": true
+      },
+      "parallels": "baseParallels",
+      "pool": "base",
+      "visualTheme": "base"
+    },
+    {
+      "slug": "brilliance",
+      "name": "Brilliance",
+      "setType": "INSERT",
+      "sortOrder": 10,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "legend"
+        ],
+        "limit": 30
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Brilliance",
+          "printRun": null,
+          "colorHex": "#F0D78C",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-brilliance"
+        },
+        {
+          "slug": "silver",
+          "name": "Brilliance Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-brilliance"
+        },
+        {
+          "slug": "orange",
+          "name": "Brilliance Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Brilliance Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Brilliance Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Brilliance Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Brilliance Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Brilliance Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-brilliance",
+      "pool": "insert",
+      "insertWeight": 5,
+      "notes": "Common insert ladder (~hobby inserts)."
+    },
+    {
+      "slug": "emergent",
+      "name": "Emergent",
+      "setType": "INSERT",
+      "sortOrder": 11,
+      "playerFilter": {
+        "tiers": [
+          "rookie",
+          "veteran"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Emergent",
+          "printRun": null,
+          "colorHex": "#26A69A",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-emergent"
+        },
+        {
+          "slug": "silver",
+          "name": "Emergent Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-emergent"
+        },
+        {
+          "slug": "orange",
+          "name": "Emergent Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Emergent Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Emergent Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Emergent Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Emergent Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Emergent Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-emergent",
+      "pool": "insert",
+      "insertWeight": 4.5
+    },
+    {
+      "slug": "fireworks",
+      "name": "Fireworks",
+      "setType": "INSERT",
+      "sortOrder": 12,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Fireworks",
+          "printRun": null,
+          "colorHex": "#FF6F00",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-fireworks"
+        },
+        {
+          "slug": "silver",
+          "name": "Fireworks Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-fireworks"
+        },
+        {
+          "slug": "orange",
+          "name": "Fireworks Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Fireworks Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Fireworks Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Fireworks Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Fireworks Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Fireworks Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-fireworks",
+      "pool": "insert",
+      "insertWeight": 3.5
+    },
+    {
+      "slug": "talismen",
+      "name": "Talismen",
+      "setType": "INSERT",
+      "sortOrder": 13,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "legend"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Talismen",
+          "printRun": null,
+          "colorHex": "#5C6BC0",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-talismen"
+        },
+        {
+          "slug": "silver",
+          "name": "Talismen Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-talismen"
+        },
+        {
+          "slug": "orange",
+          "name": "Talismen Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Talismen Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Talismen Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Talismen Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Talismen Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Talismen Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-talismen",
+      "pool": "insert",
+      "insertWeight": 3.5
+    },
+    {
+      "slug": "prizm-flashback-2012",
+      "name": "Prizm Flashback 2012",
+      "setType": "INSERT",
+      "sortOrder": 14,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Prizm Flashback 2012",
+          "printRun": null,
+          "colorHex": "#00838F",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-flashback"
+        },
+        {
+          "slug": "silver",
+          "name": "Prizm Flashback 2012 Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-flashback"
+        },
+        {
+          "slug": "orange",
+          "name": "Prizm Flashback 2012 Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Prizm Flashback 2012 Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Prizm Flashback 2012 Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Prizm Flashback 2012 Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Prizm Flashback 2012 Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Prizm Flashback 2012 Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-flashback",
+      "pool": "insert",
+      "insertWeight": 3
+    },
+    {
+      "slug": "center-stage",
+      "name": "Center Stage",
+      "setType": "INSERT",
+      "sortOrder": 15,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Center Stage",
+          "printRun": null,
+          "colorHex": "#7E57C2",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-center-stage"
+        },
+        {
+          "slug": "silver",
+          "name": "Center Stage Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-center-stage"
+        },
+        {
+          "slug": "orange",
+          "name": "Center Stage Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Center Stage Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Center Stage Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Center Stage Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Center Stage Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Center Stage Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-center-stage",
+      "pool": "insert",
+      "insertWeight": 3
+    },
+    {
+      "slug": "fractal",
+      "name": "Fractal",
+      "setType": "INSERT",
+      "sortOrder": 16,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Fractal",
+          "printRun": null,
+          "colorHex": "#00ACC1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-fractal"
+        },
+        {
+          "slug": "silver",
+          "name": "Fractal Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-fractal"
+        },
+        {
+          "slug": "orange",
+          "name": "Fractal Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Fractal Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Fractal Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Fractal Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Fractal Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Fractal Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-fractal",
+      "pool": "insert",
+      "insertWeight": 2.5
+    },
+    {
+      "slug": "kaleidoscopic",
+      "name": "Kaleidoscopic",
+      "setType": "INSERT",
+      "sortOrder": 17,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Kaleidoscopic",
+          "printRun": null,
+          "colorHex": "#EC407A",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-kaleidoscopic"
+        },
+        {
+          "slug": "silver",
+          "name": "Kaleidoscopic Silver Prizm",
+          "printRun": null,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.35,
+          "pool": "insert",
+          "visualTheme": "prizm-kaleidoscopic"
+        },
+        {
+          "slug": "orange",
+          "name": "Kaleidoscopic Orange Prizm",
+          "printRun": 25,
+          "colorHex": "#F15A29",
+          "isFoil": true,
+          "rarity": "ULTRA_RARE",
+          "cardType": "PARALLEL",
+          "weight": 0.04,
+          "pool": "numbered",
+          "visualTheme": "prizm-orange"
+        },
+        {
+          "slug": "gold",
+          "name": "Kaleidoscopic Gold Prizm",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.015,
+          "pool": "numbered",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "blue",
+          "name": "Kaleidoscopic Blue Prizm",
+          "printRun": 8,
+          "colorHex": "#1565C0",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.01,
+          "pool": "numbered",
+          "visualTheme": "prizm-blue"
+        },
+        {
+          "slug": "green",
+          "name": "Kaleidoscopic Green Prizm",
+          "printRun": 5,
+          "colorHex": "#2E7D32",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PARALLEL",
+          "weight": 0.006,
+          "pool": "numbered",
+          "visualTheme": "prizm-green"
+        },
+        {
+          "slug": "black",
+          "name": "Kaleidoscopic Black Prizm",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0002,
+          "pool": "numbered",
+          "visualTheme": "prizm-black"
+        },
+        {
+          "slug": "shimmer-black",
+          "name": "Kaleidoscopic Black Shimmer Prizm",
+          "printRun": 1,
+          "colorHex": "#212121",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.00015,
+          "pool": "numbered",
+          "visualTheme": "prizm-shimmer-black"
+        }
+      ],
+      "visualTheme": "prizm-kaleidoscopic",
+      "pool": "insert",
+      "insertWeight": 2.5
+    },
+    {
+      "slug": "sublime",
+      "name": "Sublime",
+      "setType": "INSERT",
+      "sortOrder": 18,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "insert-base",
+          "name": "Sublime",
+          "printRun": null,
+          "colorHex": "#81D4FA",
+          "isFoil": true,
+          "rarity": "RARE",
+          "cardType": "INSERT",
+          "weight": 1,
+          "pool": "insert",
+          "visualTheme": "prizm-sublime"
+        }
+      ],
+      "visualTheme": "prizm-sublime",
+      "pool": "insert",
+      "insertWeight": 2
+    },
+    {
+      "slug": "color-blast",
+      "name": "Color Blast",
+      "setType": "CASE_HIT",
+      "sortOrder": 30,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "case-base",
+          "name": "Color Blast",
+          "printRun": null,
+          "colorHex": "#FF4081",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "prizm-color-blast"
+        }
+      ],
+      "visualTheme": "prizm-color-blast",
+      "pool": "case_hit",
+      "insertWeight": 0.4,
+      "notes": "Tough chase insert."
+    },
+    {
+      "slug": "groovy",
+      "name": "Groovy",
+      "setType": "CASE_HIT",
+      "sortOrder": 31,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran"
+        ],
+        "limit": 20
+      },
+      "setParallels": [
+        {
+          "slug": "case-base",
+          "name": "Groovy",
+          "printRun": null,
+          "colorHex": "#FFD600",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "prizm-groovy"
+        }
+      ],
+      "visualTheme": "prizm-groovy",
+      "pool": "case_hit",
+      "insertWeight": 0.35
+    },
+    {
+      "slug": "manga",
+      "name": "Manga",
+      "setType": "CASE_HIT",
+      "sortOrder": 32,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran",
+          "rookie"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "case-base",
+          "name": "Manga",
+          "printRun": null,
+          "colorHex": "#FF7043",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "CASE_HIT",
+          "weight": 1,
+          "pool": "case_hit",
+          "visualTheme": "prizm-manga"
+        }
+      ],
+      "visualTheme": "prizm-manga",
+      "pool": "case_hit",
+      "insertWeight": 0.35
+    },
+    {
+      "slug": "signatures",
+      "name": "Signatures",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 40,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "legend"
+        ],
+        "limit": 36
+      },
+      "setParallels": [
+        {
+          "slug": "auto-base",
+          "name": "Signatures",
+          "printRun": null,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "blue-shimmer",
+          "name": "Signatures Blue Shimmer",
+          "printRun": null,
+          "colorHex": "#42A5F5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "green-pulsar",
+          "name": "Signatures Green Pulsar",
+          "printRun": null,
+          "colorHex": "#66BB6A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.25,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "red-stars",
+          "name": "Signatures Red Stars",
+          "printRun": 299,
+          "colorHex": "#EF5350",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "silver",
+          "name": "Signatures Silver",
+          "printRun": 99,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "purple",
+          "name": "Signatures Purple",
+          "printRun": 25,
+          "colorHex": "#7B2D8E",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "gold",
+          "name": "Signatures Gold",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "prizm-signatures"
+        },
+        {
+          "slug": "black",
+          "name": "Signatures Black",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0003,
+          "pool": "autograph",
+          "visualTheme": "prizm-black"
+        }
+      ],
+      "autograph": true,
+      "visualTheme": "prizm-signatures",
+      "pool": "autograph"
+    },
+    {
+      "slug": "penmanship",
+      "name": "Penmanship",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 41,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "veteran",
+          "legend",
+          "rookie"
+        ],
+        "limit": 28
+      },
+      "setParallels": [
+        {
+          "slug": "auto-base",
+          "name": "Penmanship",
+          "printRun": null,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "blue-shimmer",
+          "name": "Penmanship Blue Shimmer",
+          "printRun": null,
+          "colorHex": "#42A5F5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "green-pulsar",
+          "name": "Penmanship Green Pulsar",
+          "printRun": null,
+          "colorHex": "#66BB6A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.25,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "red-stars",
+          "name": "Penmanship Red Stars",
+          "printRun": 299,
+          "colorHex": "#EF5350",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "silver",
+          "name": "Penmanship Silver",
+          "printRun": 99,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "purple",
+          "name": "Penmanship Purple",
+          "printRun": 25,
+          "colorHex": "#7B2D8E",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "gold",
+          "name": "Penmanship Gold",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "prizm-penmanship"
+        },
+        {
+          "slug": "black",
+          "name": "Penmanship Black",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0003,
+          "pool": "autograph",
+          "visualTheme": "prizm-black"
+        }
+      ],
+      "autograph": true,
+      "visualTheme": "prizm-penmanship",
+      "pool": "autograph"
+    },
+    {
+      "slug": "club-legends-signatures",
+      "name": "Club Legends Signatures",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 42,
+      "playerFilter": {
+        "tiers": [
+          "legend"
+        ],
+        "limit": 8
+      },
+      "setParallels": [
+        {
+          "slug": "auto-base",
+          "name": "Club Legends Signatures",
+          "printRun": null,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "blue-shimmer",
+          "name": "Club Legends Signatures Blue Shimmer",
+          "printRun": null,
+          "colorHex": "#42A5F5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "green-pulsar",
+          "name": "Club Legends Signatures Green Pulsar",
+          "printRun": null,
+          "colorHex": "#66BB6A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.25,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "red-stars",
+          "name": "Club Legends Signatures Red Stars",
+          "printRun": 299,
+          "colorHex": "#EF5350",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "silver",
+          "name": "Club Legends Signatures Silver",
+          "printRun": 99,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "purple",
+          "name": "Club Legends Signatures Purple",
+          "printRun": 25,
+          "colorHex": "#7B2D8E",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "gold",
+          "name": "Club Legends Signatures Gold",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "prizm-club-legends"
+        },
+        {
+          "slug": "black",
+          "name": "Club Legends Signatures Black",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0003,
+          "pool": "autograph",
+          "visualTheme": "prizm-black"
+        }
+      ],
+      "autograph": true,
+      "visualTheme": "prizm-club-legends",
+      "pool": "autograph"
+    },
+    {
+      "slug": "dual-signatures",
+      "name": "Dual Signatures",
+      "setType": "AUTOGRAPH",
+      "sortOrder": 43,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran"
+        ],
+        "limit": 12
+      },
+      "setParallels": [
+        {
+          "slug": "auto-base",
+          "name": "Dual Signatures",
+          "printRun": null,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 1,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "blue-shimmer",
+          "name": "Dual Signatures Blue Shimmer",
+          "printRun": null,
+          "colorHex": "#42A5F5",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.35,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "green-pulsar",
+          "name": "Dual Signatures Green Pulsar",
+          "printRun": null,
+          "colorHex": "#66BB6A",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.25,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "red-stars",
+          "name": "Dual Signatures Red Stars",
+          "printRun": 299,
+          "colorHex": "#EF5350",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.12,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "silver",
+          "name": "Dual Signatures Silver",
+          "printRun": 99,
+          "colorHex": "#C0C7D1",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.08,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "purple",
+          "name": "Dual Signatures Purple",
+          "printRun": 25,
+          "colorHex": "#7B2D8E",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.04,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "gold",
+          "name": "Dual Signatures Gold",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "DUAL_AUTOGRAPH",
+          "weight": 0.015,
+          "pool": "autograph",
+          "visualTheme": "prizm-dual-signatures"
+        },
+        {
+          "slug": "black",
+          "name": "Dual Signatures Black",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.0003,
+          "pool": "autograph",
+          "visualTheme": "prizm-black"
+        }
+      ],
+      "autograph": true,
+      "visualTheme": "prizm-dual-signatures",
+      "pool": "autograph"
+    },
+    {
+      "slug": "prizm-patches",
+      "name": "Prizm Patches",
+      "setType": "RELIC",
+      "sortOrder": 50,
+      "playerFilter": {
+        "tiers": [
+          "star",
+          "legend",
+          "veteran"
+        ],
+        "limit": 16
+      },
+      "setParallels": [
+        {
+          "slug": "patch-base",
+          "name": "Prizm Patch",
+          "printRun": null,
+          "colorHex": "#6D4C41",
+          "isFoil": true,
+          "rarity": "MYTHIC",
+          "cardType": "PATCH",
+          "weight": 1,
+          "pool": "patch",
+          "visualTheme": "prizm-patch"
+        },
+        {
+          "slug": "gold",
+          "name": "Prizm Patch Gold",
+          "printRun": 10,
+          "colorHex": "#D4AF37",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "PATCH",
+          "weight": 0.08,
+          "pool": "patch",
+          "visualTheme": "prizm-gold"
+        },
+        {
+          "slug": "black",
+          "name": "Prizm Patch Black",
+          "printRun": 1,
+          "colorHex": "#1A1A1A",
+          "isFoil": true,
+          "rarity": "LEGENDARY",
+          "cardType": "ONE_OF_ONE",
+          "weight": 0.01,
+          "pool": "patch",
+          "visualTheme": "prizm-black"
+        }
+      ],
+      "memorabilia": "PATCH",
+      "visualTheme": "prizm-patch",
+      "pool": "patch",
+      "notes": "Hobby memorabilia chase."
+    }
+  ]
+}
