@@ -914,6 +914,111 @@ a {
 .d11-signature-panel,
 .d11-signature-cut { width: 100%; height: 100%; }
 
+/* Autograph-only: brush-stroke white signing strip + blue ink */
+.d11-signature-ink-placeholder {
+  min-height: 0;
+  width: 100%;
+}
+
+.d11-auto-sign-strip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.2rem;
+  isolation: isolate;
+}
+
+.d11-auto-sign-strip-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: blur(0.6px);
+  pointer-events: none;
+}
+
+.d11-auto-sign-strip-fill {
+  fill: #f7f3ec;
+}
+
+.d11-auto-sign-strip-paper {
+  position: absolute;
+  inset: 14% 6%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  mask-image: radial-gradient(ellipse 90% 68% at 50% 50%, #000 38%, transparent 76%);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.84 0 0 0 0 0.78 0 0 0 0.2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+.d11-auto-sign-strip-gloss {
+  position: absolute;
+  inset: 18% 10%;
+  z-index: 1;
+  border-radius: 48% / 60%;
+  background: linear-gradient(
+    122deg,
+    transparent 24%,
+    rgba(255, 255, 255, 0.55) 46%,
+    rgba(255, 255, 255, 0.12) 56%,
+    transparent 72%
+  );
+  opacity: 0.42;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.d11-auto-ink-svg {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 84%;
+  height: auto;
+  max-height: 2.15rem;
+  overflow: visible;
+  transform: rotate(var(--sig-rotate, -3deg));
+  transform-origin: center;
+  font-family: inherit;
+}
+
+.d11-auto-ink-text {
+  stroke: #061f6e;
+  stroke-width: 0.55px;
+  stroke-linejoin: round;
+  font-size: 33px;
+  letter-spacing: 0.15px;
+  opacity: 1;
+}
+
+.d11-auto-ink-text:not(.d11-auto-ink-text-shadow) {
+  fill: #0a36b0;
+}
+
+.d11-auto-ink-text-shadow {
+  fill: #1a4ec4;
+  stroke: none;
+  opacity: 0.22;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-sign-strip {
+  min-height: 1.9rem;
+  padding: 0.28rem 0.15rem;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-ink-svg {
+  max-height: 1.75rem;
+}
+
+.d11-signature-ink-placeholder.is-compact .d11-auto-ink-text {
+  font-size: 27px;
+}
+
 .d11-cut-matte {
   background:
     linear-gradient(180deg, rgba(250, 246, 236, 0.08), transparent 35%),
@@ -1178,6 +1283,21 @@ a {
   border: none;
   background: transparent;
   height: 100%;
+}
+
+.d11-booklet-sig-plate .d11-signature-ink-placeholder {
+  height: 100%;
+  width: 100%;
+}
+
+.d11-booklet-sig-plate .d11-auto-sign-strip {
+  min-height: 100%;
+  padding: 0.15rem 0.1rem;
+}
+
+.d11-booklet-sig-plate .d11-auto-ink-svg {
+  width: 90%;
+  max-height: 1.85rem;
 }
 
 .d11-booklet-interior-meta {
