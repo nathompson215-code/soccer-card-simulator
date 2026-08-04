@@ -39,8 +39,8 @@ export function BookletCardArt({
   const serial =
     serialDisplay && !serialDisplay.startsWith("?")
       ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
+      : card.serialDisplay && !card.serialDisplay.startsWith("?")
+        ? card.serialDisplay
         : null;
 
   const parts = card.playerName.trim().split(/\s+/);
