@@ -4,8 +4,10 @@ import {
   assignSerialFromId,
   buildOpeningPullPersistData,
   buildUserCardPersistData,
+  coerceSerialNumber,
   formatPermanentSerial,
   parseSerialDisplay,
+  resolveCatalogSerial,
   resolvePersistSerial,
 } from "@/lib/card-serial";
 import type { CardDTO, PullResultDTO } from "@/lib/types";
@@ -75,6 +77,7 @@ describe("permanent serial helpers", () => {
     assert.equal(formatPermanentSerial(17, 25), "17/25");
     assert.equal(formatPermanentSerial(null, 1), "1/1");
     assert.equal(formatPermanentSerial(99, 25), null);
+    assert.equal(formatPermanentSerial(99, 25, "card-x"), `${assignSerialFromId("card-x", 25)}/25`);
     assert.equal(formatPermanentSerial(3, null), null);
   });
 
@@ -82,15 +85,91 @@ describe("permanent serial helpers", () => {
     assert.deepEqual(parseSerialDisplay("?/25"), {
       serialNumber: null,
       serialDisplay: null,
+      printRun: null,
     });
     assert.deepEqual(parseSerialDisplay("1/1"), {
       serialNumber: 1,
       serialDisplay: "1/1",
+      printRun: 1,
     });
     assert.deepEqual(parseSerialDisplay("7/10"), {
       serialNumber: 7,
       serialDisplay: "7/10",
+      printRun: 10,
     });
+  });
+});
+
+describe("serial totals 1/1, /5, /10, /25, /99", () => {
+  const totals = [1, 5, 10, 25, 99] as const;
+
+  for (const total of totals) {
+    it(`coerces missing/invalid serials into 1..${total} and never uses ?/`, () => {
+      const id = `card-total-${total}`;
+      assert.equal(coerceSerialNumber(null, total, id), assignSerialFromId(id, total));
+      assert.equal(coerceSerialNumber(0, total, id), assignSerialFromId(id, total));
+      assert.equal(coerceSerialNumber(total + 1, total, id), assignSerialFromId(id, total));
+      assert.equal(coerceSerialNumber(-3, total, id), assignSerialFromId(id, total));
+      if (total === 1) {
+        assert.equal(coerceSerialNumber(99, 1, id), 1);
+        assert.equal(coerceSerialNumber(null, 1, id), 1);
+      } else {
+        assert.equal(coerceSerialNumber(1, total, id), 1);
+        assert.equal(coerceSerialNumber(total, total, id), total);
+      }
+
+      const catalog = resolveCatalogSerial({
+        assignedSerial: null,
+        printRun: total,
+        stableId: id,
+      });
+      assert.ok(catalog);
+      assert.equal(catalog.serialDisplay.includes("?"), false);
+      assert.match(catalog.serialDisplay, total === 1 ? /^1\/1$/ : new RegExp(`^\\d+/${total}$`));
+      assert.ok(catalog.serialNumber >= 1 && catalog.serialNumber <= total);
+
+      const card = baseCard({
+        id,
+        printRun: total,
+        serialDisplay: null,
+        cardType: total === 1 ? "ONE_OF_ONE" : "PARALLEL",
+        rarity: total === 1 ? "LEGENDARY" : "RARE",
+      });
+      // Missing pull serial + ?/ snapshot must still persist a valid permanent serial.
+      for (const bad of [null, `?/${total}`, "0/1", `${total + 5}/${total}`]) {
+        const persisted = resolvePersistSerial(pull(card, bad));
+        assert.equal(persisted.serialDisplay?.includes("?"), false);
+        assert.ok(persisted.serialNumber && persisted.serialNumber >= 1 && persisted.serialNumber <= total);
+        assert.equal(
+          persisted.serialDisplay,
+          total === 1 ? "1/1" : `${persisted.serialNumber}/${total}`,
+        );
+      }
+    });
+  }
+
+  it("persists identical serials for reveal, collection, and history payloads", () => {
+    for (const total of totals) {
+      const id = `stable-${total}`;
+      const expected = resolveCatalogSerial({
+        assignedSerial: null,
+        printRun: total,
+        stableId: id,
+      });
+      assert.ok(expected);
+      const card = baseCard({
+        id,
+        printRun: total,
+        serialDisplay: expected.serialDisplay,
+        cardType: total === 1 ? "ONE_OF_ONE" : "PARALLEL",
+      });
+      const userCard = buildUserCardPersistData("u1", "p1", pull(card, null));
+      const history = buildOpeningPullPersistData(pull(card, `?/${total}`), 0, 0, "uc-1");
+      assert.equal(userCard.serialDisplay, expected.serialDisplay);
+      assert.equal(userCard.serialNumber, expected.serialNumber);
+      assert.equal(history.serialDisplay, expected.serialDisplay);
+      assert.equal(history.serialNumber, expected.serialNumber);
+    }
   });
 });
 

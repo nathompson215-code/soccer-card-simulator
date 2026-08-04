@@ -1,6 +1,6 @@
 /**
  * Permanent catalog serial helpers.
- * Serials are assigned once at Card creation and stored on Card.assignedSerial.
+ * Serials are assigned once (Card.assignedSerial / UserCard) and reused everywhere.
  * Rendering must never invent or regenerate serials — only display stored values.
  */
 
@@ -20,64 +20,120 @@ export function assignSerialFromId(id: string, printRun: number): number {
   return (Math.abs(h >>> 0) % printRun) + 1;
 }
 
-/** Format a stored serial for display. Returns null when the card is not numbered. */
+/**
+ * Coerce a serial into a valid 1..serialTotal integer.
+ * - serialTotal === 1 → always 1
+ * - missing / 0 / invalid / out of range → stable assign from id
+ */
+export function coerceSerialNumber(
+  serialNumber: number | null | undefined,
+  serialTotal: number,
+  stableId: string,
+): number {
+  if (serialTotal <= 0) {
+    throw new Error(`serialTotal must be positive, got ${serialTotal}`);
+  }
+  if (serialTotal === 1) return 1;
+  if (
+    serialNumber != null &&
+    Number.isFinite(serialNumber) &&
+    Number.isInteger(serialNumber) &&
+    serialNumber >= 1 &&
+    serialNumber <= serialTotal
+  ) {
+    return serialNumber;
+  }
+  return assignSerialFromId(stableId, serialTotal);
+}
+
+/** Format n/total. Never returns ?/ placeholders for numbered cards when stableId is provided. */
 export function formatPermanentSerial(
   assignedSerial: number | null | undefined,
   printRun: number | null | undefined,
+  stableId?: string | null,
 ): string | null {
   if (printRun == null || printRun <= 0) return null;
   if (printRun === 1) return "1/1";
-  if (assignedSerial == null || assignedSerial < 1 || assignedSerial > printRun) {
-    return null;
+  if (
+    assignedSerial != null &&
+    Number.isInteger(assignedSerial) &&
+    assignedSerial >= 1 &&
+    assignedSerial <= printRun
+  ) {
+    return `${assignedSerial}/${printRun}`;
   }
-  return `${assignedSerial}/${printRun}`;
+  if (stableId) {
+    return `${assignSerialFromId(stableId, printRun)}/${printRun}`;
+  }
+  return null;
 }
 
-/** Parse `n/printRun` without inventing placeholders. */
+/** Resolve catalog serial for a numbered card (always valid when printRun is set). */
+export function resolveCatalogSerial(params: {
+  assignedSerial?: number | null;
+  printRun: number | null | undefined;
+  stableId: string;
+}): { serialNumber: number; serialDisplay: string } | null {
+  const { assignedSerial, printRun, stableId } = params;
+  if (printRun == null || printRun <= 0) return null;
+  const serialNumber = coerceSerialNumber(assignedSerial, printRun, stableId);
+  return {
+    serialNumber,
+    serialDisplay: printRun === 1 ? "1/1" : `${serialNumber}/${printRun}`,
+  };
+}
+
+/** Parse `n/printRun` without inventing placeholders. Rejects ?/ and invalid values. */
 export function parseSerialDisplay(serialDisplay: string | null | undefined): {
   serialNumber: number | null;
   serialDisplay: string | null;
+  printRun: number | null;
 } {
   if (!serialDisplay || serialDisplay.startsWith("?")) {
-    return { serialNumber: null, serialDisplay: null };
+    return { serialNumber: null, serialDisplay: null, printRun: null };
   }
   const [rawNum, rawRun] = serialDisplay.split("/");
   const serialNumber = Number(rawNum);
   const printRun = Number(rawRun);
-  if (!Number.isFinite(serialNumber) || serialNumber < 1) {
-    return { serialNumber: null, serialDisplay: null };
+  if (!Number.isFinite(serialNumber) || !Number.isInteger(serialNumber) || serialNumber < 1) {
+    return { serialNumber: null, serialDisplay: null, printRun: null };
   }
-  if (Number.isFinite(printRun) && printRun === 1) {
-    return { serialNumber: 1, serialDisplay: "1/1" };
+  if (!Number.isFinite(printRun) || !Number.isInteger(printRun) || printRun < 1) {
+    return { serialNumber: null, serialDisplay: null, printRun: null };
   }
-  if (Number.isFinite(printRun) && serialNumber > printRun) {
-    return { serialNumber: null, serialDisplay: null };
+  if (printRun === 1) {
+    return { serialNumber: 1, serialDisplay: "1/1", printRun: 1 };
   }
-  return { serialNumber, serialDisplay };
+  if (serialNumber > printRun) {
+    return { serialNumber: null, serialDisplay: null, printRun };
+  }
+  return { serialNumber, serialDisplay: `${serialNumber}/${printRun}`, printRun };
 }
 
 /**
  * Resolve the permanent serial to persist on UserCard / OpeningPull.
- * Prefers the pull snapshot, then the catalog card DTO — never randomizes.
+ * Numbered cards always receive a valid n/total — never ?/ or null.
  */
 export function resolvePersistSerial(pull: PullResultDTO): {
   serialNumber: number | null;
   serialDisplay: string | null;
 } {
-  const fromPull = parseSerialDisplay(pull.serialDisplay);
-  if (fromPull.serialDisplay) return fromPull;
-
-  const fromCard = parseSerialDisplay(pull.card.serialDisplay);
-  if (fromCard.serialDisplay) return fromCard;
-
-  // Last resort for true 1/1s if display strings were dropped.
-  if (pull.card.printRun === 1 || pull.card.cardType === "ONE_OF_ONE") {
-    return { serialNumber: 1, serialDisplay: "1/1" };
+  const printRun = pull.card.printRun;
+  if (printRun == null || printRun <= 0) {
+    return { serialNumber: null, serialDisplay: null };
   }
 
+  const fromPull = parseSerialDisplay(pull.serialDisplay);
+  const fromCard = parseSerialDisplay(pull.card.serialDisplay);
+  const candidate =
+    fromPull.serialNumber ??
+    fromCard.serialNumber ??
+    null;
+
+  const serialNumber = coerceSerialNumber(candidate, printRun, pull.card.id);
   return {
-    serialNumber: null,
-    serialDisplay: formatPermanentSerial(null, pull.card.printRun),
+    serialNumber,
+    serialDisplay: printRun === 1 ? "1/1" : `${serialNumber}/${printRun}`,
   };
 }
 

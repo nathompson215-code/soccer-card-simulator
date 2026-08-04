@@ -61,6 +61,15 @@ export type CollectionQuery = {
   sort?: string;
 };
 
+function preferSerialDisplay(
+  primary: string | null | undefined,
+  fallback: string | null | undefined,
+): string | null {
+  if (primary && !primary.startsWith("?")) return primary;
+  if (fallback && !fallback.startsWith("?")) return fallback;
+  return null;
+}
+
 function pct(owned: number, total: number) {
   if (!total) return 0;
   return Math.round((owned / total) * 1000) / 10;
@@ -98,14 +107,16 @@ function aggregateEntries(
     const existing = map.get(row.cardId);
     if (!existing) {
       const card = toCardDTO(row.card);
+      const ownedSerial =
+        row.serialDisplay && !row.serialDisplay.startsWith("?") ? row.serialDisplay : null;
       map.set(row.cardId, {
         cardId: row.cardId,
         card,
         copyCount: 1,
         firstPulledAt: row.pulledAt,
         lastPulledAt: row.pulledAt,
-        serialDisplays: row.serialDisplay
-          ? [row.serialDisplay]
+        serialDisplays: ownedSerial
+          ? [ownedSerial]
           : card.serialDisplay
             ? [card.serialDisplay]
             : [],
@@ -115,8 +126,9 @@ function aggregateEntries(
     existing.copyCount += 1;
     if (row.pulledAt < existing.firstPulledAt) existing.firstPulledAt = row.pulledAt;
     if (row.pulledAt > existing.lastPulledAt) existing.lastPulledAt = row.pulledAt;
-    if (row.serialDisplay) existing.serialDisplays.push(row.serialDisplay);
-    else if (existing.card.serialDisplay) {
+    if (row.serialDisplay && !row.serialDisplay.startsWith("?")) {
+      existing.serialDisplays.push(row.serialDisplay);
+    } else if (existing.card.serialDisplay) {
       existing.serialDisplays.push(existing.card.serialDisplay);
     }
   }
@@ -466,7 +478,7 @@ export async function getCollection(query: CollectionQuery = {}) {
       cardId: row.cardId,
       productId: row.productId,
       pulledAt: row.pulledAt.toISOString(),
-      serialDisplay: row.serialDisplay ?? card.serialDisplay,
+      serialDisplay: preferSerialDisplay(row.serialDisplay, card.serialDisplay),
       card,
     };
   });
@@ -622,9 +634,9 @@ export async function getCardCollectionDetail(
     pullHistory: pulls.map((p) => ({
       instanceId: p.id,
       pulledAt: p.pulledAt.toISOString(),
-      serialDisplay: p.serialDisplay ?? cardDto.serialDisplay,
+      serialDisplay: preferSerialDisplay(p.serialDisplay, cardDto.serialDisplay),
     })),
-    latestSerialDisplay: pulls[0]?.serialDisplay ?? cardDto.serialDisplay,
+    latestSerialDisplay: preferSerialDisplay(pulls[0]?.serialDisplay, cardDto.serialDisplay),
   };
 }
 

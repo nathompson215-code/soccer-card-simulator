@@ -55,7 +55,7 @@ export function toCardDTO(card: CardWithRelations): CardDTO {
     rarity: parallel.rarity,
     cardType: parallel.cardType,
     printRun,
-    serialDisplay: formatPermanentSerial(card.assignedSerial, printRun),
+    serialDisplay: formatPermanentSerial(card.assignedSerial, printRun, card.id),
     estimatedValueCents: card.estimatedValueCents,
     frontImageUrl: card.frontImageUrl,
     backImageUrl: card.backImageUrl,

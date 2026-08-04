@@ -1,5 +1,5 @@
 import type { Card, Parallel } from "@prisma/client";
-import { buildUserCardPersistData, formatPermanentSerial } from "@/lib/card-serial";
+import { buildUserCardPersistData, resolveCatalogSerial } from "@/lib/card-serial";
 import { prisma } from "@/lib/db";
 import { cardInclude, toCardDTO } from "@/lib/mappers";
 import { loadProductConfig, type HitPool, type LoadedProductConfig } from "@/lib/product-config";
@@ -94,15 +94,15 @@ function serialFor(
   },
 ) {
   const printRun = card.numbering?.printRun ?? card.parallel.printRun;
-  const serialDisplay = formatPermanentSerial(card.assignedSerial, printRun);
-  if (!serialDisplay) {
+  const resolved = resolveCatalogSerial({
+    assignedSerial: card.assignedSerial,
+    printRun,
+    stableId: card.id,
+  });
+  if (!resolved) {
     return { serialNumber: null as number | null, serialDisplay: null as string | null };
   }
-  const serialNumber = Number(serialDisplay.split("/")[0]);
-  return {
-    serialNumber: Number.isFinite(serialNumber) ? serialNumber : null,
-    serialDisplay,
-  };
+  return resolved;
 }
 
 function toPull(card: CardRow, serialDisplay: string | null): PullResultDTO {
@@ -551,13 +551,28 @@ export async function savePullsToCollection(
   productId: string,
   pulls: PullResultDTO[],
 ) {
-  const created = await prisma.$transaction(
-    pulls.map((pull) =>
-      prisma.userCard.create({
-        data: buildUserCardPersistData(userId, productId, pull),
-      }),
-    ),
-  );
+  const created = await prisma.$transaction(async (tx) => {
+    const rows = [];
+    for (const pull of pulls) {
+      const data = buildUserCardPersistData(userId, productId, pull);
+      // Permanently stamp catalog assignedSerial when missing/invalid.
+      if (data.serialNumber != null && pull.card.printRun && pull.card.printRun > 0) {
+        await tx.card.updateMany({
+          where: {
+            id: pull.card.id,
+            OR: [
+              { assignedSerial: null },
+              { assignedSerial: { lt: 1 } },
+              { assignedSerial: { gt: pull.card.printRun } },
+            ],
+          },
+          data: { assignedSerial: data.serialNumber },
+        });
+      }
+      rows.push(await tx.userCard.create({ data }));
+    }
+    return rows;
+  });
   return created;
 }
 
