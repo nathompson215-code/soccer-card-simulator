@@ -106,6 +106,10 @@ export interface ProductConfigFile {
     bookletChance: number;
     caseHitChance: number;
   };
+  /** Optional product-page highlight tiles: [title, subtitle][] */
+  boxHighlights?: Array<[string, string]>;
+  /** Optional domestic league link (e.g. Premier League products). */
+  league?: { slug: string; name: string };
 }
 
 export interface PlayersConfigFile {

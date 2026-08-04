@@ -1,0 +1,954 @@
+{
+  "clubs": [
+    {
+      "slug": "manchester-city",
+      "name": "Manchester City",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "arsenal",
+      "name": "Arsenal",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "manchester-united",
+      "name": "Manchester United",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "liverpool",
+      "name": "Liverpool",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "chelsea",
+      "name": "Chelsea",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "tottenham",
+      "name": "Tottenham Hotspur",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "newcastle",
+      "name": "Newcastle United",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "aston-villa",
+      "name": "Aston Villa",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "brighton",
+      "name": "Brighton & Hove Albion",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "west-ham",
+      "name": "West Ham United",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "crystal-palace",
+      "name": "Crystal Palace",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "fulham",
+      "name": "Fulham",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "brentford",
+      "name": "Brentford",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "wolves",
+      "name": "Wolverhampton Wanderers",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "everton",
+      "name": "Everton",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "nottingham-forest",
+      "name": "Nottingham Forest",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "bournemouth",
+      "name": "AFC Bournemouth",
+      "country": "ENG",
+      "league": "premier-league"
+    },
+    {
+      "slug": "burnley",
+      "name": "Burnley",
+      "country": "ENG",
+      "league": "premier-league"
+    }
+  ],
+  "players": [
+    {
+      "name": "Thierry Henry",
+      "country": "FR",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1977,
+      "pullWeight": 0.55
+    },
+    {
+      "name": "Didier Drogba",
+      "country": "CI",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1978,
+      "pullWeight": 0.55
+    },
+    {
+      "name": "Wayne Rooney",
+      "country": "ENG",
+      "club": "manchester-united",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1985,
+      "pullWeight": 0.55
+    },
+    {
+      "name": "Steven Gerrard",
+      "country": "ENG",
+      "club": "liverpool",
+      "position": "MID",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1980,
+      "pullWeight": 0.5
+    },
+    {
+      "name": "Alan Shearer",
+      "country": "ENG",
+      "club": "newcastle",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1970,
+      "pullWeight": 0.5
+    },
+    {
+      "name": "David Beckham",
+      "country": "ENG",
+      "club": "manchester-united",
+      "position": "MID",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1975,
+      "pullWeight": 0.5
+    },
+    {
+      "name": "Eric Cantona",
+      "country": "FR",
+      "club": "manchester-united",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1966,
+      "pullWeight": 0.45
+    },
+    {
+      "name": "Dennis Bergkamp",
+      "country": "NL",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "LEGEND",
+      "tier": "legend",
+      "birthYear": 1969,
+      "pullWeight": 0.5
+    },
+    {
+      "name": "Erling Haaland",
+      "country": "NO",
+      "club": "manchester-city",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 2000,
+      "pullWeight": 1.2
+    },
+    {
+      "name": "Kevin De Bruyne",
+      "country": "BE",
+      "club": "manchester-city",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1991,
+      "pullWeight": 1.15
+    },
+    {
+      "name": "Mohamed Salah",
+      "country": "EG",
+      "club": "liverpool",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1992,
+      "pullWeight": 1.15
+    },
+    {
+      "name": "Bukayo Saka",
+      "country": "ENG",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 2001,
+      "pullWeight": 1.15
+    },
+    {
+      "name": "Phil Foden",
+      "country": "ENG",
+      "club": "manchester-city",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 2000,
+      "pullWeight": 1.15
+    },
+    {
+      "name": "Son Heung-min",
+      "country": "KR",
+      "club": "tottenham",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1992,
+      "pullWeight": 1.1
+    },
+    {
+      "name": "Bruno Fernandes",
+      "country": "PT",
+      "club": "manchester-united",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1994,
+      "pullWeight": 1.1
+    },
+    {
+      "name": "Virgil van Dijk",
+      "country": "NL",
+      "club": "liverpool",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1991,
+      "pullWeight": 1.1
+    },
+    {
+      "name": "Martin Ødegaard",
+      "country": "NO",
+      "club": "arsenal",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1998,
+      "pullWeight": 1.1
+    },
+    {
+      "name": "Rodri",
+      "country": "ES",
+      "club": "manchester-city",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1996,
+      "pullWeight": 1.1
+    },
+    {
+      "name": "Alexander Isak",
+      "country": "SE",
+      "club": "newcastle",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 1999,
+      "pullWeight": 1.15
+    },
+    {
+      "name": "Cole Palmer",
+      "country": "ENG",
+      "club": "chelsea",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "star",
+      "birthYear": 2002,
+      "pullWeight": 1.2
+    },
+    {
+      "name": "Kobbie Mainoo",
+      "country": "ENG",
+      "club": "manchester-united",
+      "position": "MID",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2005,
+      "pullWeight": 1.7
+    },
+    {
+      "name": "Alejandro Garnacho",
+      "country": "AR",
+      "club": "manchester-united",
+      "position": "FWD",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2004,
+      "pullWeight": 1.6
+    },
+    {
+      "name": "Rasmus Højlund",
+      "country": "DK",
+      "club": "manchester-united",
+      "position": "FWD",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2003,
+      "pullWeight": 1.55
+    },
+    {
+      "name": "Evan Ferguson",
+      "country": "IE",
+      "club": "brighton",
+      "position": "FWD",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2004,
+      "pullWeight": 1.6
+    },
+    {
+      "name": "Lewis Miley",
+      "country": "ENG",
+      "club": "newcastle",
+      "position": "MID",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2006,
+      "pullWeight": 1.7
+    },
+    {
+      "name": "Rico Lewis",
+      "country": "ENG",
+      "club": "manchester-city",
+      "position": "DEF",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2004,
+      "pullWeight": 1.55
+    },
+    {
+      "name": "Jeremy Doku",
+      "country": "BE",
+      "club": "manchester-city",
+      "position": "FWD",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2002,
+      "pullWeight": 1.5
+    },
+    {
+      "name": "Destiny Udogie",
+      "country": "IT",
+      "club": "tottenham",
+      "position": "DEF",
+      "era": "ROOKIE",
+      "tier": "rookie",
+      "birthYear": 2002,
+      "pullWeight": 1.55
+    },
+    {
+      "name": "Jack Grealish",
+      "country": "ENG",
+      "club": "manchester-city",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1995,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Julian Alvarez",
+      "country": "AR",
+      "club": "manchester-city",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2000,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Bernardo Silva",
+      "country": "PT",
+      "club": "manchester-city",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1994,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Josko Gvardiol",
+      "country": "HR",
+      "club": "manchester-city",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2002,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Ederson",
+      "country": "BR",
+      "club": "manchester-city",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1993,
+      "pullWeight": 2.4
+    },
+    {
+      "name": "Declan Rice",
+      "country": "ENG",
+      "club": "arsenal",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1999,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "William Saliba",
+      "country": "FR",
+      "club": "arsenal",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2001,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Gabriel Martinelli",
+      "country": "BR",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2001,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Kai Havertz",
+      "country": "DE",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1999,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Marcus Rashford",
+      "country": "ENG",
+      "club": "manchester-united",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1997,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Cody Gakpo",
+      "country": "NL",
+      "club": "liverpool",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1999,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Darwin Núñez",
+      "country": "UY",
+      "club": "liverpool",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1999,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Dominik Szoboszlai",
+      "country": "HU",
+      "club": "liverpool",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2000,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Trent Alexander-Arnold",
+      "country": "ENG",
+      "club": "liverpool",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1998,
+      "pullWeight": 2.2
+    },
+    {
+      "name": "Alisson Becker",
+      "country": "BR",
+      "club": "liverpool",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1992,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Reece James",
+      "country": "ENG",
+      "club": "chelsea",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1999,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Enzo Fernández",
+      "country": "AR",
+      "club": "chelsea",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2001,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Christopher Nkunku",
+      "country": "FR",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1997,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Mykhailo Mudryk",
+      "country": "UA",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 2001,
+      "pullWeight": 2.4
+    },
+    {
+      "name": "James Maddison",
+      "country": "ENG",
+      "club": "tottenham",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1996,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Richarlison",
+      "country": "BR",
+      "club": "tottenham",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1997,
+      "pullWeight": 2.4
+    },
+    {
+      "name": "Bruno Guimarães",
+      "country": "BR",
+      "club": "newcastle",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1997,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Ollie Watkins",
+      "country": "ENG",
+      "club": "aston-villa",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1995,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Kaoru Mitoma",
+      "country": "JP",
+      "club": "brighton",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1997,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Eberechi Eze",
+      "country": "ENG",
+      "club": "crystal-palace",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1998,
+      "pullWeight": 2.3
+    },
+    {
+      "name": "Jarrod Bowen",
+      "country": "ENG",
+      "club": "west-ham",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "veteran",
+      "birthYear": 1996,
+      "pullWeight": 2.4
+    },
+    {
+      "name": "Kyle Walker",
+      "country": "ENG",
+      "club": "manchester-city",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1990,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "John Stones",
+      "country": "ENG",
+      "club": "manchester-city",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1994,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Gabriel Jesus",
+      "country": "BR",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1997,
+      "pullWeight": 5.2
+    },
+    {
+      "name": "Leandro Trossard",
+      "country": "BE",
+      "club": "arsenal",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1994,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "Casemiro",
+      "country": "BR",
+      "club": "manchester-united",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1992,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "André Onana",
+      "country": "CM",
+      "club": "manchester-united",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1996,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Luis Díaz",
+      "country": "CO",
+      "club": "liverpool",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1997,
+      "pullWeight": 5.2
+    },
+    {
+      "name": "Diogo Jota",
+      "country": "PT",
+      "club": "liverpool",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1996,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Alexis Mac Allister",
+      "country": "AR",
+      "club": "liverpool",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1998,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Raheem Sterling",
+      "country": "ENG",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1994,
+      "pullWeight": 5.2
+    },
+    {
+      "name": "Moises Caicedo",
+      "country": "EC",
+      "club": "chelsea",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2001,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Nicolas Jackson",
+      "country": "SN",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2001,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "Noni Madueke",
+      "country": "ENG",
+      "club": "chelsea",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2002,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Pedro Porro",
+      "country": "ES",
+      "club": "tottenham",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1999,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Dejan Kulusevski",
+      "country": "SE",
+      "club": "tottenham",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2000,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Callum Wilson",
+      "country": "ENG",
+      "club": "newcastle",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1992,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "Sandro Tonali",
+      "country": "IT",
+      "club": "newcastle",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2000,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Kieran Trippier",
+      "country": "ENG",
+      "club": "newcastle",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1990,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Moussa Diaby",
+      "country": "FR",
+      "club": "aston-villa",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1999,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Emiliano Martínez",
+      "country": "AR",
+      "club": "aston-villa",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1992,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "João Pedro",
+      "country": "BR",
+      "club": "brighton",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2001,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Bryan Mbeumo",
+      "country": "CM",
+      "club": "brentford",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1999,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "João Palhinha",
+      "country": "PT",
+      "club": "fulham",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1995,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Pedro Neto",
+      "country": "PT",
+      "club": "wolves",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2000,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "Jordan Pickford",
+      "country": "ENG",
+      "club": "everton",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1994,
+      "pullWeight": 5.5
+    },
+    {
+      "name": "Morgan Gibbs-White",
+      "country": "ENG",
+      "club": "nottingham-forest",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2000,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "Dominic Solanke",
+      "country": "ENG",
+      "club": "bournemouth",
+      "position": "FWD",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1997,
+      "pullWeight": 5.4
+    },
+    {
+      "name": "James Trafford",
+      "country": "ENG",
+      "club": "burnley",
+      "position": "GK",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 2002,
+      "pullWeight": 5.6
+    },
+    {
+      "name": "Lucas Paquetá",
+      "country": "BR",
+      "club": "west-ham",
+      "position": "MID",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1997,
+      "pullWeight": 5.3
+    },
+    {
+      "name": "Thiago Silva",
+      "country": "BR",
+      "club": "chelsea",
+      "position": "DEF",
+      "era": "CURRENT",
+      "tier": "common",
+      "birthYear": 1984,
+      "pullWeight": 5.5
+    }
+  ]
+}

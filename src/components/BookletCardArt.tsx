@@ -39,13 +39,16 @@ export function BookletCardArt({
   const serial =
     serialDisplay && !serialDisplay.startsWith("?")
       ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
+      : card.serialDisplay && !card.serialDisplay.startsWith("?")
+        ? card.serialDisplay
         : null;
 
   const parts = card.playerName.trim().split(/\s+/);
   const lastName = parts.slice(-1)[0] ?? card.playerName;
   const firstName = parts.length > 1 ? parts.slice(0, -1).join(" ") : "";
+  const isAutographBooklet =
+    card.cardType.includes("AUTOGRAPH") ||
+    /autograph|\bauto\b/i.test(`${card.subset} ${card.subsetName} ${card.parallelName}`);
 
   return (
     <div
@@ -145,6 +148,7 @@ export function BookletCardArt({
                 playerSlug={card.playerSlug}
                 variant="panel"
                 compact={compact}
+                inkPlaceholder={isAutographBooklet}
               />
             </div>
 

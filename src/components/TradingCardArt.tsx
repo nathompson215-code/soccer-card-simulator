@@ -43,8 +43,8 @@ export function TradingCardArt({
   const serial =
     serialDisplay && !serialDisplay.startsWith("?")
       ? serialDisplay
-      : card.printRun
-        ? `?/${card.printRun}`
+      : card.serialDisplay && !card.serialDisplay.startsWith("?")
+        ? card.serialDisplay
         : null;
 
   const parts = card.playerName.trim().split(/\s+/);
@@ -119,10 +119,13 @@ export function TradingCardArt({
             playerSlug={card.playerSlug}
             compact={compact}
             variant="on-card"
+            inkPlaceholder={visual.template === "autograph"}
             className={
               visual.template === "patchAuto"
                 ? "absolute bottom-[8%] left-[5%] right-[34%] z-[12]"
-                : "absolute bottom-[10%] left-[6%] right-[10%] z-[12]"
+                : visual.template === "autograph"
+                  ? "absolute bottom-[19%] left-[3%] right-[3%] z-[14]"
+                  : "absolute bottom-[10%] left-[6%] right-[10%] z-[12]"
             }
           />
         ) : null}

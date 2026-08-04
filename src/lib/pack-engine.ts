@@ -471,11 +471,11 @@ export async function openBoxFromDb(
     rarityCounts[pull.card.rarity] = (rarityCounts[pull.card.rarity] ?? 0) + 1;
   }
 
-  // Recount guarantees from actual pulls for honesty
+  // Recount guarantees from actual pulls for honesty (config-driven pools)
   for (const result of guaranteeResults) {
     const g = guarantees.find((x) => x.id === result.id);
     if (!g) continue;
-    result.actual = allPulls.filter((pull) => matchesPool(pull, g.pool)).length;
+    result.actual = allPulls.filter((pull) => matchesPool(pull, g.pool, config)).length;
   }
 
   const hits = allPulls.filter((p) => p.isHit);
@@ -496,13 +496,28 @@ export async function openBoxFromDb(
   };
 }
 
-function matchesPool(pull: PullResultDTO, pool: HitPool) {
+function matchesPool(
+  pull: PullResultDTO,
+  pool: HitPool,
+  config: LoadedProductConfig | null = null,
+) {
+  if (config) {
+    const setSlug = pull.card.subset;
+    const parallelSlug = pull.card.parallelSlug;
+    const keyed = config.parallelPoolBySlug[`${setSlug}:${parallelSlug}`];
+    if (keyed) return keyed === pool;
+    const parallelPool = config.parallelPoolBySlug[parallelSlug];
+    if (parallelPool) return parallelPool === pool;
+    const setPool = config.setPoolBySlug[setSlug];
+    if (setPool) return setPool === pool;
+  }
+
   const slug = pull.card.parallelSlug;
   const type = pull.card.cardType;
   if (pool === "autograph") return type.includes("AUTOGRAPH");
   if (pool === "insert") return type === "INSERT";
   if (pool === "pulsar") return slug === "pulsar";
-  if (pool === "refractor") return slug === "refractor";
+  if (pool === "refractor") return slug === "refractor" || slug === "silver";
   if (pool === "numbered") {
     return (
       Boolean(pull.card.printRun) &&
